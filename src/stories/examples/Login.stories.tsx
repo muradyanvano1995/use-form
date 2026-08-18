@@ -3,6 +3,8 @@ import { expect, fn, userEvent, waitFor, within } from 'storybook/test'
 import { LoginForm } from '../../examples/LoginForm.tsx'
 import { ValidationMode } from '../../lib/index.ts'
 import { disabledArgType, modeArgType, reValidateModeArgType } from '../preview/controls.ts'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Examples/Login',
@@ -38,15 +40,14 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'Minimal login with blur validation, remember-me, reset, and `taken@example.com` backend mapping (450ms). API: useForm, register, setErrors, submitError.',
+          'LoginForm.tsx',
+        ),
         story:
           'Submit empty for required errors, type not-an-email, then a valid pair. Password is redacted in Actions.',
       },
-      source: {
-        language: 'tsx',
-        code: `import { rules, useForm, ValidationMode } from '<package-name>'`,
-      },
+      source: consumerDocsSource(snippets.basicUseForm),
     },
   },
 } satisfies Meta<typeof LoginForm>

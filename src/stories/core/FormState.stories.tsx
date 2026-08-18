@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { WatchersForm } from '../../examples/WatchersForm.tsx'
 import { Callout, DocsPage, Kicker } from '../components/DocsUi.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 function FormStateGuide() {
   return (
@@ -26,8 +28,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Store snapshot fields and why the useForm caller re-renders.',
+        component: withGithubExample(
+          'Store snapshot fields and why the useForm caller re-renders.',
+          'WatchersForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.formState),
     },
     controls: { disable: true },
   },

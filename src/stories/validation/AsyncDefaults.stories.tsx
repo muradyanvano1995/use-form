@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, waitFor, within } from 'storybook/test'
 import { AsyncDefaultsProfileForm } from '../../examples/AsyncDefaultsProfileForm.tsx'
 import { fn } from 'storybook/test'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Validation/Async defaults',
@@ -23,9 +25,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'Sync fallback renders immediately. Successful load becomes the reset baseline. preserveDirty keeps edits. Switch loadOutcome to failure in Controls.',
+          'AsyncDefaultsProfileForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.asyncDefaults),
     },
   },
 } satisfies Meta<typeof AsyncDefaultsProfileForm>

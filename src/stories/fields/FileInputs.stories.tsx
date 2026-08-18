@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
 import { FileUploadForm } from '../../examples/FileUploadForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Fields/File inputs',
@@ -8,9 +10,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'File identities only. JPEG/PNG avatar under 2MB, 1–3 documents. A filename containing virus maps a nested backend error. Actions must never include file bytes.',
+          'FileUploadForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.fileInputs),
     },
     controls: { disable: true },
   },

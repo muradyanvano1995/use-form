@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
 import { DependentFieldsForm } from '../../examples/DependentFieldsForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Validation/Dependencies',
@@ -8,9 +10,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'dependencies: confirmPassword → password, postalCode → country. Touch the dependent, then change the source. CA postal codes in this demo must start with H.',
+          'DependentFieldsForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.dependencies),
     },
     controls: { disable: true },
   },

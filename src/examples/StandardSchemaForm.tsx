@@ -1,8 +1,5 @@
 import { useForm, ValidationMode } from '../hooks/useForm'
-import {
-  standardSchemaResolver,
-  type StandardSchemaV1,
-} from '../hooks/useForm/validation'
+import { standardSchemaResolver, type StandardSchemaV1 } from '../hooks/useForm/validation'
 import './examples.css'
 
 type Input = {

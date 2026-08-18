@@ -268,7 +268,7 @@ See `src/examples/LoginForm.tsx`, `RegistrationForm.tsx`, nested `ProfileForm.ts
 - Context generics are compile-time assertions only (not runtime-verified)
 - No public `isRegistered` subscription API
 - Structured errors: `errors` is the string view; `errorDetails` is canonical (`docs/structured-errors.md`)
-- Built-in i18n catalogs are implemented (`docs/internationalization.md`); no translation-library adapter
+- Built-in i18n catalogs are implemented (`docs/internationalization.md`); no translation-library adapter. Catalog identity changes do not rewrite existing errors or auto-revalidate. Locale switchers should call `validate()` after catalogs commit when errors are already visible. `form.refreshErrorMessages()` is a documented future proposal only (built-in type/params rewrite; cannot translate resolver/server/custom strings).
 - DevTools is a separate package entry (`./devtools`); core must not export it
 
 ## Extension guidelines

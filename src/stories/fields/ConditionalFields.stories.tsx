@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent, within } from 'storybook/test'
 import { ConditionalFieldsDemo } from '../../examples/ConditionalCompanyForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Fields/Conditional fields',
@@ -20,9 +22,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'Toggle Company to mount nested fields. Tax TAKEN runs a 400ms async check that aborts if you hide the fields. Split into unregister vs preserve via the control — both behaviors remain covered.',
+          'ConditionalCompanyForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.conditionalFields),
     },
   },
 } satisfies Meta<typeof ConditionalFieldsDemo>

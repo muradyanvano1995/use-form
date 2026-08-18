@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, waitFor, within } from 'storybook/test'
 import { BatchedAddressForm } from '../../examples/BatchedAddressForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'State and Performance/Batching',
@@ -8,9 +10,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'form.batch() applies several setValue calls as one notification. getDirtyValues() is an imperative getter and does not subscribe.',
+          'BatchedAddressForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.batching),
     },
     controls: { disable: true },
   },

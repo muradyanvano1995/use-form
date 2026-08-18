@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test'
 import { RegistrationForm } from '../../examples/RegistrationForm.tsx'
 import { disabledArgType } from '../preview/controls.ts'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Examples/Registration',
@@ -24,9 +26,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'createRule name check, matchesField, accepted terms, exists@example.com server error (500ms), reset-after-success.',
+          'RegistrationForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.customRules),
     },
   },
 } satisfies Meta<typeof RegistrationForm>

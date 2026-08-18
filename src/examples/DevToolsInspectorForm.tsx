@@ -1,10 +1,4 @@
-import {
-  FormProvider,
-  rules,
-  useForm,
-  ValidationMode,
-  type FieldRules,
-} from '../hooks/useForm'
+import { FormProvider, rules, useForm, ValidationMode, type FieldRules } from '../hooks/useForm'
 import { FormDevTools, type DevToolsPosition } from '../devtools'
 import './examples.css'
 

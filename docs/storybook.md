@@ -34,8 +34,10 @@ DevTools uses `--form-devtools-*` with hardcoded fallbacks so it still renders o
 1. Prefer wrapping an example in `src/examples` over inventing a one-off form.
 2. Set `title` to match the sidebar hierarchy.
 3. Document the public API, how to interact, expected behavior, and limits.
-4. Put consumer copy in `parameters.docs.source.code` using `<package-name>` imports, not `../lib`.
+4. Put consumer copy in `parameters.docs.source.code` using `<package-name>` imports, not `../lib`. Snippets live in `src/stories/snippets/consumerSnippets.ts` (about 15–60 lines, copyable). Link longer examples with “View complete implementation on GitHub”.
 5. Add `play` only for critical user flows. Query by role and name.
+
+Autodocs is enabled (`docs` in `.storybook/main.ts` plus `tags: ['autodocs']` in preview). Storybook Docs canvas source is shown by default (`docs.canvas.sourceState: 'shown'`). Custom `CodePanel` includes an accessible Copy code button; do not invent a second highlighter.
 
 ## Controls
 
@@ -60,13 +62,15 @@ Use `fn()` from `storybook/test` on typed callback args. Capture submit success/
 
 ## Accessibility
 
-`@storybook/addon-a11y` is enabled with `a11y.test: 'error'`. Fix violations instead of disabling rules. Static prose pages may use `a11y.test: 'todo'` when they are not interactive widgets. Associate errors with `getErrorId`. Do not put `role="alert"` on every field error. Root errors are not focus targets.
+`@storybook/addon-docs` plus `@storybook/addon-a11y` (`a11y.test: 'error'`). Fix violations instead of disabling rules. Static prose pages may use `a11y.test: 'todo'` when they are not interactive widgets. Associate errors with `getErrorId`. Do not put `role="alert"` on every field error. Root errors are not focus targets.
 
 ## Responsive review
 
 Viewports: small mobile 320, large mobile 414, tablet 768, desktop 1280, wide 1600. Check that rows stack, buttons stay usable, and inline DevTools does not cover the form.
 
 ## Visual review checklist
+
+For representative Docs pages also confirm: intended `source.code` is visible (or Show code opens it), Copy copies the consumer snippet, light/dark code is readable, long lines scroll inside the block, and mobile Docs does not overflow the page.
 
 For every major story:
 
@@ -79,7 +83,7 @@ For every major story:
 7. Controls and Actions
 8. Browser console
 
-`npm run test:storybook-visual` screenshots `storybook-static` via local Playwright. Screenshots stay in gitignored `storybook-visual/`. Do not upload them or enable Chromatic.
+`npm run test:storybook-visual` screenshots `storybook-static` via local Playwright (optional; not part of `verify`). It also opens Docs pages to confirm consumer `source.code`, Copy, light/dark readability, and in-block horizontal scroll. Screenshots stay in gitignored `storybook-visual/`. Do not upload them or enable Chromatic.
 
 ## Sensitive data
 

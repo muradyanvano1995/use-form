@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { LoginForm } from '../../examples/LoginForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Core Concepts/Registration',
@@ -7,13 +9,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'register(name) returns name, id, onChange, onBlur, ref, aria-invalid, aria-describedby. File fields omit value. Radios pass type and value. This is the native-control path; custom widgets use useController instead.',
+          'LoginForm.tsx',
+        ),
       },
-      source: {
-        code: `const email = form.register('email')
-<input {...email} type="email" autoComplete="email" />`,
-      },
+      source: consumerDocsSource(snippets.registration),
     },
     controls: { disable: true },
   },

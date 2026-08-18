@@ -64,7 +64,8 @@ Size budgets live in `scripts/size-budget.json` and are measured from minified c
 - CI: `docs/ci.md` (provider not chosen)
 - TypeDoc: `npm run docs:api` → `api-docs/` (gitignored)
 - Storybook: `npm run storybook` / `build:storybook` (devDependency, not packed, not deployed)
-- Storybook contributor rules: `docs/storybook.md` (theme layers, Controls, Actions, play tests, a11y, visual checklist)
+- Storybook contributor rules: `docs/storybook.md` (theme layers, Controls, Actions, play tests, a11y, visual checklist, consumer `source.code` snippets, CodePanel copy)
+- Consumer snippets: `src/stories/snippets/consumerSnippets.ts`. Autodocs is enabled. Docs canvas `sourceState: 'shown'`. CodePanel Copy code button.
 - Pre-rebuild audit: `docs/storybook-audit.md`
-- Addons: `@storybook/addon-a11y`. Preview toolbar `theme`: light | dark | system. Manager themes via `addons.setConfig`. Backgrounds disabled.
-- Scripts: `test:storybook` (Vitest for `src/stories`, including RTL flows that mirror CSF `play` functions), `test:storybook-visual` (local Playwright screenshots; optional; gitignored `storybook-visual/`)
+- Addons: `@storybook/addon-docs`, `@storybook/addon-a11y`. Preview toolbar `theme`: light | dark | system. Manager themes via `addons.setConfig`. Backgrounds disabled.
+- Scripts: `test:storybook` (Vitest for `src/stories`, including RTL flows that mirror CSF `play` functions), `test:storybook-visual` (Playwright screenshots of `storybook-static`; not part of `verify`; gitignored `storybook-visual/`)

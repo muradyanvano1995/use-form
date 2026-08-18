@@ -46,7 +46,7 @@ src/
   devtools/                   # Separate entry — FormDevTools, safeSerialize (not core barrel)
     FormDevTools.tsx / FormDevTools.test.tsx / safeSerialize.ts / safeSerialize.test.ts / index.ts / devtools.type-test.ts
   examples/                   # Login, Registration, LocalizedRegistration, Profile, AsyncDefaults, ConditionalCompany, UsernameAvailability, DependentFields, FileUpload, ControlledFields, ContextProfile, OrderItems, ResolverRegistration, PasswordQuality, BatchedAddress, DevToolsInspector, Checkout, RadioCheckbox, StandardSchema, Watchers
-  stories/                    # Storybook only (not packed): documentation/, core/, validation/, fields/, state/, tools/, examples/, styles/, preview/, theme/, components/
+  stories/                    # Storybook only (not packed): documentation/, core/, validation/, fields/, state/, tools/, examples/, styles/, preview/, theme/, components/, snippets/
   test/setup.ts
   App.tsx
 docs/

@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { RadioCheckboxGroupsForm } from '../../examples/RadioCheckboxGroupsForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Fields/Radio and checkbox groups',
@@ -7,9 +9,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'Radio groups share a register name with type radio and value. Checkboxes are booleans. Both use fieldset/legend.',
+          'RadioCheckboxGroupsForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.radioCheckbox),
     },
     controls: { disable: true },
   },

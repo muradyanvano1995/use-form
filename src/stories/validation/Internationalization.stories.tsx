@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect, fn, userEvent, within } from 'storybook/test'
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test'
 import { LocalizedRegistrationForm } from '../../examples/LocalizedRegistrationForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Validation/Internationalization',
@@ -12,16 +14,20 @@ const meta = {
     locale: {
       control: 'radio',
       options: ['en', 'hy'],
-      description: 'Catalog and labels. Existing errors do not rewrite until you revalidate.',
+      description:
+        'Application catalogs and labels. The core library does not rewrite existing errors until the next validation cycle; this example revalidates after the new catalogs commit when errors are already visible.',
     },
     onLocaleChange: { action: 'localeChange' },
   },
   parameters: {
     docs: {
       description: {
-        component:
-          'fieldLabels + validationMessages catalogs. No translation library. Switch to Armenian, then click Revalidate after a failed submit.',
+        component: withGithubExample(
+          'fieldLabels + validationMessages catalogs. Switching language refreshes visible errors automatically after the new catalogs commit. A pristine form is not validated. Core useForm still does not rewrite resolved strings on catalog identity changes.',
+          'LocalizedRegistrationForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.internationalization),
     },
   },
 } satisfies Meta<typeof LocalizedRegistrationForm>
@@ -36,7 +42,6 @@ export const Catalogs: Story = {
     await expect(canvas.getByText(/Full name is required/)).toBeVisible()
     await userEvent.click(canvas.getByRole('radio', { name: 'Հայերեն' }))
     await expect(args.onLocaleChange).toHaveBeenCalledWith('hy')
-    await userEvent.click(canvas.getByRole('button', { name: 'Վերավավերացնել' }))
-    await expect(canvas.getByText(/Անուն դաշտը պարտադիր է/)).toBeVisible()
+    await waitFor(() => expect(canvas.getByText(/Անուն դաշտը պարտադիր է/)).toBeVisible())
   },
 }

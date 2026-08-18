@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ApiTable, Callout, CodePanel, DocsPage, Kicker } from '../components/DocsUi.tsx'
+import { consumerDocsSource } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 function ApiOverviewPage() {
   return (
@@ -31,6 +33,7 @@ function ApiOverviewPage() {
       <p>
         Import from <code>{'<package-name>'}</code>. This entry preserves <code>'use client'</code>.
       </p>
+      <CodePanel title="Core entry" code={snippets.basicUseForm} />
       <ApiTable
         rows={[
           {
@@ -153,12 +156,8 @@ function ApiOverviewPage() {
         ]}
       />
 
-      <CodePanel
-        title="Entries"
-        code={`import { useForm, rules, ValidationMode } from '<package-name>'
-import { FormDevTools } from '<package-name>/devtools'
-import { standardSchemaResolver } from '<package-name>/resolvers/standard-schema'`}
-      />
+      <CodePanel title="DevTools entry" code={snippets.devtools} />
+      <CodePanel title="Standard Schema entry" code={snippets.schemaResolver} />
 
       <h2>Intentionally internal</h2>
       <p>
@@ -184,6 +183,7 @@ const meta = {
         component:
           'Table of public core exports from docs/public-api.md, plus DevTools and Standard Schema subpaths that are not on the core barrel. Controls are empty because this page is static documentation.',
       },
+      source: consumerDocsSource(snippets.basicUseForm),
     },
   },
 } satisfies Meta<typeof ApiOverviewPage>

@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
 import { DevToolsInspectorForm } from '../../examples/DevToolsInspectorForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Tools/DevTools',
@@ -20,9 +22,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'Import FormDevTools from <package-name>/devtools. Passwords are redacted. File contents are never shown. CSS variables follow the preview theme with dark fallbacks.',
+          'DevToolsInspectorForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.devtools),
     },
     viewport: { defaultViewport: 'desktop' },
   },

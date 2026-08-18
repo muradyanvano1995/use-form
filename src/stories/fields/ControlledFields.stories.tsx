@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
 import { ControlledFieldsForm } from '../../examples/ControlledFieldsForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Fields/Controlled fields',
@@ -8,9 +10,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'useController for a date picker, parse/format currency, and a custom file widget. Native file value is never assigned programmatically. Change the price and submit.',
+          'ControlledFieldsForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.controlledFields),
     },
     controls: { disable: true },
   },

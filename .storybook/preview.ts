@@ -5,6 +5,7 @@ import { docsViewports } from '../src/stories/preview/viewports.ts'
 import { withTheme } from '../src/stories/preview/withTheme.ts'
 
 const preview: Preview = {
+  tags: ['autodocs'],
   decorators: [withTheme],
   globalTypes: {
     [THEME_GLOBAL]: {
@@ -43,6 +44,12 @@ const preview: Preview = {
     docs: {
       theme: docsLightTheme,
       toc: true,
+      canvas: {
+        sourceState: 'shown',
+      },
+      source: {
+        excludeDecorators: true,
+      },
     },
     a11y: {
       test: 'error',

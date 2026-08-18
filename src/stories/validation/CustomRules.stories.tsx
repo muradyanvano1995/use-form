@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { RegistrationForm } from '../../examples/RegistrationForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Validation/Custom rules',
@@ -7,9 +9,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'createRule builds a reusable sync rule. Here names containing “admin” fail. This is not the password-quality form (that story is Structured errors).',
+          'RegistrationForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.customRules),
     },
     controls: { disable: true },
   },

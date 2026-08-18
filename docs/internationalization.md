@@ -105,21 +105,27 @@ Empty or non-string factory results fall back to the next layer (catalog, then E
 
 ## Dynamic locale changes
 
+### Core library semantics
+
 Passing a new `validationMessages` / `fieldLabels` object:
 
 - Does not reset values, defaults, dirty, or touched state
 - Does not restart async default loaders
 - Does not change registration or `control` identity
-- Does not mutate existing error strings
+- Does **not** mutate existing error strings
 - Is used by the **next** validation cycle
 
-Revalidate after changing locale:
+The hook does **not** revalidate when catalog identity changes. Automatic core revalidation would unexpectedly rerun async field rules, resolvers, and form-level `validate` functions on every locale object swap.
+
+Revalidate after changing locale when you already have visible errors:
 
 ```ts
 await form.validate()
 ```
 
-There is no `refreshErrorMessages()`. Existing issues already contain resolved strings. The package does not silently rerun async validation when the catalog identity changes.
+Call `validate()` only after React has committed the new catalogs (typically in an effect that depends on locale, skipping the initial mount). Do not call it in the same event handler as `setLocale` — that cycle still reads the previous snapshot.
+
+There is no `refreshErrorMessages()` helper today. Existing issues already contain resolved strings.
 
 Capture locale in factories if needed:
 
@@ -128,6 +134,34 @@ validationMessages: {
   required: (context) => t('validation.required', context),
 }
 ```
+
+### Recommended application behavior
+
+A polished locale switcher should:
+
+1. Commit the new `validationMessages` and `fieldLabels` (and any per-rule messages that close over locale).
+2. Skip validation when the form is pristine: no visible errors, not submitted.
+3. After commit, if field or root errors are already visible, call `form.validate()` so built-in messages resolve against the new catalog.
+4. Ignore stale in-flight results from rapid locale changes (`useForm` already drops superseded validation generations).
+5. Translate or clear success/status copy that lives outside `form.errors`.
+6. Localize custom, async, form-level, resolver, and server messages yourself. Catalogs never rewrite those strings.
+
+See `src/examples/LocalizedRegistrationForm.tsx` for this application-level pattern.
+
+### Proposed: `form.refreshErrorMessages()` (not implemented)
+
+A future helper could re-resolve **existing built-in rule issues** from stored `type` + `params` + the current catalog/labels **without** running validators, resolvers, or `onSubmit`.
+
+It must **not** pretend to translate:
+
+- Custom field validators
+- `rules.async` returned messages
+- Form-level `validate` maps
+- Resolver / Standard Schema issues
+- `setError` / `setErrors` (`manual` / `server`)
+- Root, loader, or `submitError` strings
+
+Until that helper exists, applications that need refreshed built-in copy should call `validate()` after catalogs commit, accepting that this reruns the full client pipeline.
 
 ## Criteria modes
 
@@ -182,7 +216,7 @@ Message factories must not log or translate secrets accidentally. The resolver n
 
 ## Known limitations
 
-- No `refreshErrorMessages()` helper — call `validate()` after a locale change
+- No `refreshErrorMessages()` helper — applications call `validate()` after a locale change when errors are already visible. A future helper could rewrite built-in issue strings from stored type/params without rerunning validation; it cannot translate resolver, server, or custom messages.
 - No wildcard labels (`products.*.name`)
 - Custom rule types are not catalog keys
 - Schema/resolver/server messages stay as provided

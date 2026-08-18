@@ -7,9 +7,12 @@ import {
   DocsPage,
   ExampleShell,
   FeatureList,
+  GithubSourceLink,
   Kicker,
   StateInspector,
 } from '../components/DocsUi.tsx'
+import { consumerDocsSource } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 type EmailFieldValues = {
   email: string
@@ -106,27 +109,7 @@ function GettingStartedPage() {
         Infer values from <code>defaultValues</code>, or pass an explicit generic. Hooks are
         client-only. Import them from a Client Component in RSC apps.
       </p>
-      <CodePanel
-        title="useForm"
-        code={`import { rules, useForm, ValidationMode } from '<package-name>'
-
-type LoginValues = {
-  email: string
-  password: string
-}
-
-const form = useForm<LoginValues>({
-  defaultValues: { email: '', password: '' },
-  mode: ValidationMode.OnSubmit,
-  rules: {
-    email: [rules.required(), rules.email()],
-    password: [rules.required(), rules.minLength(8)],
-  },
-  onSubmit: (values) => {
-    void values
-  },
-})`}
-      />
+      <CodePanel title="useForm" code={snippets.basicUseForm} />
 
       <h2>Default values</h2>
       <p>
@@ -141,10 +124,7 @@ const form = useForm<LoginValues>({
         <code>onChange</code>, <code>onBlur</code>, <code>ref</code>, and aria props. DOM{' '}
         <code>name</code> is the path string.
       </p>
-      <CodePanel
-        title="register"
-        code={`<input {...form.register('email')} type="email" autoComplete="email" />`}
-      />
+      <CodePanel title="register" code={snippets.registration} />
 
       <h2>Accessible errors</h2>
       <p>
@@ -152,12 +132,7 @@ const form = useForm<LoginValues>({
         <code>{`id={form.getErrorId('email')}`}</code>. <code>register</code> sets{' '}
         <code>aria-invalid</code> and <code>aria-describedby</code>.
       </p>
-      <CodePanel
-        title="Label and error id"
-        code={`<label htmlFor={form.getFieldId('email')}>Email</label>
-<input {...form.register('email')} />
-{form.errors.email ? <p id={form.getErrorId('email')}>{form.errors.email}</p> : null}`}
-      />
+      <CodePanel title="Label and error id" code={snippets.registration} />
 
       <h2>Validation rules</h2>
       <p>
@@ -172,13 +147,7 @@ const form = useForm<LoginValues>({
         <code>focusOnError</code> defaults to true. <code>reset()</code> restores cloned defaults
         and clears native file inputs. <code>resetField(path)</code> restores one leaf.
       </p>
-      <CodePanel
-        title="Submit and reset"
-        code={`<form onSubmit={form.handleSubmit} noValidate>
-  <button type="submit" disabled={form.isSubmitting}>Save</button>
-  <button type="button" onClick={() => form.reset()}>Reset</button>
-</form>`}
-      />
+      <CodePanel title="Submit and reset" code={snippets.submission} />
 
       <h2>Type inference</h2>
       <p>
@@ -192,63 +161,34 @@ const form = useForm<LoginValues>({
         <code>OnChange</code>. After submit, <code>reValidateMode</code> defaults to onChange.
         Manual <code>validate()</code> / <code>validateField(path)</code> always run.
       </p>
+      <CodePanel title="Validation modes" code={snippets.validationModes} />
 
       <h2>useController</h2>
       <p>
         For custom controls whose API is a value. Optional <code>parse</code> / <code>format</code>{' '}
         map display to stored types. <code>disabled</code> is UI-only; the value still submits.
       </p>
-      <CodePanel
-        title="useController"
-        code={`import { useController, useForm } from '<package-name>'
-
-const { field, fieldState } = useController({
-  control: form.control,
-  name: 'profile.birthDate',
-})
-
-field.onChange(nextDate)`}
-      />
+      <CodePanel title="useController" code={snippets.controlledFields} />
 
       <h2>FormProvider</h2>
       <p>
         Pass only <code>form.control</code>, never the full <code>useForm</code> return. Child hooks
         fall back to the nearest provider. Explicit <code>control</code> still wins.
       </p>
-      <CodePanel
-        title="FormProvider"
-        code={`import { FormProvider, useFormContext } from '<package-name>'
-
-<FormProvider control={form.control}>
-  <ChildFields />
-</FormProvider>`}
-      />
+      <CodePanel title="FormProvider" code={snippets.context} />
 
       <h2>Nested fields</h2>
       <p>
         Values stay nested. Errors, touched, and dirty maps use <code>'address.city'</code> keys.
       </p>
-      <CodePanel
-        title="Nested path"
-        code={`form.register('address.city')
-form.setValue('address.city', 'Yerevan')
-form.validateField('address.city')`}
-      />
+      <CodePanel title="Nested path" code={snippets.nestedFields} />
 
       <h2>Field arrays</h2>
       <p>
         One index level. Stable keys live outside form values. Wildcard item rules are not
         implemented; use form-level <code>validate</code> for dynamic items.
       </p>
-      <CodePanel
-        title="useFieldArray"
-        code={`import { useFieldArray, useForm } from '<package-name>'
-
-const { fields, append, remove } = useFieldArray({
-  control: form.control,
-  name: 'products',
-})`}
-      />
+      <CodePanel title="useFieldArray" code={snippets.fieldArrays} />
 
       <h2>Server errors</h2>
       <p>
@@ -256,16 +196,7 @@ const { fields, append, remove } = useFieldArray({
         <code>helpers.setSubmitError</code>. Pass <code>{"{ source: 'server' }"}</code> when the map
         came from the backend.
       </p>
-      <CodePanel
-        title="Submit helpers"
-        code={`onSubmit: async (values, helpers) => {
-  const result = await save(values)
-  if (result.fieldErrors) {
-    helpers.setErrors(result.fieldErrors, { source: 'server' })
-    helpers.setSubmitError('Save failed. Check the highlighted fields.')
-  }
-}`}
-      />
+      <CodePanel title="Submit helpers" code={snippets.backendErrors} />
 
       <h2>File inputs</h2>
       <p>
@@ -273,48 +204,28 @@ const { fields, append, remove } = useFieldArray({
         <code>multiple: true</code> for <code>File[]</code>). State stores the File reference, not
         contents. Client file rules are UX only, not a security boundary.
       </p>
-      <CodePanel
-        title="File field"
-        code={`<input {...form.register('avatar', { type: 'file' })} />
-<input {...form.register('documents', { type: 'file', multiple: true })} />`}
-      />
+      <CodePanel title="File field" code={snippets.fileInputs} />
 
       <h2>Async validation</h2>
       <p>
         Ordinary async validators run immediately. Debounce remote checks with{' '}
         <code>rules.async</code>. Pending debounce is not counted in <code>isValidating</code>.
       </p>
-      <CodePanel
-        title="Debounced async rule"
-        code={`rules: {
-  username: [
-    rules.required(),
-    rules.async(checkUsername, { debounce: 300 }),
-  ],
-}`}
-      />
+      <CodePanel title="Debounced async rule" code={snippets.asyncValidation} />
 
       <h2>Schema resolver subpath</h2>
       <p>
         Not on the core barrel. The adapter does not depend on Zod, Yup, or Valibot. It has no React
         import and can run on the server.
       </p>
-      <CodePanel
-        title="Standard Schema"
-        code={`import { standardSchemaResolver } from '<package-name>/resolvers/standard-schema'`}
-      />
+      <CodePanel title="Standard Schema" code={snippets.schemaResolver} />
 
       <h2>DevTools subpath</h2>
       <p>
         Development inspector only. Do not ship it as a production UI. Conditionally render or pass{' '}
         <code>{'enabled={false}'}</code>.
       </p>
-      <CodePanel
-        title="DevTools"
-        code={`import { FormDevTools } from '<package-name>/devtools'
-
-<FormDevTools control={form.control} />`}
-      />
+      <CodePanel title="DevTools" code={snippets.devtools} />
 
       <h2>Next steps</h2>
       <FeatureList
@@ -337,6 +248,7 @@ const { fields, append, remove } = useFieldArray({
           },
         ]}
       />
+      <GithubSourceLink path="src/examples/LoginForm.tsx" />
     </DocsPage>
   )
 }
@@ -354,6 +266,7 @@ const meta = {
         component:
           'Install placeholder, React 19 peer, first typed form, register, accessible errors, validation, submit, reset, nested fields, arrays, files, resolvers, and DevTools. Controls are empty because the Overview is static documentation. EmailField is a live form with play coverage for required, invalid, and valid email.',
       },
+      source: consumerDocsSource(snippets.basicUseForm),
     },
   },
 } satisfies Meta<typeof GettingStartedPage>
@@ -388,6 +301,7 @@ export const EmailField: Story = {
         story:
           'Live email field from the public barrel: required and email rules, getFieldId/getErrorId, submit, and reset.',
       },
+      source: consumerDocsSource(snippets.registration),
     },
   },
 }

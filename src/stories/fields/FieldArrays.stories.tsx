@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
 import { OrderItemsForm } from '../../examples/OrderItemsForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Fields/Field arrays',
@@ -8,9 +10,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'useFieldArray append, insert, remove, move, swap, update, clear. minItems on the array. File per row. Submit does not console.log files.',
+          'OrderItemsForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.fieldArrays),
     },
     controls: { disable: true },
   },

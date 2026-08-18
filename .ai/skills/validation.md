@@ -9,7 +9,7 @@ type FieldErrors<T> = Partial<Record<FieldPath<T>, string>>
 type FieldErrorDetails<T> = Partial<Record<FieldPath<T>, FieldError>>
 ```
 
-`errors[path]` is always `errorDetails[path].message`. See `docs/structured-errors.md`. Built-in messages can be customized per form; see `docs/internationalization.md`.
+`errors[path]` is always `errorDetails[path].message`. See `docs/structured-errors.md`. Built-in messages can be customized per form; see `docs/internationalization.md`. Catalog identity changes do not rewrite existing errors and do not auto-revalidate (automatic core revalidation would rerun async validators and resolvers). Applications with a locale switcher should revalidate after catalogs commit when errors are already visible. `form.refreshErrorMessages()` is proposed, not implemented.
 
 Nested example: `{ 'address.city': 'City is required' }`.
 

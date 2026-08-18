@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent, within } from 'storybook/test'
 import { ResolverRegistrationForm } from '../../examples/ResolverRegistrationForm.tsx'
 import { StandardSchemaForm } from '../../examples/StandardSchemaForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Validation/Schema resolvers',
@@ -9,9 +11,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'Custom FormResolver vs standardSchemaResolver from the dedicated subpath. Resolvers run after rules/validate. Output types can differ from live input (age string → number).',
+          'StandardSchemaForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.schemaResolver),
     },
   },
 } satisfies Meta<typeof StandardSchemaForm>

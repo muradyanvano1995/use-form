@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { LoginForm } from '../../examples/LoginForm.tsx'
 import { ValidationMode } from '../../lib/index.ts'
 import { modeArgType, reValidateModeArgType } from '../preview/controls.ts'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Core Concepts/Validation modes',
@@ -23,9 +25,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'Same login form; change `mode` in Controls. onSubmit waits until submit; onBlur validates when leaving a field; onChange validates while typing. reValidateMode applies after the first submit.',
+          'LoginForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.validationModes),
     },
   },
 } satisfies Meta<typeof LoginForm>

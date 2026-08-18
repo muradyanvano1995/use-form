@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { RegistrationForm } from '../../examples/RegistrationForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Validation/Built-in rules',
@@ -7,9 +9,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'required, email, minLength, min, accepted, matchesField. See docs/validation.md. Custom createRule lives on the name field (admin token).',
+          'RegistrationForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.builtInRules),
     },
     controls: { disable: true },
   },

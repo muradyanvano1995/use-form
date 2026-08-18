@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
 import { RegistrationForm } from '../../examples/RegistrationForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Core Concepts/Reset',
@@ -8,9 +10,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'reset() restores the default-value baseline. resetField("password") clears one path. After a successful create, this example resets the whole form.',
+          'RegistrationForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.reset),
     },
     controls: { disable: true },
   },

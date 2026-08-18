@@ -38,16 +38,8 @@ export function FeatureList({ items }: { items: ReadonlyArray<{ title: string; b
   )
 }
 
-export function CodePanel({ title, code }: { title?: string; code: string }) {
-  return (
-    <figure className="docs-code">
-      {title ? <figcaption className="docs-code__header">{title}</figcaption> : null}
-      <pre>
-        <code>{code}</code>
-      </pre>
-    </figure>
-  )
-}
+export { CodePanel } from './CodePanel.tsx'
+export { GithubSourceLink } from './GithubSourceLink.tsx'
 
 export function ApiTable({
   rows,

@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent, within } from 'storybook/test'
 import { CheckoutForm } from '../../examples/CheckoutForm.tsx'
 import { disabledArgType } from '../preview/controls.ts'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Examples/Checkout',
@@ -23,9 +25,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'Combines nested fields, field arrays, files, validation, and coupon FAIL backend mapping. File contents are not logged.',
+          'CheckoutForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.fieldArrays),
     },
     viewport: { defaultViewport: 'desktop' },
   },

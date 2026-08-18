@@ -5,8 +5,11 @@ import {
   CodePanel,
   DocsPage,
   FeatureList,
+  GithubSourceLink,
   Kicker,
 } from '../components/DocsUi.tsx'
+import { consumerDocsSource } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 function IntroductionPage() {
   return (
@@ -222,32 +225,8 @@ function IntroductionPage() {
       />
 
       <h2>Minimal example</h2>
-      <CodePanel
-        title="Client form"
-        code={`import { rules, useForm, ValidationMode } from '<package-name>'
-
-function Login() {
-  const form = useForm({
-    defaultValues: { email: '', password: '' },
-    mode: ValidationMode.OnSubmit,
-    rules: {
-      email: [rules.required(), rules.email()],
-      password: [rules.required(), rules.minLength(8)],
-    },
-    onSubmit: (values) => {
-      void values
-    },
-  })
-
-  return (
-    <form onSubmit={form.handleSubmit} noValidate>
-      <input {...form.register('email')} />
-      <input {...form.register('password')} type="password" />
-      <button type="submit">Sign in</button>
-    </form>
-  )
-}`}
-      />
+      <CodePanel title="Client form" code={snippets.basicUseForm} />
+      <GithubSourceLink path="src/examples/LoginForm.tsx" />
     </DocsPage>
   )
 }
@@ -265,6 +244,7 @@ const meta = {
         component:
           'Landing page for this local form-hooks library: purpose, React 19 and ESM-only maturity, capabilities, validation precedence, and current limits. Storybook Controls are empty because the page is static documentation.',
       },
+      source: consumerDocsSource(snippets.basicUseForm),
     },
   },
 } satisfies Meta<typeof IntroductionPage>

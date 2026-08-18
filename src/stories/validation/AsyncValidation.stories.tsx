@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, waitFor, within } from 'storybook/test'
 import { UsernameAvailabilityForm } from '../../examples/UsernameAvailabilityForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Validation/Async validation',
@@ -8,9 +10,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'rules.async with debounce 400ms on change. Blur and submit skip the delay. Fake network is 120ms. Taken names: admin, root, taken. Abort on change cancels in-flight checks.',
+          'UsernameAvailabilityForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.asyncValidation),
     },
     controls: { disable: true },
   },

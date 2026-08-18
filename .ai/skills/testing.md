@@ -39,6 +39,9 @@ devtools/FormDevTools.tsx  → FormDevTools.test.tsx
 devtools/safeSerialize.ts  → safeSerialize.test.ts
 src/stories/**/*.stories.tsx CSF play functions (Storybook runtime)
 src/stories/storyPlay.test.tsx (RTL flows mirroring critical play paths)
+src/stories/components/CodePanel.test.tsx
+src/examples/LocalizedRegistrationForm.test.tsx
+src/stories/snippets/consumerSnippets.test.ts
 src/stories/theme/resolvePreviewTheme.test.ts
 src/stories/preview/safeActions.test.ts
 ```

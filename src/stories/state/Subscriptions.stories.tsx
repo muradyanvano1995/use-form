@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { WatchersForm } from '../../examples/WatchersForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'State and Performance/Subscriptions',
@@ -7,9 +9,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'useFormState selectors isolate dirty flags. The useForm caller still re-renders; memoize children that subscribe.',
+          'WatchersForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.watchers),
     },
     controls: { disable: true },
   },

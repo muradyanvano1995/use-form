@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { WatchersForm } from '../../examples/WatchersForm.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'State and Performance/Watchers',
@@ -7,9 +9,12 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'useWatch({ name: "title" }) from context. Distinct from useFormState: watchers read values, form-state selectors read flags/errors.',
+          'WatchersForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.watchers),
     },
     controls: { disable: true },
   },

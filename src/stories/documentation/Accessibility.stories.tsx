@@ -8,6 +8,8 @@ import {
   FeatureList,
   Kicker,
 } from '../components/DocsUi.tsx'
+import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
+import { snippets } from '../snippets/consumerSnippets.ts'
 
 function AccessibilityPage() {
   return (
@@ -33,11 +35,7 @@ function AccessibilityPage() {
         <code>{'htmlFor={form.getFieldId(path)}'}</code> so the id matches <code>register</code>. Do
         not rely on placeholder text as the only name.
       </p>
-      <CodePanel
-        title="Label + field id"
-        code={`<label htmlFor={form.getFieldId('email')}>Email</label>
-<input {...form.register('email')} type="email" autoComplete="email" />`}
-      />
+      <CodePanel title="Label + field id" code={snippets.registration} />
 
       <h2>Fieldset and legend</h2>
       <p>
@@ -138,9 +136,12 @@ const meta = {
     },
     docs: {
       description: {
-        component:
+        component: withGithubExample(
           'Accessibility guide for labels, fieldset/legend, aria-invalid, aria-describedby, focusOnError, root errors, live regions, reduced motion, and keyboard use. Controls are empty because the guide is static documentation. LabelsAndErrorIds renders LoginForm.',
+          'LoginForm.tsx',
+        ),
       },
+      source: consumerDocsSource(snippets.registration),
     },
   },
 } satisfies Meta<typeof AccessibilityPage>
@@ -166,6 +167,7 @@ export const LabelsAndErrorIds: Story = {
         story:
           'Live LoginForm from src/examples. Labels use getFieldId; messages use getErrorId; register supplies aria-invalid and aria-describedby.',
       },
+      source: consumerDocsSource(snippets.registration),
     },
   },
 }
