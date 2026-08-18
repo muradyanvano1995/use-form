@@ -5,27 +5,27 @@
 
 ## Capability matrix
 
-| Area                  | Status      | Quality | Missing behavior                                                                                  | Priority           |
-| --------------------- | ----------- | ------- | ------------------------------------------------------------------------------------------------- | ------------------ |
-| Flat fields           | **Done**    | High    | —                                                                                                 | —                  |
-| Nested fields         | **Done**    | High    | Path depth capped at 5; parent object paths exist in `FieldPath` but metadata is leaf-oriented    | Low (docs only)    |
-| Field arrays          | **Done**    | High    | No nested arrays inside items; no wildcard `products.*.name` rules                                | P2 (future)        |
-| File inputs           | **Done**    | High    | No `toFormData` helper (intentionally deferred)                                                   | Low                |
-| Built-in validation   | **Done**    | High    | Per-form catalogs; no translation-library adapter                                                 | —                  |
-| Custom validation     | **Done**    | High    | Dependency graph supports exact paths; no wildcard dependencies                                   | P2 (future)        |
-| Async validation      | **Done**    | High    | Debounced `rules.async`; no result caching / cross-form dedupe                                    | P2 (caching later) |
-| Schema resolvers      | **Done**    | High    | No Zod/Yup first-party adapters; Standard Schema adapter only                                     | P2 (adapters)      |
-| Controlled components | **Done**    | High    | —                                                                                                 | —                  |
-| Field subscriptions   | **Done**    | High    | Component calling `useForm` still re-renders fully (by design); use memoized children + selectors | —                  |
-| Form context          | **Done**    | High    | Runtime cannot verify caller generics; pass `FormControl` only into the provider                  | —                  |
-| Dependent fields      | **Done**    | High    | Exact indexed paths are positional; consumers regenerate config after array structural changes    | P2 (future)        |
-| Async defaults        | **Done**    | High    | Requires sync fallback + `loadDefaultValues`; no Suspense                                         | —                  |
-| Conditional fields    | **Done**    | High    | Destructive unregister is typed to optional paths; no public `isRegistered` API yet               | —                  |
-| Structured errors     | **Done**    | High    | Dual string + `FieldError` views; `criteriaMode`; params-aware dedupe; i18n catalogs              | —                  |
-| Accessibility         | **Done**    | High    | Headless IDs / aria / focus-on-error; controller exposes `id` / `errorId` / aria props            | P2                 |
-| SSR safety            | **Partial** | Medium  | Stable store `getServerSnapshot`; selector cache; no dedicated SSR hydration suite                | P1                 |
-| Package build         | **Local**   | High    | Not published; name/license/repo/CI blockers remain                                               | P1 (owner)         |
-| Documentation         | **Done**    | High    | README, guides, Storybook, TypeDoc, public-api inventory; no public npm page                      | —                  |
+| Area                  | Status      | Quality | Missing behavior                                                                                  | Priority                |
+| --------------------- | ----------- | ------- | ------------------------------------------------------------------------------------------------- | ----------------------- |
+| Flat fields           | **Done**    | High    | —                                                                                                 | —                       |
+| Nested fields         | **Done**    | High    | Path depth capped at 5; parent object paths exist in `FieldPath` but metadata is leaf-oriented    | Low (docs only)         |
+| Field arrays          | **Done**    | High    | No nested arrays inside items; no wildcard `products.*.name` rules                                | P2 (future)             |
+| File inputs           | **Done**    | High    | No `toFormData` helper (intentionally deferred)                                                   | Low                     |
+| Built-in validation   | **Done**    | High    | Per-form catalogs; no translation-library adapter                                                 | —                       |
+| Custom validation     | **Done**    | High    | Dependency graph supports exact paths; no wildcard dependencies                                   | P2 (future)             |
+| Async validation      | **Done**    | High    | Debounced `rules.async`; no result caching / cross-form dedupe                                    | P2 (caching later)      |
+| Schema resolvers      | **Done**    | High    | No Zod/Yup first-party adapters; Standard Schema adapter only                                     | P2 (adapters)           |
+| Controlled components | **Done**    | High    | —                                                                                                 | —                       |
+| Field subscriptions   | **Done**    | High    | Component calling `useForm` still re-renders fully (by design); use memoized children + selectors | —                       |
+| Form context          | **Done**    | High    | Runtime cannot verify caller generics; pass `FormControl` only into the provider                  | —                       |
+| Dependent fields      | **Done**    | High    | Exact indexed paths are positional; consumers regenerate config after array structural changes    | P2 (future)             |
+| Async defaults        | **Done**    | High    | Requires sync fallback + `loadDefaultValues`; no Suspense                                         | —                       |
+| Conditional fields    | **Done**    | High    | Destructive unregister is typed to optional paths; no public `isRegistered` API yet               | —                       |
+| Structured errors     | **Done**    | High    | Dual string + `FieldError` views; `criteriaMode`; params-aware dedupe; i18n catalogs              | —                       |
+| Accessibility         | **Done**    | High    | Headless IDs / aria / focus-on-error; controller exposes `id` / `errorId` / aria props            | P2                      |
+| SSR safety            | **Partial** | Medium  | Stable store `getServerSnapshot`; selector cache; no dedicated SSR hydration suite                | P1                      |
+| Package build         | **Local**   | High    | Not published; name/license/repo/CI blockers remain                                               | P1 (owner)              |
+| Documentation         | **Done**    | High    | Consumer Storybook with light/dark/system themes; not deployed; package not on npm                | P1 (publish site later) |
 
 ## Recommended phase order
 

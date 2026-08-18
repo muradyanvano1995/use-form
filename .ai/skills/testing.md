@@ -6,6 +6,7 @@
 - React Testing Library (`renderHook`, `act`, `waitFor`)
 - `@testing-library/jest-dom` matchers via `src/test/setup.ts`
 - Coverage via `@vitest/coverage-v8` (configured in `vite.config.ts`)
+- Storybook play functions run in the Storybook UI; `npm run test:storybook` is Vitest on `src/stories` (RTL flows, not `composeStories`)
 
 ## File naming
 
@@ -36,6 +37,10 @@ formGetters.ts             → formGetters.test.ts (+ formGetters.type-test.ts)
 formBatch.ts               → formBatch.test.ts (+ formBatch.type-test.ts)
 devtools/FormDevTools.tsx  → FormDevTools.test.tsx
 devtools/safeSerialize.ts  → safeSerialize.test.ts
+src/stories/**/*.stories.tsx CSF play functions (Storybook runtime)
+src/stories/storyPlay.test.tsx (RTL flows mirroring critical play paths)
+src/stories/theme/resolvePreviewTheme.test.ts
+src/stories/preview/safeActions.test.ts
 ```
 
 Do **not** split `useForm` into thematic files. Keep all hook behavior (including nested paths, debounce integration, async defaults, and unregister) in `useForm.test.ts`. Subscription isolation (render counts) belongs in `subscriptions.test.tsx`. Controller isolation belongs in `useController.test.tsx`. Field-array behavior belongs in `useFieldArray.test.tsx`. Pure unregister helpers belong in `fieldRegistration.test.ts`.
@@ -101,6 +106,8 @@ npm run test
 npm run test:coverage
 npm run typecheck
 npm run lint
+npm run test:storybook
+npm run test:storybook-visual   # after build:storybook; needs Playwright Chromium
 npm run test:package
 npm run test:ssr
 npm run test:exports

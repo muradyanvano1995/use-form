@@ -25,9 +25,16 @@ const SERVER_PROFILE: AsyncProfileValues = {
   tags: ['member'],
 }
 
-let shouldFailNextLoad = false
+export type AsyncDefaultsProfileFormProps = {
+  loadOutcome?: 'success' | 'failure'
+  onLoaded?: (payload: { name: string }) => void
+  onLoadFailed?: (message: string) => void
+}
 
-async function fakeFetchProfile(signal?: AbortSignal): Promise<AsyncProfileValues> {
+async function fakeFetchProfile(
+  signal: AbortSignal | undefined,
+  outcome: 'success' | 'failure',
+): Promise<AsyncProfileValues> {
   await new Promise<void>((resolve, reject) => {
     const timer = setTimeout(resolve, 350)
     signal?.addEventListener(
@@ -42,20 +49,33 @@ async function fakeFetchProfile(signal?: AbortSignal): Promise<AsyncProfileValue
     )
   })
 
-  if (shouldFailNextLoad) {
-    shouldFailNextLoad = false
+  if (outcome === 'failure') {
     throw new Error('Could not reach the profile service')
   }
 
   return { ...SERVER_PROFILE, tags: [...SERVER_PROFILE.tags] }
 }
 
-export function AsyncDefaultsProfileForm() {
+export function AsyncDefaultsProfileForm({
+  loadOutcome = 'success',
+  onLoaded,
+  onLoadFailed,
+}: AsyncDefaultsProfileFormProps = {}) {
   const form = useForm<AsyncProfileValues>({
     id: 'async-defaults-profile',
     defaultValues: fallback,
     mode: ValidationMode.OnBlur,
-    loadDefaultValues: async ({ signal }) => fakeFetchProfile(signal),
+    loadDefaultValues: async ({ signal }) => {
+      try {
+        const profile = await fakeFetchProfile(signal, loadOutcome)
+        onLoaded?.({ name: profile.name })
+        return profile
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown load error'
+        onLoadFailed?.(message)
+        throw error
+      }
+    },
     defaultValuesLoadMode: 'preserveDirty',
     rules: {
       name: [rules.required(), rules.minLength(2)],
@@ -127,19 +147,11 @@ export function AsyncDefaultsProfileForm() {
         </button>
         <button
           type="button"
+          className="demo-form__secondary"
           disabled={form.isLoadingDefaults}
           onClick={() => void form.reloadDefaultValues()}
         >
           Reload defaults
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            shouldFailNextLoad = true
-            void form.reloadDefaultValues()
-          }}
-        >
-          Simulate failure
         </button>
       </div>
 

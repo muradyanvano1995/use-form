@@ -31,7 +31,13 @@ function fakeTaxCheck(taxNumber: string, signal?: AbortSignal): Promise<string |
   })
 }
 
-function ConditionalFieldsDemo({ shouldUnregister }: { shouldUnregister: boolean }) {
+export function ConditionalFieldsDemo({
+  shouldUnregister,
+  onSubmitSuccess,
+}: {
+  shouldUnregister: boolean
+  onSubmitSuccess?: (payload: ConditionalFormValues) => void
+}) {
   const form = useForm<ConditionalFormValues>({
     id: shouldUnregister ? 'conditional-unregister' : 'conditional-preserve',
     defaultValues,
@@ -49,7 +55,9 @@ function ConditionalFieldsDemo({ shouldUnregister }: { shouldUnregister: boolean
         ),
       ],
     },
-    onSubmit: () => undefined,
+    onSubmit: (values) => {
+      onSubmitSuccess?.(values)
+    },
   })
 
   const accountType = useWatch(form, 'accountType')

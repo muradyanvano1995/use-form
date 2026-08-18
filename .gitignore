@@ -14,6 +14,7 @@ dist-ssr
 coverage
 storybook-static
 api-docs
+storybook-visual
 *.tgz
 package-tests/tmp
 *.local

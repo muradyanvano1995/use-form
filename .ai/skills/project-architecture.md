@@ -45,8 +45,8 @@ src/
     validation/resolver.type-test.ts
   devtools/                   # Separate entry — FormDevTools, safeSerialize (not core barrel)
     FormDevTools.tsx / FormDevTools.test.tsx / safeSerialize.ts / safeSerialize.test.ts / index.ts / devtools.type-test.ts
-  examples/                   # Login, Registration, LocalizedRegistration, Profile, AsyncDefaults, ConditionalCompany, UsernameAvailability, DependentFields, FileUpload, ControlledFields, ContextProfile, OrderItems, ResolverRegistration, PasswordQuality, BatchedAddress, DevToolsInspector
-  stories/                    # Storybook (not packed)
+  examples/                   # Login, Registration, LocalizedRegistration, Profile, AsyncDefaults, ConditionalCompany, UsernameAvailability, DependentFields, FileUpload, ControlledFields, ContextProfile, OrderItems, ResolverRegistration, PasswordQuality, BatchedAddress, DevToolsInspector, Checkout, RadioCheckbox, StandardSchema, Watchers
+  stories/                    # Storybook only (not packed): documentation/, core/, validation/, fields/, state/, tools/, examples/, styles/, preview/, theme/, components/
   test/setup.ts
   App.tsx
 docs/
@@ -70,6 +70,8 @@ docs/
   imperative-api.md
   batching.md
   devtools.md
+  storybook.md
+  storybook-audit.md
 ```
 
 Test naming: one `Module.test.ts` (or `.tsx` when JSX is required) beside each production module. Nested path behavior lives in `useForm.test.ts` describes + `pathUtilities.test.ts`. Details: `skills/testing.md`.

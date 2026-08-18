@@ -5,7 +5,7 @@ import {
   ValidationMode,
   type FieldErrors,
   type FormResolver,
-} from '../hooks/useForm/index.ts'
+} from '../hooks/useForm'
 import './examples.css'
 
 type RegistrationInput = {
@@ -85,7 +85,6 @@ export function ResolverRegistrationForm() {
     mode: ValidationMode.OnSubmit,
     onSubmit: async (values, helpers) => {
       // `values.age` is number — transformed output only.
-      console.info('registration submit', values)
       if (values.email.endsWith('@blocked.test')) {
         helpers.setError('email', 'This email is blocked by the server')
       }

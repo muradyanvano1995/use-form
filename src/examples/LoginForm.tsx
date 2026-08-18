@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   ReValidateMode,
   rules,
@@ -6,6 +7,7 @@ import {
   type FieldErrors,
   type FieldRules,
 } from '../hooks/useForm'
+import type { DemoFormProps, DemoSubmitHandlers } from './demoFormTypes.ts'
 import './examples.css'
 
 type LoginFormValues = {
@@ -13,6 +15,14 @@ type LoginFormValues = {
   password: string
   rememberMe: boolean
 }
+
+export type LoginFormProps = DemoFormProps &
+  DemoSubmitHandlers<{ email: string; rememberMe: boolean; password: '[redacted]' }> & {
+    mode?: ValidationMode
+    reValidateMode?: ReValidateMode
+    focusOnError?: boolean
+    preventDuplicateSubmit?: boolean
+  }
 
 const loginRules: FieldRules<LoginFormValues> = {
   email: [rules.required('Email is required'), rules.email('Enter a valid email address')],
@@ -44,7 +54,18 @@ async function fakeLoginRequest(values: LoginFormValues): Promise<void> {
   }
 }
 
-export function LoginForm() {
+export function LoginForm({
+  disabled = false,
+  mode = ValidationMode.OnBlur,
+  reValidateMode = ReValidateMode.OnChange,
+  focusOnError = true,
+  preventDuplicateSubmit = true,
+  onSubmitSuccess,
+  onSubmitInvalid,
+  onReset,
+}: LoginFormProps) {
+  const [statusMessage, setStatusMessage] = useState<string | undefined>()
+
   const form = useForm<LoginFormValues>({
     id: 'login',
     defaultValues: {
@@ -52,14 +73,23 @@ export function LoginForm() {
       password: '',
       rememberMe: false,
     },
-    mode: ValidationMode.OnBlur,
-    reValidateMode: ReValidateMode.OnChange,
+    mode,
+    reValidateMode,
+    focusOnError,
+    preventDuplicateSubmit,
     rules: loginRules,
     onSubmit: async (values, helpers) => {
       try {
         await fakeLoginRequest(values)
         helpers.setSubmitError(undefined)
+        setStatusMessage('Signed in. Password values are never sent to Actions.')
+        onSubmitSuccess?.({
+          email: values.email,
+          rememberMe: values.rememberMe,
+          password: '[redacted]',
+        })
       } catch (error) {
+        setStatusMessage(undefined)
         if (isEmailTakenError(error)) {
           if (error.fieldErrors) {
             helpers.setErrors(error.fieldErrors)
@@ -73,10 +103,20 @@ export function LoginForm() {
   })
 
   return (
-    <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
+    <form
+      className="demo-form"
+      onSubmit={(event) => {
+        setStatusMessage(undefined)
+        void form.handleSubmit(event).then(() => {
+          const fieldCount = Object.keys(form.getErrors()).length
+          if (fieldCount > 0) onSubmitInvalid?.({ fieldCount })
+        })
+      }}
+      noValidate
+    >
       <header className="demo-form__header">
         <h2>Sign in</h2>
-        <p>Email, password, and remember-me with blur validation.</p>
+        <p>Email, password, and remember-me. Validation mode defaults to blur.</p>
       </header>
 
       {form.submitError ? (
@@ -85,52 +125,66 @@ export function LoginForm() {
         </p>
       ) : null}
 
-      <div className="demo-form__field">
-        <label htmlFor={form.getFieldId('email')}>Email</label>
-        <input
-          {...form.register('email')}
-          type="email"
-          autoComplete="email"
-          placeholder="you@example.com"
-        />
-        {form.errors.email ? (
-          <p id={form.getErrorId('email')} className="demo-form__error" role="alert">
-            {form.errors.email}
-          </p>
-        ) : null}
-      </div>
+      {statusMessage ? (
+        <p className="demo-form__success" role="status">
+          {statusMessage}
+        </p>
+      ) : null}
 
-      <div className="demo-form__field">
-        <label htmlFor={form.getFieldId('password')}>Password</label>
-        <input {...form.register('password')} type="password" autoComplete="current-password" />
-        {form.errors.password ? (
-          <p id={form.getErrorId('password')} className="demo-form__error" role="alert">
-            {form.errors.password}
-          </p>
-        ) : null}
-      </div>
+      <fieldset disabled={disabled}>
+        <legend>Credentials</legend>
+        <div className="demo-form__field">
+          <label htmlFor={form.getFieldId('email')}>Email</label>
+          <input
+            {...form.register('email')}
+            type="email"
+            autoComplete="email"
+            placeholder="you@example.com"
+          />
+          {form.errors.email ? (
+            <p id={form.getErrorId('email')} className="demo-form__error">
+              {form.errors.email}
+            </p>
+          ) : null}
+        </div>
 
-      <div className="demo-form__field demo-form__field--inline">
-        <input {...form.register('rememberMe')} type="checkbox" />
-        <label htmlFor={form.getFieldId('rememberMe')}>Remember me</label>
-      </div>
+        <div className="demo-form__field">
+          <label htmlFor={form.getFieldId('password')}>Password</label>
+          <input {...form.register('password')} type="password" autoComplete="current-password" />
+          {form.errors.password ? (
+            <p id={form.getErrorId('password')} className="demo-form__error">
+              {form.errors.password}
+            </p>
+          ) : null}
+        </div>
+
+        <div className="demo-form__field demo-form__field--inline">
+          <input {...form.register('rememberMe')} type="checkbox" />
+          <label htmlFor={form.getFieldId('rememberMe')}>Remember me</label>
+        </div>
+      </fieldset>
 
       <div className="demo-form__actions">
-        <button type="submit" disabled={form.isSubmitting}>
+        <button type="submit" disabled={disabled || form.isSubmitting}>
           {form.isSubmitting ? 'Signing in…' : 'Sign in'}
         </button>
         <button
           type="button"
           className="demo-form__secondary"
-          onClick={() => form.reset()}
-          disabled={form.isSubmitting}
+          onClick={() => {
+            setStatusMessage(undefined)
+            form.reset()
+            onReset?.()
+          }}
+          disabled={disabled || form.isSubmitting}
         >
           Reset
         </button>
       </div>
 
       <p className="demo-form__hint">
-        Try <code>taken@example.com</code> to simulate a backend field error.
+        Try <code>taken@example.com</code> with any 6+ character password to simulate a backend
+        field error (450ms).
       </p>
     </form>
   )

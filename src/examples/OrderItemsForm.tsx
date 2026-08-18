@@ -184,7 +184,7 @@ export function OrderItemsForm() {
       return errors
     },
     onSubmit: async (values) => {
-      console.info('order submit', values)
+      void values.customer.name
     },
   })
 

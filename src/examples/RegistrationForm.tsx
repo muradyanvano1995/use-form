@@ -8,6 +8,7 @@ import {
   type FieldErrors,
   type FieldRules,
 } from '../hooks/useForm'
+import type { DemoFormProps, DemoSubmitHandlers } from './demoFormTypes.ts'
 import './examples.css'
 
 type RegistrationFormValues = {
@@ -74,7 +75,15 @@ async function fakeRegisterRequest(values: RegistrationFormValues): Promise<void
   }
 }
 
-export function RegistrationForm() {
+export type RegistrationFormProps = DemoFormProps &
+  DemoSubmitHandlers<{ name: string; email: string; age: number; password: '[redacted]' }>
+
+export function RegistrationForm({
+  disabled = false,
+  onSubmitSuccess,
+  onSubmitInvalid,
+  onReset,
+}: RegistrationFormProps = {}) {
   const [statusMessage, setStatusMessage] = useState<string | undefined>()
 
   const form = useForm<RegistrationFormValues>({
@@ -90,6 +99,12 @@ export function RegistrationForm() {
         helpers.reset(registrationDefaults)
         helpers.setSubmitError(undefined)
         setStatusMessage('Account created. The form was reset to defaults.')
+        onSubmitSuccess?.({
+          name: values.name,
+          email: values.email,
+          age: values.age,
+          password: '[redacted]',
+        })
       } catch (error) {
         if (isEmailExistsError(error)) {
           if (error.fieldErrors) {
@@ -104,7 +119,16 @@ export function RegistrationForm() {
   })
 
   return (
-    <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
+    <form
+      className="demo-form"
+      onSubmit={(event) => {
+        void form.handleSubmit(event).then(() => {
+          const fieldCount = Object.keys(form.getErrors()).length
+          if (fieldCount > 0) onSubmitInvalid?.({ fieldCount })
+        })
+      }}
+      noValidate
+    >
       <header className="demo-form__header">
         <h2>Create account</h2>
         <p>Built-in rules, cross-field match, and a reusable custom name rule.</p>
@@ -189,7 +213,7 @@ export function RegistrationForm() {
       ) : null}
 
       <div className="demo-form__actions">
-        <button type="submit" disabled={form.isSubmitting}>
+        <button type="submit" disabled={disabled || form.isSubmitting}>
           {form.isSubmitting ? 'Creating…' : 'Create account'}
         </button>
         <button
@@ -198,8 +222,9 @@ export function RegistrationForm() {
           onClick={() => {
             setStatusMessage(undefined)
             form.reset()
+            onReset?.()
           }}
-          disabled={form.isSubmitting}
+          disabled={disabled || form.isSubmitting}
         >
           Reset
         </button>
@@ -207,7 +232,7 @@ export function RegistrationForm() {
           type="button"
           className="demo-form__secondary"
           onClick={() => form.resetField('password')}
-          disabled={form.isSubmitting}
+          disabled={disabled || form.isSubmitting}
         >
           Reset password
         </button>

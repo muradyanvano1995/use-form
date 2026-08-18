@@ -46,6 +46,14 @@ npm run pack:dry-run
 npm run verify
 ```
 
+```bash
+npm run storybook
+npm run build:storybook
+npm run test:storybook
+```
+
+Storybook is local documentation only. Follow [docs/storybook.md](docs/storybook.md). Review light, dark, mobile, and desktop before considering docs complete. Do not log passwords or file contents in Actions.
+
 `verify` is the full non-destructive release-readiness suite. It does not publish.
 
 ## Documentation updates

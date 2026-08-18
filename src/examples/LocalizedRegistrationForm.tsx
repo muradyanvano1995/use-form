@@ -52,8 +52,17 @@ const armenianMessages = {
 
 type Locale = 'en' | 'hy'
 
-export function LocalizedRegistrationForm() {
-  const [locale, setLocale] = useState<Locale>('en')
+export type LocalizedRegistrationFormProps = {
+  locale?: Locale
+  onLocaleChange?: (locale: Locale) => void
+}
+
+export function LocalizedRegistrationForm({
+  locale: localeProp,
+  onLocaleChange,
+}: LocalizedRegistrationFormProps = {}) {
+  const [internalLocale, setInternalLocale] = useState<Locale>(localeProp ?? 'en')
+  const locale = localeProp ?? internalLocale
   const [statusMessage, setStatusMessage] = useState<string | undefined>()
 
   const form = useForm<RegistrationValues>({
@@ -101,7 +110,10 @@ export function LocalizedRegistrationForm() {
             type="radio"
             name="localized-locale"
             checked={locale === 'en'}
-            onChange={() => setLocale('en')}
+            onChange={() => {
+              setInternalLocale('en')
+              onLocaleChange?.('en')
+            }}
           />
           English
         </label>
@@ -110,7 +122,10 @@ export function LocalizedRegistrationForm() {
             type="radio"
             name="localized-locale"
             checked={locale === 'hy'}
-            onChange={() => setLocale('hy')}
+            onChange={() => {
+              setInternalLocale('hy')
+              onLocaleChange?.('hy')
+            }}
           />
           Հայերեն
         </label>

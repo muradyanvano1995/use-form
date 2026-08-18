@@ -6,12 +6,22 @@ All notable changes to this project are documented in this file.
 
 ### Added
 
-- Library build (`npm run build:lib`) with ESM output, declarations, and package `exports` for core, DevTools, and the Standard Schema adapter
-- Isolated packed-package consumer, SSR, export, archive, and bundle-size checks
-- Storybook workspace and TypeDoc API generation (local only)
-- `FormDevTools` `hideFileNames` plus documented filename-privacy and proxy/getter limits
-- Lifecycle rejection inside `form.batch()` for `validate`, `validateField`, `handleSubmit`, and `reloadDefaultValues`
-- Ancestor-path skip in dirty/touched value extraction so parent arrays stay arrays
+- Production-oriented Storybook documentation: semantic light/dark/system theming, landing pages, Getting Started, hierarchy, Controls/Actions, play tests, and local visual smoke
+- Shared documentation tokens (`--docs-*`) and Docs UI primitives
+- Checkout, radio/checkbox, Standard Schema, and watchers example forms
+- `docs/storybook.md` contributor guide and `docs/storybook-audit.md` pre-implementation audit
+- `@storybook/addon-a11y` (dev-only)
+- `FormDevTools` CSS variables so the inspector follows the active documentation theme
+
+### Changed
+
+- Example CSS uses documentation tokens instead of light-only hardcoded colors
+- Storybook backgrounds addon is disabled; the theme toolbar owns the canvas
+
+### Fixed
+
+- Example and DevTools contrast in dark preview
+- Order and resolver demos no longer `console.info` form values (which could include files)
 
 ### Changed
 

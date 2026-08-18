@@ -1,5 +1,5 @@
 import { useCallback, useId, useMemo, useState, type CSSProperties, type ReactNode } from 'react'
-import { useFormState, type FormControl, type FormValues } from '../hooks/useForm/index.ts'
+import { useFormState, type FormControl, type FormValues } from '../hooks/useForm'
 import { resolveControl, useOptionalFormContext } from '../hooks/useForm/formContext.ts'
 import { computeDirtyFields } from '../hooks/useForm/utilities.ts'
 import {
@@ -86,9 +86,9 @@ function panelStyle(position: DevToolsPosition, open: boolean): CSSProperties {
 const shellStyle: CSSProperties = {
   fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
   fontSize: 12,
-  color: '#e2e8f0',
-  background: '#0f172a',
-  border: '1px solid #334155',
+  color: 'var(--form-devtools-fg, #e2e8f0)',
+  background: 'var(--form-devtools-bg, #0f172a)',
+  border: '1px solid var(--form-devtools-border, #334155)',
   borderRadius: 8,
   boxShadow: '0 10px 30px rgba(15, 23, 42, 0.35)',
   overflow: 'hidden',
@@ -100,14 +100,14 @@ const headerStyle: CSSProperties = {
   justifyContent: 'space-between',
   gap: 8,
   padding: '8px 10px',
-  background: '#1e293b',
+  background: 'var(--form-devtools-header, #1e293b)',
 }
 
 const buttonStyle: CSSProperties = {
   appearance: 'none',
-  border: '1px solid #64748b',
-  background: '#0f172a',
-  color: '#f8fafc',
+  border: '1px solid var(--form-devtools-border, #64748b)',
+  background: 'var(--form-devtools-bg, #0f172a)',
+  color: 'var(--form-devtools-fg, #f8fafc)',
   borderRadius: 4,
   padding: '4px 8px',
   cursor: 'pointer',
@@ -115,7 +115,7 @@ const buttonStyle: CSSProperties = {
 }
 
 const sectionStyle: CSSProperties = {
-  borderTop: '1px solid #334155',
+  borderTop: '1px solid var(--form-devtools-border, #334155)',
 }
 
 const preStyle: CSSProperties = {

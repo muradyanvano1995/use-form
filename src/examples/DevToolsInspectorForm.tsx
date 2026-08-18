@@ -4,8 +4,8 @@ import {
   useForm,
   ValidationMode,
   type FieldRules,
-} from '../hooks/useForm/index.ts'
-import { FormDevTools } from '../devtools/index.ts'
+} from '../hooks/useForm'
+import { FormDevTools, type DevToolsPosition } from '../devtools'
 import './examples.css'
 
 type InspectorValues = {
@@ -29,7 +29,13 @@ const inspectorRules: FieldRules<InspectorValues> = {
   'profile.password': [rules.required('Password is required'), rules.minLength(8)],
 }
 
-export function DevToolsInspectorForm() {
+export function DevToolsInspectorForm({
+  position = 'inline',
+  initiallyOpen = true,
+}: {
+  position?: DevToolsPosition
+  initiallyOpen?: boolean
+}) {
   const form = useForm<InspectorValues>({
     id: 'devtools-inspector',
     defaultValues,
@@ -44,9 +50,9 @@ export function DevToolsInspectorForm() {
         <header className="demo-form__header">
           <h2>Form DevTools</h2>
           <p>
-            Development inspector imported from <code>src/devtools</code> (future{' '}
-            <code>package-name/devtools</code> subpath). Passwords are redacted; file contents are
-            never shown. The inspector resolves <code>control</code> from context.
+            Development inspector imported from <code>{'<package-name>/devtools'}</code>. Passwords
+            are redacted; file contents are never shown. The inspector resolves <code>control</code>{' '}
+            from context.
           </p>
         </header>
 
@@ -79,7 +85,11 @@ export function DevToolsInspectorForm() {
           <button type="submit">Validate</button>
         </div>
 
-        <FormDevTools position="inline" redact={['profile.password']} />
+        <FormDevTools
+          position={position}
+          initiallyOpen={initiallyOpen}
+          redact={['profile.password']}
+        />
       </form>
     </FormProvider>
   )

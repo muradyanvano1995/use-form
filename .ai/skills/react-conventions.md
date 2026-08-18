@@ -9,8 +9,9 @@
 
 ## Components
 
-- Example forms live in `src/examples` and are wired from `App.tsx`.
-- Keep forms accessible: labels, stable ids, `aria-invalid`, `aria-describedby`, keyboard submit, disabled submit while submitting.
+- Example forms live in `src/examples` and are wired from `App.tsx` and Storybook.
+- Storybook examples must stay readable in light and dark `data-theme` using `--docs-*` tokens. Do not add per-story palettes or import `src/index.css`.
+- Keep forms accessible: labels, stable ids, `aria-invalid`, `aria-describedby`, keyboard submit, disabled submit while submitting. Prefer field errors linked by id over `role="alert"` on every field.
 - Controlled custom inputs should use `useController({ control, name })` (or context inside `FormProvider`), not a second ad-hoc binding layer.
 - Prefer `register()` for native HTML controls.
 - Pass only `form.control` into `FormProvider` — never the full `useForm` return value.

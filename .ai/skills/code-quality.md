@@ -12,6 +12,8 @@
 | `npm run build:lib`               | ESM library + declarations → `dist/`         |
 | `npm run build:app`               | Demo Vite build → `dist-app/`                |
 | `npm run build`                   | Alias of `build:lib`                         |
+| `npm run build:storybook`         | Static Storybook → `storybook-static/`       |
+| `npm run test:storybook`          | Storybook Vitest suite (`src/stories`)       |
 | `npm run verify`                  | Full non-destructive release-readiness suite |
 
 See `.ai/skills/package-release.md` for packing, size, Storybook, and TypeDoc. Do not add `prepublishOnly`.

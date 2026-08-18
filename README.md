@@ -108,7 +108,7 @@ The adapter is not exported from the core entry. It does not depend on Zod, Yup,
 ## Documentation
 
 - Guides: `docs/`
-- Interactive examples: `npm run storybook` (local only; not deployed)
+- Interactive examples: `npm run storybook` (local only; not deployed). Contributor rules: [docs/storybook.md](docs/storybook.md)
 - API reference: `npm run docs:api` (writes `api-docs/`, not committed)
 - Agent skills: `.ai/skills/`
 

@@ -13,7 +13,11 @@ import { PasswordQualityForm } from './examples/PasswordQualityForm.tsx'
 import { ProfileForm } from './examples/ProfileForm.tsx'
 import { RegistrationForm } from './examples/RegistrationForm.tsx'
 import { ResolverRegistrationForm } from './examples/ResolverRegistrationForm.tsx'
+import { CheckoutForm } from './examples/CheckoutForm.tsx'
+import { RadioCheckboxGroupsForm } from './examples/RadioCheckboxGroupsForm.tsx'
+import { StandardSchemaForm } from './examples/StandardSchemaForm.tsx'
 import { UsernameAvailabilityForm } from './examples/UsernameAvailabilityForm.tsx'
+import { WatchersForm } from './examples/WatchersForm.tsx'
 import './examples/examples.css'
 
 function App() {
@@ -46,6 +50,10 @@ function App() {
         <PasswordQualityForm />
         <ResolverRegistrationForm />
         <BatchedAddressForm />
+        <WatchersForm />
+        <RadioCheckboxGroupsForm />
+        <StandardSchemaForm />
+        <CheckoutForm />
         <DevToolsInspectorForm />
       </div>
     </main>
