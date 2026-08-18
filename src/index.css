@@ -1,0 +1,29 @@
+:root {
+  font:
+    16px/1.45 system-ui,
+    'Segoe UI',
+    sans-serif;
+  color: #14213d;
+  background: #f7f4ef;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+code {
+  font-family: ui-monospace, Consolas, monospace;
+}

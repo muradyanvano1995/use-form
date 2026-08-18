@@ -1,0 +1,34 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "Form hooks API",
+  "entryPoints": [
+    "src/lib/index.ts",
+    "src/devtools/index.ts",
+    "src/resolvers/standard-schema/index.ts"
+  ],
+  "entryPointStrategy": "resolve",
+  "out": "api-docs",
+  "tsconfig": "tsconfig.lib.json",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "excludeExternals": true,
+  "skipErrorChecking": true,
+  "readme": "none",
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.type-test.ts",
+    "src/examples/**",
+    "src/stories/**",
+    "src/App.tsx",
+    "src/main.tsx"
+  ],
+  "categorizeByGroup": true,
+  "validation": {
+    "notExported": false,
+    "invalidLink": true
+  },
+  "navigation": {
+    "includeCategories": true
+  }
+}

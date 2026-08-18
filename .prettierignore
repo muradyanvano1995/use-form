@@ -1,0 +1,8 @@
+node_modules
+coverage
+dist
+dist-app
+storybook-static
+api-docs
+*.tgz
+package-tests/tmp

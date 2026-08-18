@@ -1,0 +1,46 @@
+# Code quality
+
+## Scripts
+
+| Script                            | Purpose                                      |
+| --------------------------------- | -------------------------------------------- |
+| `npm run typecheck`               | `tsc -b`                                     |
+| `npm run lint`                    | ESLint                                       |
+| `npm run format` / `format:check` | Prettier                                     |
+| `npm run test`                    | Vitest run                                   |
+| `npm run test:coverage`           | Vitest + V8 coverage (thresholds)            |
+| `npm run build:lib`               | ESM library + declarations → `dist/`         |
+| `npm run build:app`               | Demo Vite build → `dist-app/`                |
+| `npm run build`                   | Alias of `build:lib`                         |
+| `npm run verify`                  | Full non-destructive release-readiness suite |
+
+See `.ai/skills/package-release.md` for packing, size, Storybook, and TypeDoc. Do not add `prepublishOnly`.
+
+Prettier: no semicolons, single quotes, trailing commas, width 100 (`.prettierrc`).
+
+## Rules of thumb
+
+- No `any` unless documented and unavoidable
+- Do not disable lint rules casually
+- Comments explain non-obvious decisions only
+- Keep diffs focused; do not rewrite unrelated Vite/ESLint/Prettier config
+- Update `.ai/skills` in the same change as behavior changes
+- Prefer `as const` objects over TypeScript enums (`erasableSyntaxOnly`)
+- Do not re-export internal store constructors (`createFormStore`) or `getControlInternals` from the public barrel
+- Keep `FormControl` opaque; never put mutable store APIs on the public type
+- Field-array keys and remappers stay internal (`fieldArrayUtilities.ts` is not a public export)
+- Debounce timer registries / async-rule WeakMaps stay internal (`validationScheduler.ts`, `asyncRule.ts` helpers)
+- Defaults-load generation / abort controllers stay internal (`defaultValuesLoader.ts` exports types + pure merge only)
+- Pending-unregister registries / element ref counts stay internal (`fieldRegistration.ts` exports types + pure helpers only)
+- Do not add concrete schema libraries (Zod/Yup/Valibot) as core runtime dependencies; use `FormResolver` / Standard Schema adapters
+- Do not add speculative caching options (`cache`, `dedupe`, `staleTime`) without a separate cache contract
+- Do not export internal error builders (`fieldErrorFromIssues`, merge/strip helpers) from the public barrel
+- Do not export the validation message resolver, catalog snapshot symbol, or rule metadata WeakMaps
+- Do not export `FormDevTools` or `safeSerialize` from the core barrel
+- Do not export store transaction helpers or batch queues from the public barrel
+
+## Dependencies policy
+
+- Reuse React / Vite tooling already present
+- Add focused libs only with clear value (Vitest/RTL were added for the form system)
+- Do not add React Hook Form / Formik / similar form frameworks
