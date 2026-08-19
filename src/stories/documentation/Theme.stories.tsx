@@ -115,7 +115,7 @@ function ThemePage() {
         items={[
           {
             title: 'Manager',
-            body: "Manager chrome stays on docsLightTheme so the sidebar and toolbar are consistent.",
+            body: 'Manager chrome stays on docsLightTheme so the sidebar and toolbar are consistent.',
           },
           {
             title: 'Preview toolbar',
@@ -148,20 +148,16 @@ function ThemePage() {
         <code>.docs-preview-root</code>. <code>parameters.previewTheme</code> is effectively a no-op
         now (dark mode is disabled).
       </p>
-      <CodePanel
-        title="Toolbar global"
-        code={`// Theme switching disabled (light only)`}
-      />
+      <CodePanel title="Toolbar global" code={`// Theme switching disabled (light only)`} />
 
       <h2>System and listeners</h2>
-      <p>
-        Dark/system theme listeners are disabled. Storybook always renders light.
-      </p>
+      <p>Dark/system theme listeners are disabled. Storybook always renders light.</p>
 
       <h2>3. Example CSS variables</h2>
       <p>
-        Tokens are scoped under <code>[data-theme='light']</code>. Examples should use these variables
-        rather than hardcoded hex. Reduced-motion overrides also live in the token stylesheet.
+        Tokens are scoped under <code>[data-theme='light']</code>. Examples should use these
+        variables rather than hardcoded hex. Reduced-motion overrides also live in the token
+        stylesheet.
       </p>
       <CodePanel
         title="Example usage"
