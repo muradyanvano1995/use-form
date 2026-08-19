@@ -103,8 +103,8 @@ export const KeyboardAndReset: Story = {
 }
 
 export const Dark: Story = {
-  globals: { theme: 'dark' },
   parameters: {
-    docs: { description: { story: 'Same login under the dark preview global.' } },
+    previewTheme: 'light',
+    docs: { description: { story: 'Canvas forced to light tokens (dark mode disabled).' } },
   },
 }

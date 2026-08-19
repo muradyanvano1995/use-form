@@ -12,7 +12,7 @@ function ThemeTokensDemo() {
   return (
     <ExampleShell
       title="Preview tokens"
-      description="These surfaces read --docs-* variables. Switch the toolbar Theme control to light, dark, or system."
+      description="These surfaces read --docs-* variables. Theme switching is light-only (dark disabled)."
     >
       <div
         style={{
@@ -106,7 +106,7 @@ function ThemePage() {
       <Callout tone="info" title="Controls">
         <p>
           Storybook Controls are empty because this page is static documentation. Use the toolbar
-          Theme switcher (light, dark, system) instead of Controls or the backgrounds addon.
+          Theme switcher (light only) instead of Controls or the backgrounds addon.
         </p>
       </Callout>
 
@@ -115,11 +115,11 @@ function ThemePage() {
         items={[
           {
             title: 'Manager',
-            body: 'addons.setConfig applies docsLightTheme or docsDarkTheme so the sidebar and toolbar follow the same mode.',
+            body: "Manager chrome stays on docsLightTheme so the sidebar and toolbar are consistent.",
           },
           {
             title: 'Preview toolbar',
-            body: 'Global theme is light | dark | system. The decorator writes data-theme on the document and the preview root.',
+            body: 'Global theme is light only. The decorator writes `data-theme="light"` on the document and the preview root.',
           },
           {
             title: 'Example tokens',
@@ -131,50 +131,37 @@ function ThemePage() {
       <h2>1. Manager themes</h2>
       <p>
         <code>.storybook/manager.ts</code> registers a small addon that reads the same global and
-        calls <code>{'addons.setConfig({ theme })'}</code>. Light and dark manager themes live in{' '}
+        calls <code>{'addons.setConfig({ theme })'}</code>. The Storybook manager is fixed to{' '}
         <code>src/stories/theme/managerThemes.ts</code>.
       </p>
       <CodePanel
         title="Manager"
         code={`addons.setConfig({
-  theme: resolved === 'dark' ? docsDarkTheme : docsLightTheme,
+  theme: docsLightTheme,
 })`}
       />
 
       <h2>2. Preview global</h2>
       <p>
-        <code>preview.ts</code> declares <code>globalTypes.theme</code> with toolbar items light,
-        dark, and system. <code>withTheme</code> resolves the mode, sets <code>data-theme</code> on{' '}
-        <code>documentElement</code> and <code>body</code>, and paints the canvas with{' '}
-        <code>var(--docs-bg-page)</code>.
+        <code>preview.ts</code> disables theme switching in Storybook Docs. The preview decorator
+        always applies <code>data-theme=\"light\"</code> and scopes canvas tokens on{' '}
+        <code>.docs-preview-root</code>. <code>parameters.previewTheme</code> is effectively a no-op
+        now (dark mode is disabled).
       </p>
       <CodePanel
         title="Toolbar global"
-        code={`globalTypes: {
-  theme: {
-    toolbar: {
-      items: [
-        { value: 'light', title: 'Light' },
-        { value: 'dark', title: 'Dark' },
-        { value: 'system', title: 'System' },
-      ],
-    },
-  },
-}`}
+        code={`// Theme switching disabled (light only)`}
       />
 
       <h2>System and listeners</h2>
       <p>
-        System mode follows <code>prefers-color-scheme</code>. The preview decorator subscribes to
-        the media query and removes the listener when the mode is no longer system or the story
-        unmounts. Manager chrome uses the same media query while the global is system.
+        Dark/system theme listeners are disabled. Storybook always renders light.
       </p>
 
       <h2>3. Example CSS variables</h2>
       <p>
-        Tokens are scoped under <code>[data-theme='light']</code> and{' '}
-        <code>[data-theme='dark']</code>. Examples should use these variables rather than hardcoded
-        hex. Reduced-motion overrides also live in the token stylesheet.
+        Tokens are scoped under <code>[data-theme='light']</code>. Examples should use these variables
+        rather than hardcoded hex. Reduced-motion overrides also live in the token stylesheet.
       </p>
       <CodePanel
         title="Example usage"
@@ -217,7 +204,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Storybook theming layers: manager themes via addons.setConfig, preview toolbar global theme (light|dark|system) with data-theme, and --docs-* CSS variables. Backgrounds are disabled because the theme owns the canvas. Controls are empty because this page is static documentation.',
+          'Storybook theming layers: manager themes via addons.setConfig, preview Docs fixed to light via data-theme, and --docs-* CSS variables. Backgrounds are disabled because the theme owns the canvas. Controls are empty because this page is static documentation.',
       },
     },
   },

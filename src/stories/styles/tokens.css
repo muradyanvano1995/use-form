@@ -1,4 +1,3 @@
-:root,
 [data-theme='light'] {
   color-scheme: light;
   --docs-bg-page: #f4f1ea;
@@ -35,8 +34,16 @@
   --docs-info-border: #93c5fd;
   --docs-disabled-bg: #e8e4dc;
   --docs-disabled-text: #57534e;
-  --docs-code-bg: #efe8dc;
+  --docs-code-bg: #fffdf8;
   --docs-code-text: #14213d;
+  --docs-syntax-default: #14213d;
+  --docs-syntax-comment: #6b7280;
+  --docs-syntax-keyword: #0f766e;
+  --docs-syntax-string: #9f1239;
+  --docs-syntax-function: #6d28d9;
+  --docs-syntax-number: #b45309;
+  --docs-syntax-punctuation: #4a5a70;
+  --docs-syntax-tag: #1d4ed8;
   --docs-shadow: 0 8px 24px rgb(20 33 61 / 8%);
   --docs-radius: 0.75rem;
   --docs-radius-sm: 0.4rem;
@@ -93,6 +100,14 @@
   --docs-disabled-text: #9ca3af;
   --docs-code-bg: #0f141b;
   --docs-code-text: #e8eef6;
+  --docs-syntax-default: #e8eef6;
+  --docs-syntax-comment: #8b949e;
+  --docs-syntax-keyword: #79c0ff;
+  --docs-syntax-string: #7ee787;
+  --docs-syntax-function: #d2a8ff;
+  --docs-syntax-number: #ffa657;
+  --docs-syntax-punctuation: #c5d0dc;
+  --docs-syntax-tag: #7ee787;
   --docs-shadow: 0 12px 32px rgb(0 0 0 / 35%);
   --form-devtools-bg: #0f172a;
   --form-devtools-fg: #e2e8f0;

@@ -1,30 +1,15 @@
 import type { Preview } from '@storybook/react-vite'
 import { docsLightTheme } from '../src/stories/theme/managerThemes.ts'
-import { THEME_GLOBAL, ThemeMode } from '../src/stories/theme/resolvePreviewTheme.ts'
 import { docsViewports } from '../src/stories/preview/viewports.ts'
 import { withTheme } from '../src/stories/preview/withTheme.ts'
+import '../src/stories/styles/tokens.css'
+import '../src/stories/styles/preview.css'
+import '../src/stories/styles/syntax.css'
+import '../src/examples/examples.css'
 
 const preview: Preview = {
   tags: ['autodocs'],
   decorators: [withTheme],
-  globalTypes: {
-    [THEME_GLOBAL]: {
-      description: 'Preview and example theme. Owns the canvas background.',
-      toolbar: {
-        title: 'Theme',
-        icon: 'paintbrush',
-        items: [
-          { value: ThemeMode.Light, title: 'Light', icon: 'sun' },
-          { value: ThemeMode.Dark, title: 'Dark', icon: 'moon' },
-          { value: ThemeMode.System, title: 'System', icon: 'browser' },
-        ],
-        dynamicTitle: true,
-      },
-    },
-  },
-  initialGlobals: {
-    [THEME_GLOBAL]: ThemeMode.Light,
-  },
   parameters: {
     layout: 'padded',
     controls: {

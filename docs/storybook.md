@@ -22,7 +22,7 @@ Titles are sorted in `.storybook/preview.ts`. Keep one concept per story. If two
 Three layers, all Storybook-native:
 
 1. **Manager** — `.storybook/manager.ts` + `create()` themes. Follows the preview `theme` global.
-2. **Preview / Docs** — toolbar `light` | `dark` | `system`. Decorator sets `data-theme` and `color-scheme`, syncs Docs theme, listens to `prefers-color-scheme` in system mode and removes the listener on change. `preview-head.html` applies the URL global before React to reduce flashes. Initial global is `light`.
+2. **Preview / Docs** — forced `light` only (dark mode disabled). A preview decorator sets `data-theme="light"` on the document and docs containers, and scopes canvas tokens on `.docs-preview-root`. `parameters.previewTheme`/toolbar theme switching are no-ops now (Storybook always renders light).
 3. **Examples** — semantic `--docs-*` variables in `tokens.css`. `examples.css` consumes them. Do not add per-story palettes. Do not import `src/index.css` or `App.tsx`.
 
 Backgrounds addon is **disabled**. The theme owns the canvas.

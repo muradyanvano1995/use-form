@@ -1,4 +1,6 @@
 import { useEffect, useId, useState, type ReactNode } from 'react'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism/index.js'
 
 export const COPY_RESTORE_MS = 2000
 
@@ -73,9 +75,22 @@ export function CodePanel({ title, code }: { title?: string; code: string }) {
           {status === 'copied' ? 'Copied' : status === 'failed' ? 'Copy failed' : 'Copy'}
         </button>
       </div>
-      <pre>
-        <code>{code}</code>
-      </pre>
+      <SyntaxHighlighter
+        language="tsx"
+        // Let our CSS drive theme-friendly colors (no inline background).
+        // `useInlineStyles={false}` keeps semantic token classNames like `token keyword`.
+        useInlineStyles={false}
+        style={document?.documentElement.getAttribute('data-theme') === 'dark' ? oneDark : oneLight}
+        showLineNumbers={false}
+        wrapLongLines={false}
+        // Keep surface/background/layout controlled by our existing `.docs-code` CSS.
+        customStyle={{}}
+        // Avoid inline text color so token classes are the source of truth.
+        codeTagProps={{ style: {} }}
+        PreTag="pre"
+      >
+        {code}
+      </SyntaxHighlighter>
       <p id={statusId} className="docs-code__status" role="status" aria-live="polite">
         {statusMessage}
       </p>

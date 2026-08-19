@@ -369,10 +369,59 @@ body {
   border-color: var(--docs-border) !important;
 }
 
+/* Storybook's docs toolbar sometimes keeps light background styling even
+   when the rest of the docs canvas is correctly themed. */
+[data-theme='dark'] .sbdocs [role='toolbar'] {
+  background: var(--docs-bg-page) !important;
+}
+
+[data-theme='dark'] .sbdocs [role='toolbar'] svg {
+  fill: currentColor !important;
+}
+
+/* Docs TOC (table of contents) text color override.
+   Storybook uses light-mode hard-coded colors for TOC links in some cases. */
+[data-theme='dark'] aside.sbdocs-toc--custom,
+[data-theme='dark'] aside.sbdocs-toc--custom .toc-link {
+  color: var(--docs-text) !important;
+}
+
+[data-theme='dark'] aside.sbdocs-toc--custom .toc-link:hover {
+  color: var(--docs-text-secondary) !important;
+}
+
 .sbdocs-title,
 .sbdocs-h1,
 .sbdocs-h2,
+.sbdocs-h3,
 .sbdocs-p,
-.sbdocs-li {
-  color: var(--docs-text);
+.sbdocs-li,
+.sbdocs-subtitle,
+.sbdocs-content h1,
+.sbdocs-content h2,
+.sbdocs-content h3,
+.sbdocs-content p,
+.sbdocs-content li {
+  color: var(--docs-text) !important;
+}
+
+.sbdocs .docblock-argstable,
+.sbdocs .docblock-argstable-head,
+.sbdocs .docblock-argstable-body {
+  background: var(--docs-bg-elevated) !important;
+  color: var(--docs-text) !important;
+  border-color: var(--docs-border) !important;
+}
+
+.sbdocs .docblock-argstable th {
+  background: var(--docs-bg-muted) !important;
+  color: var(--docs-text) !important;
+}
+
+.sbdocs .docblock-argstable td {
+  color: var(--docs-text-secondary) !important;
+}
+
+.sbdocs-preview .docs-story {
+  background: var(--docs-bg-page);
 }

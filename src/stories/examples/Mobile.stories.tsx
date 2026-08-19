@@ -25,9 +25,12 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const LoginSmall: Story = {
-  globals: { theme: 'light' },
+  parameters: { previewTheme: 'light' },
 }
 
 export const LoginSmallDark: Story = {
-  globals: { theme: 'dark' },
+  parameters: {
+    previewTheme: 'light',
+    docs: { description: { story: 'Light canvas at 320px (dark mode disabled).' } },
+  },
 }

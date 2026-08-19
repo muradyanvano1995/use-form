@@ -98,6 +98,99 @@ async function assertNoPageOverflow(page, label) {
   return overflowX
 }
 
+async function assertDocsTextContrast(page, label) {
+  const failures = await page.evaluate(() => {
+    function parseRgb(str) {
+      const m = /^rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(str)
+      if (!m) return null
+      return [Number(m[1]), Number(m[2]), Number(m[3])]
+    }
+
+    function toLinear(c) {
+      const cs = c / 255
+      return cs <= 0.03928 ? cs / 12.92 : ((cs + 0.055) / 1.055) ** 2.4
+    }
+
+    function luminance(r, g, b) {
+      return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b)
+    }
+
+    function contrastRatio(fgStr, bgStr) {
+      const fg = parseRgb(fgStr)
+      const bg = parseRgb(bgStr)
+      if (!fg || !bg) return null
+      const l1 = luminance(...fg)
+      const l2 = luminance(...bg)
+      const lighter = Math.max(l1, l2)
+      const darker = Math.min(l1, l2)
+      return (lighter + 0.05) / (darker + 0.05)
+    }
+
+    function findNonTransparentBackground(el) {
+      let cur = el
+      while (cur) {
+        const bg = getComputedStyle(cur).backgroundColor
+        if (bg && bg !== 'rgba(0, 0, 0, 0)') {
+          return { bg, ownerTag: cur.tagName, ownerClass: cur.className }
+        }
+        cur = cur.parentElement
+      }
+      return {
+        bg: getComputedStyle(document.body).backgroundColor,
+        ownerTag: 'BODY',
+        ownerClass: document.body.className,
+      }
+    }
+
+    const nodes = [
+      ...document.querySelectorAll(
+        '.sbdocs p, .sbdocs li, .sbdocs h1, .sbdocs h2, .sbdocs h3, .sbdocs a',
+      ),
+    ].slice(0, 80)
+
+    const bad = []
+    for (const node of nodes) {
+      const cs = getComputedStyle(node)
+      if (
+        cs.display === 'none' ||
+        cs.visibility === 'hidden' ||
+        Number(cs.opacity) === 0 ||
+        node.classList.contains('sb-sr-only')
+      ) {
+        continue
+      }
+      const fg = cs.color
+      const bgInfo = findNonTransparentBackground(node)
+      const ratio = contrastRatio(fg, bgInfo.bg)
+      if (ratio == null) continue
+      // Low ratios are where text becomes effectively invisible.
+      if (ratio < 2.0) {
+        bad.push({
+          tag: node.tagName,
+          className: node.className,
+          fg,
+          bg: bgInfo.bg,
+          bgOwnerTag: bgInfo.ownerTag,
+          bgOwnerClass: bgInfo.ownerClass,
+          bgOwnerHtml: document
+            .querySelector(`.${CSS.escape(bgInfo.ownerClass)}`)
+            ?.outerHTML?.slice(0, 250),
+          ratio,
+          text: (node.textContent ?? '').trim().slice(0, 50),
+        })
+      }
+    }
+    return bad
+  })
+
+  if (failures.length) {
+    const first = failures[0]
+    throw new Error(
+      `${label}: docs text contrast too low (${failures.length} samples). First: ${first.tag} ${first.className} ratio=${first.ratio} fg=${first.fg} bg=${first.bg} (set by ${first.bgOwnerTag} ${first.bgOwnerClass}) text="${first.text}" ownerHtml="${first.bgOwnerHtml}"`,
+    )
+  }
+}
+
 const playwright = await import('playwright').catch(() => null)
 if (!playwright) {
   console.error(
@@ -121,11 +214,18 @@ const notes = []
 
 try {
   for (const story of stories) {
-    for (const theme of ['light', 'dark']) {
+    for (const theme of ['light']) {
       const url = `http://127.0.0.1:6007/iframe.html?id=${story.id}&viewMode=story&globals=theme:${theme}`
       const desktop = await context.newPage()
       await desktop.setViewportSize({ width: 1280, height: 800 })
       await desktop.goto(url, { waitUntil: 'networkidle' })
+      await desktop
+        .waitForFunction(
+          (expectedTheme) => document.documentElement.getAttribute('data-theme') === expectedTheme,
+          theme,
+          { timeout: 15000 },
+        )
+        .catch(() => undefined)
       const dataTheme = await desktop.evaluate(() =>
         document.documentElement.getAttribute('data-theme'),
       )
@@ -161,6 +261,13 @@ try {
       const mobile = await context.newPage()
       await mobile.setViewportSize({ width: 320, height: 640 })
       await mobile.goto(url, { waitUntil: 'networkidle' })
+      await mobile
+        .waitForFunction(
+          (expectedTheme) => document.documentElement.getAttribute('data-theme') === expectedTheme,
+          theme,
+          { timeout: 15000 },
+        )
+        .catch(() => undefined)
       const overflowX = await mobile.evaluate(
         () => document.documentElement.scrollWidth > window.innerWidth + 24,
       )
@@ -174,11 +281,18 @@ try {
   }
 
   for (const pageInfo of docsPages) {
-    for (const theme of ['light', 'dark']) {
+    for (const theme of ['light']) {
       const url = `http://127.0.0.1:6007/iframe.html?id=${pageInfo.id}&viewMode=docs&globals=theme:${theme}`
       const desktop = await context.newPage()
       await desktop.setViewportSize({ width: 1280, height: 800 })
       await desktop.goto(url, { waitUntil: 'networkidle' })
+      await desktop
+        .waitForFunction(
+          (expectedTheme) => document.documentElement.getAttribute('data-theme') === expectedTheme,
+          theme,
+          { timeout: 15000 },
+        )
+        .catch(() => undefined)
       await desktop
         .locator('.sb-preparing-docs')
         .waitFor({ state: 'hidden', timeout: 15000 })
@@ -203,6 +317,9 @@ try {
         notes.push(`${pageInfo.name} ${theme}: copy clicked`)
       }
       await assertReadableCode(desktop, `${pageInfo.name} ${theme}`)
+      if (theme === 'dark') {
+        await assertDocsTextContrast(desktop, `${pageInfo.name} ${theme}`)
+      }
       await desktop.screenshot({
         path: join(outDir, `${pageInfo.name}-${theme}.png`),
         fullPage: true,
@@ -212,6 +329,13 @@ try {
       const mobile = await context.newPage()
       await mobile.setViewportSize({ width: 320, height: 640 })
       await mobile.goto(url, { waitUntil: 'networkidle' })
+      await mobile
+        .waitForFunction(
+          (expectedTheme) => document.documentElement.getAttribute('data-theme') === expectedTheme,
+          theme,
+          { timeout: 15000 },
+        )
+        .catch(() => undefined)
       const overflowX = await assertNoPageOverflow(mobile, `${pageInfo.name} ${theme} mobile`)
       notes.push(`${pageInfo.name} ${theme} mobile overflowX=${overflowX}`)
       await mobile.screenshot({

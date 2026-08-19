@@ -52,17 +52,17 @@ export const Default: Story = {
 }
 
 export const Mobile: Story = {
-  globals: { theme: 'light' },
   parameters: {
+    previewTheme: 'light',
     viewport: { defaultViewport: 'smallMobile' },
     docs: { description: { story: 'Checkout at 320px. Rows stack; buttons remain tappable.' } },
   },
 }
 
 export const DarkMobile: Story = {
-  globals: { theme: 'dark' },
   parameters: {
+    previewTheme: 'light',
     viewport: { defaultViewport: 'smallMobile' },
-    docs: { description: { story: 'Dark preview at small mobile width.' } },
+    docs: { description: { story: 'Light canvas at small mobile width (dark mode disabled).' } },
   },
 }
