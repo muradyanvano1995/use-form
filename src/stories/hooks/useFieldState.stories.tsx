@@ -4,13 +4,13 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Hooks/useWatch',
+  title: 'Hooks/useFieldState',
   component: WatchersForm,
   parameters: {
     docs: {
       description: {
         component: withGithubExample(
-          'useWatch({ name: "title" }) from context. Distinct from useFormState: watchers read values, form-state selectors read flags/errors.',
+          'useFieldState(control, name) subscribes to one field’s error, touched, dirty, and invalid flags. Prefer it over useFormState when you only need a single path. Distinct from useWatch, which reads values.',
           'WatchersForm.tsx',
         ),
       },
@@ -23,4 +23,4 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const UseWatch: Story = {}
+export const FieldSlice: Story = {}

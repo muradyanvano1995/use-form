@@ -225,9 +225,10 @@
 }
 
 .demo-form .demo-form__error,
-.docs-page .demo-form__error {
+.docs-page .demo-form__error,
+.docs-preview-root .demo-form__error {
   margin: 0;
-  color: var(--docs-error-text);
+  color: var(--docs-error-text, #e11d48);
   font-size: 0.88rem;
 }
 
@@ -328,10 +329,11 @@
 }
 
 .demo-form .demo-form__issue-list,
-.docs-page .demo-form__issue-list {
+.docs-page .demo-form__issue-list,
+.docs-preview-root .demo-form__issue-list {
   margin: 0.15rem 0 0;
   padding-left: 1.15rem;
-  color: var(--docs-error-text);
+  color: var(--docs-error-text, #e11d48);
   font-size: 0.88rem;
 }
 

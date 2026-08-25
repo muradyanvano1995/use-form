@@ -4,13 +4,13 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Components/FormProvider',
+  title: 'Hooks/useFormContext',
   component: ContextProfileForm,
   parameters: {
     docs: {
       description: {
         component: withGithubExample(
-          'FormProvider receives form.control only. Nested children resolve control via useFormContext / useController without prop-drilling. SubmitButton uses useFormState for isSubmitting.',
+          'useFormContext<T>() reads the nearest FormProvider control. Missing provider throws. Explicit control on hooks still overrides context. See Components/FormProvider for the provider component.',
           'ContextProfileForm.tsx',
         ),
       },
@@ -23,4 +23,4 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Provider: Story = {}
+export const FromProvider: Story = {}

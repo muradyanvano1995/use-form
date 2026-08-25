@@ -83,6 +83,8 @@ Require complete sync `defaultValues` plus optional `loadDefaultValues`. Expose 
 
 ## Built-in `rules`
 
+Full Storybook inventory: `Validation/Built-in rules` (catalog + live example).
+
 | Rule                                                                                                  | Notes                                                                   |
 | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
 | `required` / `email` / length / min-max / pattern / `accepted` / `sameAs` / `matchesField` / `custom` | Existing semantics; empty-skipping where documented                     |

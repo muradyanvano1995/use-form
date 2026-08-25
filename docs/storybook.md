@@ -8,6 +8,8 @@ Do not publish, tag, push, or deploy Storybook.
 
 Titles are sorted in `.storybook/preview.ts`. Keep one concept per story. If two canvases look the same, the docs text must explain the difference (for example Built-in rules vs Custom rules both use registration, but Custom rules calls out `createRule`).
 
+Public API stories live under top-level **Hooks** and **Components**. Guides stay under Core Concepts, Validation, Fields, and documentation pages. **Examples** mirrors each functional area with a live form (`Login`, `Registration`, nested/conditional/controlled fields, files, arrays, async validation/defaults, dependencies, structured errors, i18n, resolvers, batching, DevTools, …).
+
 | Area                   | Path                           |
 | ---------------------- | ------------------------------ |
 | Tokens and preview CSS | `src/stories/styles/`          |
@@ -23,7 +25,7 @@ Three layers, all Storybook-native:
 
 1. **Manager** — `.storybook/manager.ts` + `create()` themes. Follows the preview `theme` global.
 2. **Preview / Docs** — forced `light` only (dark mode disabled). A preview decorator sets `data-theme="light"` on the document and docs containers, and scopes canvas tokens on `.docs-preview-root`. `parameters.previewTheme`/toolbar theme switching are no-ops now (Storybook always renders light).
-3. **Examples** — semantic `--docs-*` variables in `tokens.css`. `examples.css` consumes them. Do not add per-story palettes. Do not import `src/index.css` or `App.tsx`. Status colors (`.demo-form__error`, banners, issue lists) use selectors that beat `.docs-page p` / `ul` prose color so field errors stay on `--docs-error-text`.
+3. **Examples** — semantic `--docs-*` variables in `tokens.css`. `examples.css` consumes them. Do not add per-story palettes. Do not import `src/index.css` or `App.tsx`. Status colors (`.demo-form__error`, banners, issue lists) use selectors that beat `.docs-page p` / `ul` prose color. Docs also force `.sbdocs-content p/li` to `--docs-text` with `!important`; keep matching overrides in `preview.css` so field errors stay on `--docs-error-text` in canvas and Docs.
 
 Backgrounds addon is **disabled**. The theme owns the canvas.
 
@@ -37,7 +39,7 @@ DevTools uses `--form-devtools-*` tokens (surfaces, accents, syntax colors) with
 4. Put consumer copy in `parameters.docs.source.code` using `<package-name>` imports, not `../lib`. Snippets live in `src/stories/snippets/consumerSnippets.ts` (about 15–60 lines, copyable). Link longer examples with “View complete implementation on GitHub”.
 5. Add `play` only for critical user flows. Query by role and name.
 
-Autodocs is enabled (`docs` in `.storybook/main.ts` plus `tags: ['autodocs']` in preview). Storybook Docs canvas source is shown by default (`docs.canvas.sourceState: 'shown'`). Custom `CodePanel` includes an accessible Copy code button; do not invent a second highlighter.
+Autodocs is enabled (`docs` in `.storybook/main.ts` plus `tags: ['autodocs']` in preview). Storybook Docs canvas source is shown by default (`docs.canvas.sourceState: 'shown'`). Custom `CodePanel` includes an accessible Copy code button; do not invent a second highlighter. Snippet colors live in `tokens.css` (`--docs-syntax-*`, including `--docs-syntax-attr`) and `syntax.css` — Prism JSX nests `.tag` on scripts/attrs, so tag color must not target every `.token.tag`.
 
 ## Controls
 

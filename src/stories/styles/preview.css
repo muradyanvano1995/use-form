@@ -405,6 +405,26 @@ body {
   color: var(--docs-text) !important;
 }
 
+/* Field errors / status must beat the docs prose `!important` color above. */
+.sbdocs-content .demo-form__error,
+.sbdocs-content .demo-form__issue-list,
+.sbdocs-content .demo-form__issue-list li,
+.sbdocs-content .demo-form__banner,
+.sbdocs-preview .demo-form__error,
+.sbdocs-preview .demo-form__issue-list,
+.sbdocs-preview .demo-form__issue-list li,
+.sbdocs-preview .demo-form__banner,
+#storybook-root .demo-form__error,
+#storybook-root .demo-form__issue-list,
+#storybook-root .demo-form__issue-list li,
+#storybook-root .demo-form__banner,
+.docs-story .demo-form__error,
+.docs-story .demo-form__issue-list,
+.docs-story .demo-form__issue-list li,
+.docs-story .demo-form__banner {
+  color: var(--docs-error-text) !important;
+}
+
 .sbdocs .docblock-argstable,
 .sbdocs .docblock-argstable-head,
 .sbdocs .docblock-argstable-body {

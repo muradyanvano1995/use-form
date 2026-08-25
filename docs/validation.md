@@ -2,6 +2,8 @@
 
 Client validation for `useForm` covers built-in `rules`, form-level `validate`, optional schema `resolver`s, modes, async race safety, debounced remote field checks, structured errors (`docs/structured-errors.md`), and per-form message catalogs (`docs/internationalization.md`).
 
+Storybook: `Validation/Built-in rules` lists every `rules.*` helper (catalog + live example).
+
 Primary references:
 
 - `.ai/skills/validation.md` — precedence, modes, built-in rules

@@ -5,7 +5,7 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Fields/Field arrays',
+  title: 'Hooks/useFieldArray',
   component: OrderItemsForm,
   parameters: {
     docs: {

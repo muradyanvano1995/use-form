@@ -79,7 +79,8 @@ function ApiOverviewPage() {
           {
             name: 'rules',
             kind: 'validation helpers',
-            notes: 'Built-in required, email, length, files, async debounce, and combinators.',
+            notes:
+              'Built-in catalog: required, email, length, min/max, pattern, accepted, sameAs, matchesField, files, array items, async, eachFile, custom. See Validation/Built-in rules.',
           },
           {
             name: 'createRule',

@@ -4,13 +4,13 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'State and Performance/Subscriptions',
+  title: 'Hooks/useFormState',
   component: WatchersForm,
   parameters: {
     docs: {
       description: {
         component: withGithubExample(
-          'useFormState selectors isolate dirty flags. The useForm caller still re-renders; memoize children that subscribe.',
+          'useFormState selectors isolate dirty flags and other store slices. Pair with useFieldState for a single field’s error/touched/dirty. The useForm caller still re-renders; memoize children that subscribe.',
           'WatchersForm.tsx',
         ),
       },

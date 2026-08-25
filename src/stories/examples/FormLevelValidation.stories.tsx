@@ -1,26 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { WatchersForm } from '../../examples/WatchersForm.tsx'
+import { OrderItemsForm } from '../../examples/OrderItemsForm.tsx'
 import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Hooks/useWatch',
-  component: WatchersForm,
+  title: 'Examples/Form-level validation',
+  component: OrderItemsForm,
   parameters: {
     docs: {
       description: {
         component: withGithubExample(
-          'useWatch({ name: "title" }) from context. Distinct from useFormState: watchers read values, form-state selectors read flags/errors.',
-          'WatchersForm.tsx',
+          'Form-level validate walks products and returns path-keyed FieldErrors. Complements field rules and minItems.',
+          'OrderItemsForm.tsx',
         ),
       },
-      source: consumerDocsSource(snippets.watchers),
+      source: consumerDocsSource(snippets.formLevel),
     },
     controls: { disable: true },
   },
-} satisfies Meta<typeof WatchersForm>
+} satisfies Meta<typeof OrderItemsForm>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const UseWatch: Story = {}
+export const Default: Story = {}

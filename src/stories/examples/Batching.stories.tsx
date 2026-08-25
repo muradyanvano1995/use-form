@@ -1,26 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { WatchersForm } from '../../examples/WatchersForm.tsx'
+import { BatchedAddressForm } from '../../examples/BatchedAddressForm.tsx'
 import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Hooks/useWatch',
-  component: WatchersForm,
+  title: 'Examples/Batching',
+  component: BatchedAddressForm,
   parameters: {
     docs: {
       description: {
         component: withGithubExample(
-          'useWatch({ name: "title" }) from context. Distinct from useFormState: watchers read values, form-state selectors read flags/errors.',
-          'WatchersForm.tsx',
+          'form.batch() applies several setValue calls as one notification. Also shows imperative getDirtyValues().',
+          'BatchedAddressForm.tsx',
         ),
       },
-      source: consumerDocsSource(snippets.watchers),
+      source: consumerDocsSource(snippets.batching),
     },
     controls: { disable: true },
   },
-} satisfies Meta<typeof WatchersForm>
+} satisfies Meta<typeof BatchedAddressForm>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const UseWatch: Story = {}
+export const Default: Story = {}

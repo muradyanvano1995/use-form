@@ -64,7 +64,7 @@ Size budgets live in `scripts/size-budget.json` and are measured from minified c
 - CI: `docs/ci.md` (provider not chosen)
 - TypeDoc: `npm run docs:api` → `api-docs/` (gitignored)
 - Storybook: `npm run storybook` / `build:storybook` (devDependency, not packed, not deployed)
-- Storybook contributor rules: `docs/storybook.md` (theme layers, Controls, Actions, play tests, a11y, visual checklist, consumer `source.code` snippets, CodePanel copy)
+- Storybook contributor rules: `docs/storybook.md` (theme layers, Controls, Actions, play tests, a11y, visual checklist, consumer `source.code` snippets, CodePanel copy). Sidebar: top-level **Hooks** and **Components** for public API, then Core Concepts / Validation / Fields / Examples / docs pages (`storySort` in `.storybook/preview.ts`). **Examples** includes one live form per functional area. Snippet highlighting: `--docs-syntax-*` in `tokens.css` + `syntax.css` (tag vs attr vs JSX script).
 - Consumer snippets: `src/stories/snippets/consumerSnippets.ts`. Autodocs is enabled. Docs canvas `sourceState: 'shown'`. CodePanel Copy code button.
 - Pre-rebuild audit: `docs/storybook-audit.md`
 - Addons: `@storybook/addon-docs`, `@storybook/addon-a11y`. Preview toolbar `theme`: light | dark | system. Manager themes via `addons.setConfig`. Backgrounds disabled.

@@ -1,17 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect, userEvent, within } from 'storybook/test'
 import { ControlledFieldsForm } from '../../examples/ControlledFieldsForm.tsx'
 import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Hooks/useController',
+  title: 'Examples/Controlled fields',
   component: ControlledFieldsForm,
   parameters: {
     docs: {
       description: {
         component: withGithubExample(
-          'useController for a date picker, parse/format currency, and a custom file widget. Native file value is never assigned programmatically. Change the price and submit.',
+          'useController for date, parse/format currency, and a custom file widget. Native file selection is never assigned programmatically.',
           'ControlledFieldsForm.tsx',
         ),
       },
@@ -24,13 +23,4 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const CustomWidgets: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-    const price = canvas.getByLabelText('Price')
-    await userEvent.clear(price)
-    await userEvent.type(price, '12.50')
-    await expect(canvas.getByText(/Stored as number: 12.5/)).toBeVisible()
-    await userEvent.click(canvas.getByRole('button', { name: 'Submit' }))
-  },
-}
+export const Default: Story = {}

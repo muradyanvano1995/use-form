@@ -7,8 +7,8 @@ import { snippets } from '../snippets/consumerSnippets.ts'
 function FormStateGuide() {
   return (
     <DocsPage>
-      <Kicker>Core Concepts</Kicker>
-      <h1>Form state</h1>
+      <Kicker>Hooks</Kicker>
+      <h1>useForm</h1>
       <p>
         <code>useForm</code> owns values, defaultValues, errors, errorDetails, touched, dirty,
         isValid, isSubmitting, isValidating, submitCount, and async-default flags. The hook
@@ -23,13 +23,13 @@ function FormStateGuide() {
 }
 
 const meta = {
-  title: 'Core Concepts/Form state',
+  title: 'Hooks/useForm',
   component: WatchersForm,
   parameters: {
     docs: {
       description: {
         component: withGithubExample(
-          'Store snapshot fields and why the useForm caller re-renders.',
+          'Primary form hook: owns values, errors, touched/dirty, validation, and submit. The useForm caller re-renders on any store change; isolate children with useWatch / useFormState / useFieldState.',
           'WatchersForm.tsx',
         ),
       },

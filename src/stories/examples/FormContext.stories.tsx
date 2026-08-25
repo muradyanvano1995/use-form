@@ -4,13 +4,13 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Components/FormProvider',
+  title: 'Examples/Form context',
   component: ContextProfileForm,
   parameters: {
     docs: {
       description: {
         component: withGithubExample(
-          'FormProvider receives form.control only. Nested children resolve control via useFormContext / useController without prop-drilling. SubmitButton uses useFormState for isSubmitting.',
+          'FormProvider + useFormContext / useController without prop-drilling. SubmitButton uses useFormState for isSubmitting.',
           'ContextProfileForm.tsx',
         ),
       },
@@ -23,4 +23,4 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Provider: Story = {}
+export const Default: Story = {}

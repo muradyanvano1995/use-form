@@ -20,7 +20,7 @@
   --docs-button-secondary-border: #c9c0b0;
   --docs-button-danger-bg: #9f1239;
   --docs-button-danger-text: #ffffff;
-  --docs-error-text: #9f1239;
+  --docs-error-text: #e11d48;
   --docs-error-bg: #fff1f2;
   --docs-error-border: #fda4af;
   --docs-warning-text: #854d0e;
@@ -39,11 +39,12 @@
   --docs-syntax-default: #14213d;
   --docs-syntax-comment: #6b7280;
   --docs-syntax-keyword: #0f766e;
-  --docs-syntax-string: #9f1239;
-  --docs-syntax-function: #6d28d9;
-  --docs-syntax-number: #b45309;
-  --docs-syntax-punctuation: #4a5a70;
+  --docs-syntax-string: #be123c;
+  --docs-syntax-function: #7c3aed;
+  --docs-syntax-number: #c2410c;
+  --docs-syntax-punctuation: #64748b;
   --docs-syntax-tag: #1d4ed8;
+  --docs-syntax-attr: #0e7490;
   --docs-shadow: 0 8px 24px rgb(20 33 61 / 8%);
   --docs-radius: 0.75rem;
   --docs-radius-sm: 0.4rem;
@@ -121,6 +122,7 @@
   --docs-syntax-number: #ffa657;
   --docs-syntax-punctuation: #c5d0dc;
   --docs-syntax-tag: #7ee787;
+  --docs-syntax-attr: #7dd3fc;
   --docs-shadow: 0 12px 32px rgb(0 0 0 / 35%);
   --form-devtools-bg: #111827;
   --form-devtools-surface: #1a2234;

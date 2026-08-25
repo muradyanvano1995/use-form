@@ -4,13 +4,13 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Hooks/useWatch',
+  title: 'Examples/Watchers',
   component: WatchersForm,
   parameters: {
     docs: {
       description: {
         component: withGithubExample(
-          'useWatch({ name: "title" }) from context. Distinct from useFormState: watchers read values, form-state selectors read flags/errors.',
+          'useWatch for values and useFormState for flags. Child isolation without prop drilling.',
           'WatchersForm.tsx',
         ),
       },
@@ -23,4 +23,4 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const UseWatch: Story = {}
+export const Default: Story = {}

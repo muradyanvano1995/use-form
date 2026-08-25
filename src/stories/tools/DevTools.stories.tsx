@@ -5,7 +5,7 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Tools/DevTools',
+  title: 'Components/FormDevTools',
   component: DevToolsInspectorForm,
   args: {
     position: 'inline',

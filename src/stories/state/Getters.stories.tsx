@@ -4,7 +4,7 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'State and Performance/Imperative getters',
+  title: 'Core Concepts/Imperative getters',
   component: BatchedAddressForm,
   parameters: {
     docs: {

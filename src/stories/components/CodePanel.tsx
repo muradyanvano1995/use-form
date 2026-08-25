@@ -85,8 +85,8 @@ export function CodePanel({ title, code }: { title?: string; code: string }) {
         wrapLongLines={false}
         // Keep surface/background/layout controlled by our existing `.docs-code` CSS.
         customStyle={{}}
-        // Avoid inline text color so token classes are the source of truth.
-        codeTagProps={{ style: {} }}
+        // Avoid Prism's default black text / text-shadow so token classes win.
+        codeTagProps={{ style: { color: 'inherit', background: 'none', textShadow: 'none' } }}
         PreTag="pre"
       >
         {code}

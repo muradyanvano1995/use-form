@@ -200,8 +200,8 @@ function IntroductionPage() {
       <p>
         React 18 apps, React Native, CommonJS bundlers that need <code>require()</code>, deeply
         nested array trees, or a published npm dependency today. Continue from Getting Started, then
-        Validation, Fields, State and Performance, Tools, Accessibility, API overview, and
-        Limitations and roadmap.
+        Validation, Fields, Hooks, Components, Examples (one live form per feature), Accessibility,
+        API overview, and Limitations and roadmap.
       </p>
 
       <ApiTable

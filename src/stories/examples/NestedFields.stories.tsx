@@ -1,26 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { WatchersForm } from '../../examples/WatchersForm.tsx'
+import { ProfileForm } from '../../examples/ProfileForm.tsx'
 import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Hooks/useWatch',
-  component: WatchersForm,
+  title: 'Examples/Nested fields',
+  component: ProfileForm,
   parameters: {
     docs: {
       description: {
         component: withGithubExample(
-          'useWatch({ name: "title" }) from context. Distinct from useFormState: watchers read values, form-state selectors read flags/errors.',
-          'WatchersForm.tsx',
+          'Nested personal/address paths, newsletter checkbox, city `forbidden` backend error, and resetField("address.city").',
+          'ProfileForm.tsx',
         ),
       },
-      source: consumerDocsSource(snippets.watchers),
+      source: consumerDocsSource(snippets.nestedFields),
     },
     controls: { disable: true },
   },
-} satisfies Meta<typeof WatchersForm>
+} satisfies Meta<typeof ProfileForm>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const UseWatch: Story = {}
+export const Default: Story = {}

@@ -231,20 +231,20 @@ function GettingStartedPage() {
       <FeatureList
         items={[
           {
+            title: 'Hooks',
+            body: 'useForm, useWatch, useFormState, useFieldState, useController, useFieldArray, useFormContext.',
+          },
+          {
+            title: 'Components',
+            body: 'FormProvider and FormDevTools (separate package entry).',
+          },
+          {
             title: 'Validation',
             body: 'Built-in rules, custom rules, async, dependencies, structured errors, i18n, resolvers.',
           },
           {
-            title: 'Fields',
-            body: 'Nested fields, controlled fields, conditional unregister, arrays, files.',
-          },
-          {
-            title: 'State and Performance',
-            body: 'Context, subscriptions, watchers, batching, imperative getters.',
-          },
-          {
-            title: 'Accessibility / API / Limits',
-            body: 'Label patterns, public export tables, and honest unsupported surfaces.',
+            title: 'Fields / Examples',
+            body: 'Every major feature has a live Examples story: nested, conditional, files, arrays, async, i18n, resolvers, DevTools, and more.',
           },
         ]}
       />

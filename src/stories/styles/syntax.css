@@ -1,158 +1,149 @@
-/* Storybook autodocs Source uses react-syntax-highlighter with inline styles.
-   Override tokens from the active document theme (toolbar), not per-story canvas overrides. */
+/* CodePanel + Storybook autodocs Source (Prism token classes).
+   Colors come from `--docs-syntax-*` on the active `data-theme`.
+   Prism JSX marks nested script/attr spans with `.tag` too — never color all `.token.tag`. */
 
-[data-theme='light'] .docblock-source pre,
-[data-theme='light'] pre.prismjs,
-[data-theme='light'] .docblock-source pre code,
-[data-theme='light'] pre.prismjs code {
+.docs-code pre,
+.docs-code code,
+.docblock-source pre,
+.docblock-source pre code,
+pre.prismjs,
+pre.prismjs code {
   background: var(--docs-code-bg) !important;
   color: var(--docs-code-text) !important;
+  text-shadow: none !important;
 }
 
-[data-theme='dark'] .docblock-source pre,
-[data-theme='dark'] pre.prismjs,
-[data-theme='dark'] .docblock-source pre code,
-[data-theme='dark'] pre.prismjs code {
-  background: var(--docs-code-bg) !important;
-  color: var(--docs-code-text) !important;
-}
-
-[data-theme='light'] .docblock-source .token,
-[data-theme='light'] pre.prismjs .token {
+.docs-code .token,
+.docblock-source .token,
+pre.prismjs .token {
   color: var(--docs-syntax-default) !important;
+  text-shadow: none !important;
 }
 
-[data-theme='light'] .docblock-source .token.comment,
-[data-theme='light'] .docblock-source .token.prolog,
-[data-theme='light'] .docblock-source .token.doctype,
-[data-theme='light'] .docblock-source .token.cdata,
-[data-theme='light'] pre.prismjs .token.comment,
-[data-theme='light'] pre.prismjs .token.prolog,
-[data-theme='light'] pre.prismjs .token.doctype,
-[data-theme='light'] pre.prismjs .token.cdata {
+.docs-code .token.comment,
+.docs-code .token.prolog,
+.docs-code .token.doctype,
+.docs-code .token.cdata,
+.docblock-source .token.comment,
+.docblock-source .token.prolog,
+.docblock-source .token.doctype,
+.docblock-source .token.cdata,
+pre.prismjs .token.comment,
+pre.prismjs .token.prolog,
+pre.prismjs .token.doctype,
+pre.prismjs .token.cdata {
   color: var(--docs-syntax-comment) !important;
 }
 
-[data-theme='light'] .docblock-source .token.string,
-[data-theme='light'] .docblock-source .token.char,
-[data-theme='light'] .docblock-source .token.attr-value,
-[data-theme='light'] pre.prismjs .token.string,
-[data-theme='light'] pre.prismjs .token.char,
-[data-theme='light'] pre.prismjs .token.attr-value {
-  color: var(--docs-syntax-string) !important;
-}
-
-[data-theme='light'] .docblock-source .token.keyword,
-[data-theme='light'] .docblock-source .token.atrule,
-[data-theme='light'] .docblock-source .token.module,
-[data-theme='light'] pre.prismjs .token.keyword,
-[data-theme='light'] pre.prismjs .token.atrule,
-[data-theme='light'] pre.prismjs .token.module {
+.docs-code .token.keyword,
+.docs-code .token.atrule,
+.docs-code .token.module,
+.docblock-source .token.keyword,
+.docblock-source .token.atrule,
+.docblock-source .token.module,
+pre.prismjs .token.keyword,
+pre.prismjs .token.atrule,
+pre.prismjs .token.module {
   color: var(--docs-syntax-keyword) !important;
 }
 
-[data-theme='light'] .docblock-source .token.function,
-[data-theme='light'] .docblock-source .token.class-name,
-[data-theme='light'] .docblock-source .token.maybe-class-name,
-[data-theme='light'] pre.prismjs .token.function,
-[data-theme='light'] pre.prismjs .token.class-name,
-[data-theme='light'] pre.prismjs .token.maybe-class-name {
-  color: var(--docs-syntax-function) !important;
+.docs-code .token.string,
+.docs-code .token.char,
+.docs-code .token.attr-value,
+.docs-code .token.template-string,
+.docs-code .token.regex,
+.docblock-source .token.string,
+.docblock-source .token.char,
+.docblock-source .token.attr-value,
+.docblock-source .token.template-string,
+.docblock-source .token.regex,
+pre.prismjs .token.string,
+pre.prismjs .token.char,
+pre.prismjs .token.attr-value,
+pre.prismjs .token.template-string,
+pre.prismjs .token.regex {
+  color: var(--docs-syntax-string) !important;
 }
 
-[data-theme='light'] .docblock-source .token.number,
-[data-theme='light'] .docblock-source .token.boolean,
-[data-theme='light'] .docblock-source .token.constant,
-[data-theme='light'] pre.prismjs .token.number,
-[data-theme='light'] pre.prismjs .token.boolean,
-[data-theme='light'] pre.prismjs .token.constant {
+.docs-code .token.number,
+.docs-code .token.boolean,
+.docs-code .token.constant,
+.docs-code .token.builtin,
+.docblock-source .token.number,
+.docblock-source .token.boolean,
+.docblock-source .token.constant,
+.docblock-source .token.builtin,
+pre.prismjs .token.number,
+pre.prismjs .token.boolean,
+pre.prismjs .token.constant,
+pre.prismjs .token.builtin {
   color: var(--docs-syntax-number) !important;
 }
 
-[data-theme='light'] .docblock-source .token.punctuation,
-[data-theme='light'] .docblock-source .token.operator,
-[data-theme='light'] .docblock-source .token.imports,
-[data-theme='light'] .docblock-source .token.imports.punctuation,
-[data-theme='light'] pre.prismjs .token.punctuation,
-[data-theme='light'] pre.prismjs .token.operator,
-[data-theme='light'] pre.prismjs .token.imports,
-[data-theme='light'] pre.prismjs .token.imports.punctuation {
-  color: var(--docs-syntax-punctuation) !important;
-}
-
-[data-theme='light'] .docblock-source .token.tag,
-[data-theme='light'] .docblock-source .token.attr-name,
-[data-theme='light'] pre.prismjs .token.tag,
-[data-theme='light'] pre.prismjs .token.attr-name {
+/* Element / component names only — exclude script, spread, attrs (Prism nests `.tag` on those). */
+.docs-code .token.tag:not(.script):not(.spread):not(.attr-name):not(.attr-value):not(.punctuation):not(.operator):not(.class-name):not(.method):not(.function):not(.string):not(.plain-text),
+.docblock-source .token.tag:not(.script):not(.spread):not(.attr-name):not(.attr-value):not(.punctuation):not(.operator):not(.class-name):not(.method):not(.function):not(.string):not(.plain-text),
+pre.prismjs .token.tag:not(.script):not(.spread):not(.attr-name):not(.attr-value):not(.punctuation):not(.operator):not(.class-name):not(.method):not(.function):not(.string):not(.plain-text),
+.docs-code .token.class-name,
+.docs-code .token.maybe-class-name,
+.docblock-source .token.class-name,
+.docblock-source .token.maybe-class-name,
+pre.prismjs .token.class-name,
+pre.prismjs .token.maybe-class-name {
   color: var(--docs-syntax-tag) !important;
 }
 
-[data-theme='dark'] .docblock-source .token,
-[data-theme='dark'] pre.prismjs .token {
+.docs-code .token.attr-name,
+.docblock-source .token.attr-name,
+pre.prismjs .token.attr-name {
+  color: var(--docs-syntax-attr) !important;
+}
+
+/* JSX `{…}` / spreads / property access — body text, not tag blue. */
+.docs-code .token.script,
+.docs-code .token.spread,
+.docs-code .token.property-access,
+.docs-code .token.imports,
+.docs-code .token.plain-text,
+.docblock-source .token.script,
+.docblock-source .token.spread,
+.docblock-source .token.property-access,
+.docblock-source .token.imports,
+.docblock-source .token.plain-text,
+pre.prismjs .token.script,
+pre.prismjs .token.spread,
+pre.prismjs .token.property-access,
+pre.prismjs .token.imports,
+pre.prismjs .token.plain-text {
   color: var(--docs-syntax-default) !important;
 }
 
-[data-theme='dark'] .docblock-source .token.comment,
-[data-theme='dark'] .docblock-source .token.prolog,
-[data-theme='dark'] .docblock-source .token.doctype,
-[data-theme='dark'] .docblock-source .token.cdata,
-[data-theme='dark'] pre.prismjs .token.comment,
-[data-theme='dark'] pre.prismjs .token.prolog,
-[data-theme='dark'] pre.prismjs .token.doctype,
-[data-theme='dark'] pre.prismjs .token.cdata {
-  color: var(--docs-syntax-comment) !important;
-}
-
-[data-theme='dark'] .docblock-source .token.string,
-[data-theme='dark'] .docblock-source .token.char,
-[data-theme='dark'] .docblock-source .token.attr-value,
-[data-theme='dark'] pre.prismjs .token.string,
-[data-theme='dark'] pre.prismjs .token.char,
-[data-theme='dark'] pre.prismjs .token.attr-value {
-  color: var(--docs-syntax-string) !important;
-}
-
-[data-theme='dark'] .docblock-source .token.keyword,
-[data-theme='dark'] .docblock-source .token.atrule,
-[data-theme='dark'] .docblock-source .token.module,
-[data-theme='dark'] pre.prismjs .token.keyword,
-[data-theme='dark'] pre.prismjs .token.atrule,
-[data-theme='dark'] pre.prismjs .token.module {
-  color: var(--docs-syntax-keyword) !important;
-}
-
-[data-theme='dark'] .docblock-source .token.function,
-[data-theme='dark'] .docblock-source .token.class-name,
-[data-theme='dark'] .docblock-source .token.maybe-class-name,
-[data-theme='dark'] pre.prismjs .token.function,
-[data-theme='dark'] pre.prismjs .token.class-name,
-[data-theme='dark'] pre.prismjs .token.maybe-class-name {
+.docs-code .token.function,
+.docs-code .token.method,
+.docs-code .token.function-variable,
+.docblock-source .token.function,
+.docblock-source .token.method,
+.docblock-source .token.function-variable,
+pre.prismjs .token.function,
+pre.prismjs .token.method,
+pre.prismjs .token.function-variable {
   color: var(--docs-syntax-function) !important;
 }
 
-[data-theme='dark'] .docblock-source .token.number,
-[data-theme='dark'] .docblock-source .token.boolean,
-[data-theme='dark'] .docblock-source .token.constant,
-[data-theme='dark'] pre.prismjs .token.number,
-[data-theme='dark'] pre.prismjs .token.boolean,
-[data-theme='dark'] pre.prismjs .token.constant {
-  color: var(--docs-syntax-number) !important;
-}
-
-[data-theme='dark'] .docblock-source .token.punctuation,
-[data-theme='dark'] .docblock-source .token.operator,
-[data-theme='dark'] .docblock-source .token.imports,
-[data-theme='dark'] .docblock-source .token.imports.punctuation,
-[data-theme='dark'] pre.prismjs .token.punctuation,
-[data-theme='dark'] pre.prismjs .token.operator,
-[data-theme='dark'] pre.prismjs .token.imports,
-[data-theme='dark'] pre.prismjs .token.imports.punctuation {
+.docs-code .token.punctuation,
+.docs-code .token.operator,
+.docs-code .token.arrow,
+.docs-code .token.attr-equals,
+.docs-code .token.script-punctuation,
+.docblock-source .token.punctuation,
+.docblock-source .token.operator,
+.docblock-source .token.arrow,
+.docblock-source .token.attr-equals,
+.docblock-source .token.script-punctuation,
+pre.prismjs .token.punctuation,
+pre.prismjs .token.operator,
+pre.prismjs .token.arrow,
+pre.prismjs .token.attr-equals,
+pre.prismjs .token.script-punctuation {
   color: var(--docs-syntax-punctuation) !important;
-}
-
-[data-theme='dark'] .docblock-source .token.tag,
-[data-theme='dark'] .docblock-source .token.attr-name,
-[data-theme='dark'] pre.prismjs .token.tag,
-[data-theme='dark'] pre.prismjs .token.attr-name {
-  color: var(--docs-syntax-tag) !important;
 }
