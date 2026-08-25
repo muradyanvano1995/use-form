@@ -1,4 +1,4 @@
-import { rules, useForm, ValidationMode } from '../hooks/useForm'
+import { createAsyncRule, rules, useForm, ValidationMode } from '../hooks/useForm'
 import './examples.css'
 
 type UsernameFormValues = {
@@ -24,26 +24,32 @@ async function fakeUsernameCheck(username: string, signal?: AbortSignal): Promis
   return !TAKEN.has(username.toLowerCase())
 }
 
-export function UsernameAvailabilityForm() {
+const remoteCheck = async (
+  username: string,
+  _values: UsernameFormValues,
+  { signal }: { signal?: AbortSignal },
+) => {
+  const available = await fakeUsernameCheck(username, signal)
+  return available ? undefined : 'Username is already taken'
+}
+
+export function UsernameAvailabilityForm({
+  ruleApi = 'rules.async',
+}: {
+  /** `createAsyncRule` is the same scheduler; `rules.async` is the usual catalog entry. */
+  ruleApi?: 'rules.async' | 'createAsyncRule'
+} = {}) {
+  const asyncRule =
+    ruleApi === 'createAsyncRule'
+      ? createAsyncRule(remoteCheck, { debounce: 400, validateEmpty: false })
+      : rules.async(remoteCheck, { debounce: 400, validateEmpty: false })
+
   const form = useForm<UsernameFormValues>({
-    id: 'username-availability',
+    id: ruleApi === 'createAsyncRule' ? 'username-create-async-rule' : 'username-availability',
     defaultValues: { username: '' },
     mode: ValidationMode.OnChange,
     rules: {
-      username: [
-        rules.required(),
-        rules.minLength(3),
-        rules.async(
-          async (username, _values, { signal }) => {
-            const available = await fakeUsernameCheck(username, signal)
-            return available ? undefined : 'Username is already taken'
-          },
-          {
-            debounce: 400,
-            validateEmpty: false,
-          },
-        ),
-      ],
+      username: [rules.required(), rules.minLength(3), asyncRule],
     },
     onSubmit: () => undefined,
   })
@@ -53,8 +59,9 @@ export function UsernameAvailabilityForm() {
       <header className="demo-form__header">
         <h2>Username availability</h2>
         <p>
-          Sync rules fail immediately. The remote check is debounced on change; blur and submit run
-          it without waiting for the delay.
+          Sync rules fail immediately. The remote check uses{' '}
+          <code>{ruleApi === 'createAsyncRule' ? 'createAsyncRule' : 'rules.async'}</code> with
+          debounce 400ms on change; blur and submit run it without waiting for the delay.
         </p>
       </header>
 

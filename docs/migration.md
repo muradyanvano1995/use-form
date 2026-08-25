@@ -1,6 +1,6 @@
 # Migration policy
 
-There is **no published release** yet, so there are no version-to-version migrations.
+There is **no published release** yet, so there are no version-to-version migrations. The same policy is documented in Storybook under **Migration**.
 
 ## Current stability
 

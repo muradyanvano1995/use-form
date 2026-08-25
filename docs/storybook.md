@@ -8,7 +8,7 @@ Do not publish, tag, push, or deploy Storybook.
 
 Titles are sorted in `.storybook/preview.ts`. Keep one concept per story. If two canvases look the same, the docs text must explain the difference (for example Built-in rules vs Custom rules both use registration, but Custom rules calls out `createRule`).
 
-Public API stories live under top-level **Hooks** and **Components**. Guides stay under Core Concepts, Validation, Fields, and documentation pages. **Examples** mirrors each functional area with a live form (`Login`, `Registration`, nested/conditional/controlled fields, files, arrays, async validation/defaults, dependencies, structured errors, i18n, resolvers, batching, DevTools, …).
+Public API stories live under top-level **Hooks** and **Components**. Guides stay under Core Concepts, Validation, Fields, and documentation pages (including **Migration**). Core Concepts also covers imperative mutations and `normalizeErrors`. **Examples** mirrors each functional area with a live form. `Hooks/useForm` uses Login; `Hooks/useFieldState` has a dedicated FieldStateForm demo (not WatchersForm).
 
 | Area                   | Path                           |
 | ---------------------- | ------------------------------ |

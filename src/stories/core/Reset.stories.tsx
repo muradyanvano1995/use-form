@@ -11,7 +11,7 @@ const meta = {
     docs: {
       description: {
         component: withGithubExample(
-          'reset() restores the default-value baseline. resetField("password") clears one path. After a successful create, this example resets the whole form.',
+          'RegistrationForm with Reset and resetField("password"). Distinct from Submission (handleSubmit / focusOnError) — this story’s play clicks Reset after typing a name.',
           'RegistrationForm.tsx',
         ),
       },

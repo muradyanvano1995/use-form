@@ -249,6 +249,31 @@ const form = useForm({
   onSubmit: () => undefined,
 })`,
 
+  createAsyncRule: `import { createAsyncRule, rules, useForm, ValidationMode } from '<package-name>'
+
+async function checkUsername(username: string, signal?: AbortSignal) {
+  await new Promise<void>((resolve) => {
+    setTimeout(resolve, 120)
+  })
+  return username === 'taken' ? 'Username is already taken' : undefined
+}
+
+const remote = createAsyncRule(
+  async (username, _values, { signal }) => checkUsername(username, signal),
+  { debounce: 400, validateEmpty: false },
+)
+
+const form = useForm({
+  defaultValues: { username: '' },
+  mode: ValidationMode.OnChange,
+  rules: {
+    username: [rules.required(), rules.minLength(3), remote],
+  },
+  onSubmit: () => undefined,
+})
+
+// createAsyncRule is the same scheduler as rules.async; prefer rules.async in apps.`,
+
   asyncDefaults: `import { rules, useForm, ValidationMode } from '<package-name>'
 
 const fallback = { name: '', email: '' }
@@ -735,6 +760,70 @@ const form = useForm({
 
 form.resetField('password')
 form.reset({ name: 'Ada', password: '' })`,
+
+  fieldState: `import { FormProvider, rules, useFieldState, useForm, ValidationMode } from '<package-name>'
+
+type Values = { email: string }
+
+function EmailMeta() {
+  const field = useFieldState<Values, 'email'>({ name: 'email' })
+  return (
+    <p>
+      invalid={String(field.invalid)} touched={String(field.touched)} dirty={String(field.dirty)}
+    </p>
+  )
+}
+
+function EmailForm() {
+  const form = useForm<Values>({
+    defaultValues: { email: '' },
+    mode: ValidationMode.OnBlur,
+    rules: {
+      email: [rules.required(), rules.email()],
+    },
+    onSubmit: () => undefined,
+  })
+
+  return (
+    <FormProvider control={form.control}>
+      <form onSubmit={form.handleSubmit} noValidate>
+        <input {...form.register('email')} type="email" />
+        <EmailMeta />
+      </form>
+    </FormProvider>
+  )
+}`,
+
+  imperativeMutations: `import { ErrorSource, rules, useForm, ValidationMode } from '<package-name>'
+
+const form = useForm({
+  defaultValues: { email: '', note: '' },
+  mode: ValidationMode.OnSubmit,
+  rules: {
+    email: [rules.required(), rules.email()],
+  },
+  onSubmit: () => undefined,
+})
+
+await form.validateField('email')
+form.setError('email', 'Manual review required', { source: ErrorSource.Manual })
+form.clearError('email')
+form.clearRootError()
+form.clearErrors()
+await form.validate()
+// No public setFocus — focusOnError uses registered refs on submit.`,
+
+  normalizeErrors: `import { normalizeErrors } from '<package-name>'
+
+const cleaned = normalizeErrors({
+  email: 'Email is required',
+  password: '',
+  'profile.city': 'City is required',
+})
+
+// Empty messages and unsafe keys are dropped before merge.
+void cleaned.email
+void cleaned.password`,
 
   formState: `import { useForm } from '<package-name>'
 

@@ -5,7 +5,9 @@ import { ContextProfileForm } from './examples/ContextProfileForm.tsx'
 import { ControlledFieldsForm } from './examples/ControlledFieldsForm.tsx'
 import { DependentFieldsForm } from './examples/DependentFieldsForm.tsx'
 import { DevToolsInspectorForm } from './examples/DevToolsInspectorForm.tsx'
+import { FieldStateForm } from './examples/FieldStateForm.tsx'
 import { FileUploadForm } from './examples/FileUploadForm.tsx'
+import { ImperativeApiForm } from './examples/ImperativeApiForm.tsx'
 import { LocalizedRegistrationForm } from './examples/LocalizedRegistrationForm.tsx'
 import { LoginForm } from './examples/LoginForm.tsx'
 import { OrderItemsForm } from './examples/OrderItemsForm.tsx'
@@ -42,10 +44,13 @@ function App() {
         <AsyncDefaultsProfileForm />
         <ConditionalCompanyForm />
         <UsernameAvailabilityForm />
+        <UsernameAvailabilityForm ruleApi="createAsyncRule" />
         <FileUploadForm />
         <ControlledFieldsForm />
         <DependentFieldsForm />
         <ContextProfileForm />
+        <FieldStateForm />
+        <ImperativeApiForm />
         <OrderItemsForm />
         <PasswordQualityForm />
         <ResolverRegistrationForm />

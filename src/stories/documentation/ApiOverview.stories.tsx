@@ -90,7 +90,7 @@ function ApiOverviewPage() {
           {
             name: 'createAsyncRule',
             kind: 'validation helper',
-            notes: 'Build a debounced or immediate async rule with typed options.',
+            notes: 'Same scheduler as rules.async. See Validation/Async validation → CreateAsyncRule.',
           },
           {
             name: 'ValidationMode',
@@ -115,7 +115,7 @@ function ApiOverviewPage() {
           {
             name: 'normalizeErrors',
             kind: 'helper',
-            notes: 'Drop empty strings and unsafe path segments from error maps.',
+            notes: 'Drop empty strings and unsafe path segments. See Core Concepts/normalizeErrors.',
           },
           {
             name: 'defaultValidationMessages',

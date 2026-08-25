@@ -65,6 +65,8 @@ const preview: Preview = {
             'Reset',
             'Batching',
             'Imperative getters',
+            'Imperative mutations',
+            'normalizeErrors',
           ],
           'Validation',
           [
@@ -107,6 +109,7 @@ const preview: Preview = {
           ],
           'Accessibility',
           'API overview',
+          'Migration',
           'Limitations and roadmap',
           'Theme',
         ],

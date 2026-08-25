@@ -6,6 +6,8 @@ import { UsernameAvailabilityForm } from '../examples/UsernameAvailabilityForm.t
 import { ConditionalFieldsDemo } from '../examples/ConditionalCompanyForm.tsx'
 import { AsyncDefaultsProfileForm } from '../examples/AsyncDefaultsProfileForm.tsx'
 import { StandardSchemaForm } from '../examples/StandardSchemaForm.tsx'
+import { FieldStateForm } from '../examples/FieldStateForm.tsx'
+import { ImperativeApiForm } from '../examples/ImperativeApiForm.tsx'
 import { resolvePreviewTheme, ThemeMode } from './theme/resolvePreviewTheme.ts'
 
 describe('documentation example flows', () => {
@@ -73,6 +75,25 @@ describe('documentation example flows', () => {
     await user.type(screen.getByLabelText('Age'), '21')
     await user.click(screen.getByRole('button', { name: 'Create' }))
     await waitFor(() => expect(onSubmitSuccess).toHaveBeenCalledWith({ username: 'ada', age: 21 }))
+  })
+
+
+  it('useFieldState child shows dirty and invalid email', async () => {
+    const user = userEvent.setup()
+    render(<FieldStateForm />)
+    await user.type(screen.getByLabelText('Email'), 'ada')
+    await user.tab()
+    expect(screen.getByText(/dirty=true/)).toBeVisible()
+    expect(screen.getByRole('alert')).toHaveTextContent('Enter a valid email address')
+  })
+
+  it('imperative validateField and clearError', async () => {
+    const user = userEvent.setup()
+    render(<ImperativeApiForm />)
+    await user.click(screen.getByRole('button', { name: 'Validate email' }))
+    expect(screen.getByText('Email is required')).toBeVisible()
+    await user.click(screen.getByRole('button', { name: 'clearError email' }))
+    expect(screen.queryByText('Email is required')).not.toBeInTheDocument()
   })
 
   it('resolves preview theme modes', () => {

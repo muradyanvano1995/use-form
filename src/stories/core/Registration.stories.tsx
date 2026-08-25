@@ -1,26 +1,34 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { LoginForm } from '../../examples/LoginForm.tsx'
+import { expect, userEvent, within } from 'storybook/test'
+import { RadioCheckboxGroupsForm } from '../../examples/RadioCheckboxGroupsForm.tsx'
 import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
   title: 'Core Concepts/Registration',
-  component: LoginForm,
+  component: RadioCheckboxGroupsForm,
   parameters: {
     docs: {
       description: {
         component: withGithubExample(
-          'register(name) returns name, id, onChange, onBlur, ref, aria-invalid, aria-describedby. File fields omit value. Radios pass type and value. This is the native-control path; custom widgets use useController instead.',
-          'LoginForm.tsx',
+          'register(name) returns name, id, onChange, onBlur, ref, aria-invalid, aria-describedby. Radios pass type and value; checkboxes bind booleans. File fields omit value. Custom widgets use useController instead. Login/email register lives under Hooks/useForm and Examples/Login.',
+          'RadioCheckboxGroupsForm.tsx',
         ),
       },
-      source: consumerDocsSource(snippets.registration),
+      source: consumerDocsSource(snippets.radioCheckbox),
     },
     controls: { disable: true },
   },
-} satisfies Meta<typeof LoginForm>
+} satisfies Meta<typeof RadioCheckboxGroupsForm>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const NativeRegister: Story = {}
+export const NativeRegister: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByRole('radio', { name: /Phone/i }))
+    await userEvent.click(canvas.getByRole('button', { name: 'Save preferences' }))
+    await expect(canvas.getByRole('radio', { name: /Phone/i })).toBeChecked()
+  },
+}

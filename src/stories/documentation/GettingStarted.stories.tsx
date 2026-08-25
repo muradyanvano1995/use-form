@@ -244,7 +244,7 @@ function GettingStartedPage() {
           },
           {
             title: 'Fields / Examples',
-            body: 'Every major feature has a live Examples story: nested, conditional, files, arrays, async, i18n, resolvers, DevTools, and more.',
+            body: 'Live Examples plus Core Concepts for register, modes, errors, submit, reset, getters, mutations, and normalizeErrors. Migration policy is under Migration.',
           },
         ]}
       />

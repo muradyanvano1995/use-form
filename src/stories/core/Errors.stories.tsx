@@ -11,7 +11,7 @@ const meta = {
     docs: {
       description: {
         component: withGithubExample(
-          'Field errors from rules, backend mapping via helpers.setErrors, and submitError banners. Root errors (see Structured errors) are not focus targets. Trigger taken@example.com after filling a 6+ character password.',
+          'Login canvas focused on backend mapping: taken@example.com + password (≥6) then Sign in. Distinct from Submission (RegistrationForm) and Imperative mutations (validateField / clearErrors). Root errors: Structured errors.',
           'LoginForm.tsx',
         ),
       },
