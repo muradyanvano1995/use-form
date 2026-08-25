@@ -5,7 +5,7 @@
 | Script                            | Purpose                                      |
 | --------------------------------- | -------------------------------------------- |
 | `npm run typecheck`               | `tsc -b`                                     |
-| `npm run lint`                    | ESLint                                       |
+| `npm run lint`                    | ESLint (type-aware `recommendedTypeChecked`) |
 | `npm run format` / `format:check` | Prettier                                     |
 | `npm run test`                    | Vitest run                                   |
 | `npm run test:coverage`           | Vitest + V8 coverage (thresholds)            |
@@ -19,6 +19,25 @@
 See `.ai/skills/package-release.md` for packing, size, Storybook, and TypeDoc. Do not add `prepublishOnly`.
 
 Prettier: no semicolons, single quotes, trailing commas, width 100 (`.prettierrc`).
+
+## ESLint
+
+- Flat config in `eslint.config.js` uses `typescript-eslint` **`recommendedTypeChecked`** with `parserOptions.projectService`.
+- React form handlers may return promises (`handleSubmit`); `no-misused-promises` allows promise-returning JSX/DOM attributes.
+- `*.type-test.ts` and `*.{test,spec}.{ts,tsx}` relax noisy type-aware rules (casts, `any` from mocks, unused `async`).
+- Prefer fixing types over `eslint-disable`. Do not disable type-aware rules casually in library source.
+
+## IDE inspections (WebStorm)
+
+These are separate from ESLint. Prefer fixing the code when the warning is real:
+
+- Do not use a void-typed callback’s return value; cast to `() => unknown` only for runtime thenable guards.
+- Do not throw solely to be caught in the same `try` — assign an error and rethrow after cleanup.
+- Prefer `async`/`await` over `.then()` chains on public promise APIs when equivalent.
+  Keep synchronous guards (`assertNotInBatch`) outside `async` functions so they still throw synchronously.
+- Prefer directory barrels (`../hooks/useForm`, `../../lib`) over `.../index.ts` imports.
+
+Weak warnings about redundant type arguments, deprecated `DirtyFields` re-exports, and docs-only duplication can stay unless they block review.
 
 ## Rules of thumb
 

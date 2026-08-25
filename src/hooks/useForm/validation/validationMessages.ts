@@ -152,7 +152,7 @@ export function captureMessageSnapshot(
   labels?: FieldLabels<FormValues> | object,
 ): MessageResolutionSnapshot {
   return {
-    catalog: catalog ? ({ ...catalog } as ValidationMessageCatalog<FormValues>) : undefined,
+    catalog: catalog ? { ...catalog } : undefined,
     labels: labels ? { ...labels } : undefined,
   }
 }

@@ -154,7 +154,7 @@ export function applyLoadedDefaultValues<T extends FormValues>({
 
   for (const arrayPath of dirtyArrays) {
     const currentArray = getValueAtPath(currentValues, arrayPath)
-    nextValues = setValueAtPath(nextValues, arrayPath, cloneFormValue(currentArray)) as T
+    nextValues = setValueAtPath(nextValues, arrayPath, cloneFormValue(currentArray))
   }
 
   for (const path of dirtyPaths) {
@@ -162,7 +162,7 @@ export function applyLoadedDefaultValues<T extends FormValues>({
       continue
     }
     const currentLeaf = getValueAtPath(currentValues, path)
-    nextValues = setValueAtPath(nextValues, path, cloneFormValue(currentLeaf)) as T
+    nextValues = setValueAtPath(nextValues, path, cloneFormValue(currentLeaf))
   }
 
   const nextTouched: FieldTouched<T> = {}

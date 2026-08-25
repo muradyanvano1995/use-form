@@ -1,8 +1,8 @@
 import { act, render, renderHook, screen } from '@testing-library/react'
 import { memo, StrictMode, useState } from 'react'
 import { describe, expect, it } from 'vitest'
-import { FormProvider, useForm, useWatch } from '../hooks/useForm/index.ts'
-import * as core from '../hooks/useForm/index.ts'
+import { FormProvider, useForm, useWatch } from '../hooks/useForm'
+import * as core from '../hooks/useForm'
 import { FormDevTools } from './index.ts'
 
 type Sample = {

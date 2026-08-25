@@ -6,7 +6,7 @@ import {
   useFormState,
   ValidationMode,
   type FieldRules,
-} from '../hooks/useForm/index.ts'
+} from '../hooks/useForm'
 import './examples.css'
 
 type ContextProfileValues = {

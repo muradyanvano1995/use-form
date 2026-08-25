@@ -23,7 +23,7 @@ export {
   useFormContext,
   useFormState,
   useWatch,
-} from '../hooks/useForm/index.ts'
+} from '../hooks/useForm'
 
 export type {
   AsyncRuleOptions,
@@ -98,4 +98,4 @@ export type {
   ValidationResult,
   ValidationRule,
   ValidationRuleContext,
-} from '../hooks/useForm/index.ts'
+} from '../hooks/useForm'

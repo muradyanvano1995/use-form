@@ -16,9 +16,13 @@ import type {
   DefaultValuesLoader,
   ReloadDefaultValuesOptions,
 } from './defaultValuesLoader.ts'
-import type { FormResolver } from './validation/resolverTypes.ts'
-import type { ValidationResult, ValidationRuleContext } from './validation/ruleTypes.ts'
-import type { ReValidateMode, ValidationMode } from './validation'
+import type {
+  FormResolver,
+  ReValidateMode,
+  ValidationMode,
+  ValidationResult,
+  ValidationRuleContext,
+} from './validation'
 import type { FieldLabels, ValidationMessageCatalog } from './validation/validationMessages.ts'
 import type { UnregisterOptions, UnregisterOptionsFor } from './fieldRegistration.ts'
 import type {

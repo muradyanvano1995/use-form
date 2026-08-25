@@ -1,4 +1,4 @@
-import { CriteriaMode, ReValidateMode, ValidationMode } from '../../lib/index.ts'
+import { CriteriaMode, ReValidateMode, ValidationMode } from '../../lib'
 
 export const modeArgType = {
   control: 'select' as const,

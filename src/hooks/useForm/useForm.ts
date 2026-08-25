@@ -33,7 +33,6 @@ import {
   collectAffectedDependents,
   shouldRevalidateDependent,
   type DependencyIndex,
-  type DependencyMode,
 } from './dependencies.ts'
 import {
   clearNativeFileInput,
@@ -45,7 +44,6 @@ import {
   assertLoadedDefaultValues,
   isAbortError,
   toDefaultValuesError,
-  type DefaultValuesLoadMode,
   type DefaultValuesLoadReason,
   type ReloadDefaultValuesOptions,
 } from './defaultValuesLoader.ts'
@@ -125,7 +123,7 @@ import {
   type SetErrorsInput,
   type ValidationIssueInput,
 } from './errors.ts'
-import { runFieldValidationPipeline, runValidationPipeline, type FormResolver } from './validation'
+import { runFieldValidationPipeline, runValidationPipeline } from './validation'
 import { hasValidationFailure } from './validation/runResolver.ts'
 import { getCombinedFieldRules, runFieldRulesDetailed } from './validation/runRules.ts'
 import { resolveFieldDebounceMs, shouldDeferDebouncedRules } from './validation/asyncRule.ts'
@@ -154,6 +152,16 @@ import {
   readFormValues,
   readTouchedValues,
 } from './formGetters.ts'
+
+/** Stringify a registered field value for a native text-like input. */
+function formatNativeInputValue(value: unknown): string {
+  if (value === undefined || value === null) return ''
+  if (typeof value === 'number') return Number.isNaN(value) ? '' : String(value)
+  if (typeof value === 'string' || typeof value === 'boolean' || typeof value === 'bigint') {
+    return String(value)
+  }
+  return ''
+}
 
 function createInitialState<T extends FormValues>(
   defaultValues: T,
@@ -274,17 +282,17 @@ export function useForm<
     validate: validateForm,
     rules,
     fieldValidators,
-    resolver: resolver as FormResolver<TInput, TOutput, TContext> | undefined,
+    resolver: resolver,
     resolverContext: resolverContext as TContext,
     dependencies,
-    dependencyMode: dependencyMode as DependencyMode,
+    dependencyMode: dependencyMode,
     onSubmit,
     mode,
     reValidateMode,
     focusOnError,
     preventDuplicateSubmit,
     loadDefaultValues,
-    defaultValuesLoadMode: defaultValuesLoadMode as DefaultValuesLoadMode,
+    defaultValuesLoadMode: defaultValuesLoadMode,
     validateOnDefaultsLoad,
     allowSubmitWhileLoading,
     allowSubmitWhenDefaultsFailed,
@@ -299,17 +307,17 @@ export function useForm<
       validate: validateForm,
       rules,
       fieldValidators,
-      resolver: resolver as FormResolver<TInput, TOutput, TContext> | undefined,
+      resolver: resolver,
       resolverContext: resolverContext as TContext,
       dependencies,
-      dependencyMode: dependencyMode as DependencyMode,
+      dependencyMode: dependencyMode,
       onSubmit,
       mode,
       reValidateMode,
       focusOnError,
       preventDuplicateSubmit,
       loadDefaultValues,
-      defaultValuesLoadMode: defaultValuesLoadMode as DefaultValuesLoadMode,
+      defaultValuesLoadMode: defaultValuesLoadMode,
       validateOnDefaultsLoad,
       allowSubmitWhileLoading,
       allowSubmitWhenDefaultsFailed,
@@ -608,9 +616,7 @@ export function useForm<
     (root: string, resolved: Required<UnregisterOptions>, arrayOwnedValue: boolean) => {
       cancelRegistrationWorkUnder(root)
 
-      fieldOrderRef.current = omitPathsFromList(fieldOrderRef.current as string[], root) as Array<
-        FieldPath<T>
-      >
+      fieldOrderRef.current = omitPathsFromList(fieldOrderRef.current, root) as Array<FieldPath<T>>
       clearFieldElementsUnder(fieldElementsRef.current, root)
 
       for (const path of [...controllerCountsRef.current.keys()]) {
@@ -649,7 +655,7 @@ export function useForm<
         }
 
         if (!resolved.keepTouched) {
-          nextTouched = omitPathAndDescendants(nextTouched, root) as typeof nextTouched
+          nextTouched = omitPathAndDescendants(nextTouched, root)
         }
 
         const nextDetails = resolved.keepError
@@ -1230,7 +1236,7 @@ export function useForm<
         const raw = await loader({
           signal,
           reason,
-          context: optionsRef.current.resolverContext as TContext,
+          context: optionsRef.current.resolverContext,
         })
 
         if (
@@ -1242,7 +1248,7 @@ export function useForm<
         }
 
         assertLoadedDefaultValues(raw)
-        const loaded = cloneValues(raw as T)
+        const loaded = cloneValues(raw)
         const snapshot = store.getState()
         const applied = applyLoadedDefaultValues({
           currentValues: snapshot.values,
@@ -1259,7 +1265,7 @@ export function useForm<
         let nextTouched = applied.touched
         for (const root of inactivePathsRef.current) {
           nextDetails = omitFieldErrorDetailsUnder(nextDetails, root)
-          nextTouched = omitPathAndDescendants(nextTouched, root) as typeof nextTouched
+          nextTouched = omitPathAndDescendants(nextTouched, root)
         }
 
         bumpFormValidationGeneration()
@@ -1484,17 +1490,14 @@ export function useForm<
       })
 
       if (remap === 'replace') {
-        fieldOrderRef.current = omitArrayPathsFromList(
-          fieldOrderRef.current as string[],
-          name,
-        ) as Array<FieldPath<T>>
+        fieldOrderRef.current = omitArrayPathsFromList(fieldOrderRef.current, name) as Array<
+          FieldPath<T>
+        >
         clearElementMapUnderArray(fieldElementsRef.current, name)
       } else {
-        fieldOrderRef.current = reindexPathList(
-          fieldOrderRef.current as string[],
-          name,
-          remap,
-        ) as Array<FieldPath<T>>
+        fieldOrderRef.current = reindexPathList(fieldOrderRef.current, name, remap) as Array<
+          FieldPath<T>
+        >
         reindexElementMap(fieldElementsRef.current, name, remap)
       }
 
@@ -1719,24 +1722,29 @@ export function useForm<
     [commitState],
   )
 
-  const validate = useCallback(() => {
+  const validate = useCallback((): Promise<boolean> => {
     assertNotInBatch('validate()')
-    return validateInternal(store.getState().values, 'manual').then(
-      ({ errors, rootError }) => !hasValidationFailure(errors, rootError),
-    )
+    return (async () => {
+      const { errors, rootError } = await validateInternal(store.getState().values, 'manual')
+      return !hasValidationFailure(errors, rootError)
+    })()
   }, [assertNotInBatch, store, validateInternal])
 
   const validateField = useCallback(
-    <K extends FieldPath<T>>(name: K) => {
+    <K extends FieldPath<T>>(name: K): Promise<boolean> => {
       assertNotInBatch('validateField()')
       if (isInactivePath(name, inactivePathsRef.current)) {
         return Promise.resolve(true)
       }
       markFieldRegistered(name)
-      return validateFieldInternal(name, store.getState().values, 'manual').then(
-        ({ message, rootError }) =>
-          message === undefined && !(typeof rootError === 'string' && rootError.length > 0),
-      )
+      return (async () => {
+        const { message, rootError } = await validateFieldInternal(
+          name,
+          store.getState().values,
+          'manual',
+        )
+        return message === undefined && !(typeof rootError === 'string' && rootError.length > 0)
+      })()
     },
     [assertNotInBatch, markFieldRegistered, store, validateFieldInternal],
   )
@@ -1834,8 +1842,8 @@ export function useForm<
         let nextDetails = prev.errorDetails
 
         if (Array.isArray(restoredValue)) {
-          nextTouched = omitArrayPathTree(nextTouched, name) as FieldTouched<T>
-          nextDetails = omitArrayPathTree(nextDetails, name) as FieldErrorDetails<T>
+          nextTouched = omitArrayPathTree(nextTouched, name)
+          nextDetails = omitArrayPathTree(nextDetails, name)
           for (const path of [...validatedFieldsRef.current]) {
             if (path === name || path.startsWith(`${name}.`)) {
               validatedFieldsRef.current.delete(path)
@@ -1857,10 +1865,9 @@ export function useForm<
       if (isArrayField) {
         const length = Array.isArray(restoredPreview) ? restoredPreview.length : 0
         regenerateFieldArrayKeys(name, length)
-        fieldOrderRef.current = omitArrayPathsFromList(
-          fieldOrderRef.current as string[],
-          name,
-        ) as Array<FieldPath<T>>
+        fieldOrderRef.current = omitArrayPathsFromList(fieldOrderRef.current, name) as Array<
+          FieldPath<T>
+        >
         clearElementMapUnderArray(fieldElementsRef.current, name)
       }
 
@@ -2145,10 +2152,7 @@ export function useForm<
         }
       }
 
-      const displayValue =
-        fieldValue === undefined || fieldValue === null || Number.isNaN(fieldValue)
-          ? ''
-          : String(fieldValue)
+      const displayValue = formatNativeInputValue(fieldValue)
 
       return {
         ...base,
@@ -2179,7 +2183,7 @@ export function useForm<
 
   const unregister = useCallback(
     (name: FieldPath<T> | readonly FieldPath<T>[], options?: UnregisterOptions) => {
-      const names = Array.isArray(name) ? name : [name]
+      const names: readonly FieldPath<T>[] = typeof name === 'string' ? [name] : name
       const resolved = resolveUnregisterOptions(options, DEFAULT_EXPLICIT_UNREGISTER_OPTIONS)
       for (const path of names) {
         parsePath(path)
@@ -2273,12 +2277,19 @@ export function useForm<
         batchQueueRef.current.forceForm = true
       }
 
+      let callbackError: unknown
       try {
-        const result = callback()
+        // Widen `() => void` so we can inspect an illegal thenable return at runtime.
+        const run: () => unknown = callback
+        const result = run()
         if (isThenable(result)) {
-          throw new Error(ASYNC_BATCH_CALLBACK_ERROR)
+          callbackError = new Error(ASYNC_BATCH_CALLBACK_ERROR)
         }
       } catch (error) {
+        callbackError = error
+      }
+
+      if (callbackError !== undefined) {
         if (isOuter) {
           store.endTransaction()
           clearQueuedValidation(batchQueueRef.current)
@@ -2287,7 +2298,9 @@ export function useForm<
           outerBatchCompletionRef.current = null
           completion?.resolve()
         }
-        throw error
+        throw callbackError instanceof Error
+          ? callbackError
+          : new Error('form.batch() callback failed', { cause: callbackError })
       }
 
       if (!isOuter) {

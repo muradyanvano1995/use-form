@@ -5,7 +5,7 @@
 - `verbatimModuleSyntax`: use `import type` for type-only imports.
 - `erasableSyntaxOnly`: no enums / parameter properties / other non-erasable syntax.
 - `noUnusedLocals` / `noUnusedParameters`: remove dead code instead of prefix hacks unless intentional.
-- Relative imports include `.ts` / `.tsx` extensions. Prefer `../hooks/useForm/index.ts` over an extensionless directory import when `allowImportingTsExtensions` is enabled.
+- Relative imports: prefer directory barrels (`../hooks/useForm`) over `.../index.ts` when the folder has an index. Keep explicit `.ts` / `.tsx` file imports otherwise (`allowImportingTsExtensions`).
 
 ## Form typing rules
 

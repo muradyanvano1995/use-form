@@ -129,7 +129,7 @@ export function standardSchemaResolver<
 
       return {
         success: false,
-        errors: errors as import('../formTypes.ts').FieldErrors<TInput>,
+        errors: errors,
         errorDetails,
         rootError: rootErrorDetails?.message,
         rootErrorDetails,

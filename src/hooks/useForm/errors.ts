@@ -232,7 +232,7 @@ export function fieldErrorFromIssues(issues: readonly FieldIssue[]): FieldError 
   }
 
   if (normalized.length === 0) return undefined
-  const primary = normalized[0]!
+  const primary = normalized[0]
   return Object.freeze({
     message: primary.message,
     type: primary.type,
@@ -397,9 +397,11 @@ export function hasFieldErrorDetails<T extends FormValues>(
   details: FieldErrorDetails<T> | undefined,
 ): boolean {
   if (!details) return false
-  return (Object.values(details) as Array<FieldError | undefined>).some(
-    (error) => error != null && error.issues.length > 0,
-  )
+  for (const key of Object.keys(details) as Array<FieldPath<T>>) {
+    const error = details[key]
+    if (error != null && error.issues.length > 0) return true
+  }
+  return false
 }
 
 export function detailsFromStringMap<T extends FormValues>(

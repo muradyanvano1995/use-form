@@ -105,7 +105,7 @@ export function resolveFieldDebounceMs(rules: ReadonlyArray<unknown>): number {
       `Conflicting debounce durations on the same field: ${[...delays].join(', ')}ms. Use one delay for all rules.async entries on a field.`,
     )
   }
-  return [...delays][0]!
+  return [...delays][0]
 }
 
 /** Change and dependency cycles may defer `rules.async` with debounce > 0. */

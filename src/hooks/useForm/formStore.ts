@@ -171,7 +171,7 @@ export function resolveFormControl<T extends FormValues>(
     return source.control
   }
   if (isFormControl(source)) {
-    return source as FormControl<T>
+    return source
   }
   throw new Error(
     'Invalid FormControl. Pass `form.control` or a form return value that includes `control`.',

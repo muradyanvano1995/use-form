@@ -45,8 +45,7 @@ function normalizeValidators<T extends FormValues, K extends FieldPath<T>>(
   const list = Array.isArray(entry) ? entry : [entry]
   return list.map((validator) => ({
     source: ErrorSource.Field,
-    rule: (value, values, context) =>
-      (validator as FieldValidateFn<T, K>)(value, values as T, context),
+    rule: (value, values, context) => (validator as FieldValidateFn<T, K>)(value, values, context),
   }))
 }
 

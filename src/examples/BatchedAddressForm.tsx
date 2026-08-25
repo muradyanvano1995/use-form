@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useForm } from '../hooks/useForm/index.ts'
+import { useForm } from '../hooks/useForm'
 import './examples.css'
 
 type AddressValues = {

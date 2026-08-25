@@ -34,7 +34,7 @@ const registrationResolver: FormResolver<
   RegistrationInput,
   RegistrationOutput,
   RegistrationContext
-> = async (values, { context }) => {
+> = (values, { context }) => {
   const errors: FieldErrors<RegistrationInput> = {}
   const age = Number(values.age)
 
@@ -83,7 +83,7 @@ export function ResolverRegistrationForm() {
       email: [rules.required('Email is required')],
     },
     mode: ValidationMode.OnSubmit,
-    onSubmit: async (values, helpers) => {
+    onSubmit: (values, helpers) => {
       // `values.age` is number — transformed output only.
       if (values.email.endsWith('@blocked.test')) {
         helpers.setError('email', 'This email is blocked by the server')

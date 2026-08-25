@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, within } from 'storybook/test'
-import { rules, useForm, ValidationMode } from '../../lib/index.ts'
+import { rules, useForm, ValidationMode } from '../../lib'
 import {
   Callout,
   CodePanel,

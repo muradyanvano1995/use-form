@@ -91,15 +91,19 @@ export function safeSerialize(value: unknown, options: SafeSerializeOptions = {}
 
   const walk = (current: unknown, path: string, depth: number): unknown => {
     if (current === null || current === undefined) return current
-    const type = typeof current
-    if (type === 'string' || type === 'number' || type === 'boolean' || type === 'bigint') {
-      return type === 'bigint' ? `${current}n` : current
+    if (typeof current === 'bigint') return `${current}n`
+    if (
+      typeof current === 'string' ||
+      typeof current === 'number' ||
+      typeof current === 'boolean'
+    ) {
+      return current
     }
-    if (type === 'symbol') {
-      return { $dev: 'symbol', description: (current as symbol).description }
+    if (typeof current === 'symbol') {
+      return { $dev: 'symbol', description: current.description }
     }
-    if (type === 'function') {
-      return { $dev: 'Function', name: (current as { name?: string }).name || '(anonymous)' }
+    if (typeof current === 'function') {
+      return { $dev: 'Function', name: current.name || '(anonymous)' }
     }
     if (depth >= maxDepth) return { $dev: 'maxDepth' }
 
@@ -145,7 +149,7 @@ export function safeSerialize(value: unknown, options: SafeSerializeOptions = {}
         return result
       }
 
-      const proto = Object.getPrototypeOf(current)
+      const proto: object | null = Object.getPrototypeOf(current) as object | null
       const isPlain = proto === Object.prototype || proto === null
       if (!isPlain) {
         const ctor = (current as { constructor?: { name?: string } }).constructor
@@ -157,7 +161,7 @@ export function safeSerialize(value: unknown, options: SafeSerializeOptions = {}
       const keys = readOwnDataKeys(current)
       const limit = Math.min(keys.length, maxEntries)
       for (let index = 0; index < limit; index += 1) {
-        const key = keys[index]!
+        const key = keys[index]
         const childPath = joinPath(path, key)
         if (shouldRedact(childPath, key, options)) {
           result[key] = { $dev: 'redacted' }

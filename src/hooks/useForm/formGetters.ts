@@ -64,7 +64,7 @@ export function pickPathValues<T extends FormValues>(
     try {
       result = setValueAtPath(result, path, cloned)
     } catch {
-      continue
+      // Skip paths that cannot be reconstructed into a partial tree.
     }
   }
 

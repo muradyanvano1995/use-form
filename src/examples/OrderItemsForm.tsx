@@ -183,7 +183,7 @@ export function OrderItemsForm() {
       })
       return errors
     },
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       void values.customer.name
     },
   })

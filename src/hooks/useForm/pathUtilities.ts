@@ -23,7 +23,7 @@ export class InvalidPathError extends Error {
 export function isPlainObject(value: unknown): value is Record<string, unknown> {
   if (value === null || typeof value !== 'object') return false
   if (Array.isArray(value)) return false
-  const proto = Object.getPrototypeOf(value)
+  const proto: object | null = Object.getPrototypeOf(value) as object | null
   return proto === Object.prototype || proto === null
 }
 
@@ -116,7 +116,7 @@ function setAtSegments(
   value: unknown,
   index: number,
 ): unknown {
-  const segment = segments[index]!
+  const segment = segments[index]
   const isLast = index === segments.length - 1
   const pathSoFar = segments.slice(0, index).join('.')
 
@@ -132,7 +132,10 @@ function setAtSegments(
       throw new InvalidPathError(`Invalid array index "${segment}"`)
     }
 
-    const arr = Array.isArray(current) ? current.slice() : []
+    const arr: unknown[] = []
+    if (Array.isArray(current)) {
+      for (const item of current) arr.push(item)
+    }
 
     if (arrayIndex > arr.length) {
       throw new InvalidPathError(
@@ -184,7 +187,9 @@ function setAtSegments(
  */
 export function cloneFormValue<T>(value: T): T {
   if (Array.isArray(value)) {
-    return value.map((item) => (isPlainObject(item) ? cloneFormValue(item) : item)) as T
+    return (value as unknown[]).map((item) =>
+      isPlainObject(item) ? cloneFormValue(item) : item,
+    ) as T
   }
   if (!isPlainObject(value)) {
     return value
@@ -230,14 +235,15 @@ export function mergeDeepPartial<T>(base: T, partial: DeepPartial<T>): T {
 /** Collect leaf field paths under a values object (one level of array indices expanded). */
 export function collectLeafPaths(values: unknown, prefix = ''): string[] {
   if (Array.isArray(values)) {
-    if (values.length === 0) {
+    const list = values as unknown[]
+    if (list.length === 0) {
       return prefix ? [prefix] : []
     }
 
     const paths: string[] = []
-    for (let index = 0; index < values.length; index += 1) {
+    for (let index = 0; index < list.length; index += 1) {
       const path = prefix ? `${prefix}.${index}` : String(index)
-      const child = values[index]
+      const child = list[index]
       if (isPlainObject(child)) {
         const nested = collectLeafPaths(child, path)
         paths.push(...(nested.length > 0 ? nested : [path]))
@@ -284,13 +290,15 @@ export function collectDirtyLeafPaths(values: unknown, defaults: unknown, prefix
       return prefix ? [prefix] : []
     }
 
+    const currentList = values as unknown[]
+    const baselineList = defaults as unknown[]
     const childDirty: string[] = []
-    const max = Math.max(values.length, defaults.length)
+    const max = Math.max(currentList.length, baselineList.length)
     for (let index = 0; index < max; index += 1) {
       const path = prefix ? `${prefix}.${index}` : String(index)
 
-      if (index >= values.length || index >= defaults.length) {
-        const present = index < values.length ? values[index] : defaults[index]
+      if (index >= currentList.length || index >= baselineList.length) {
+        const present = index < currentList.length ? currentList[index] : baselineList[index]
         if (isPlainObject(present)) {
           childDirty.push(...collectLeafPaths(present, path))
         } else {
@@ -299,8 +307,8 @@ export function collectDirtyLeafPaths(values: unknown, defaults: unknown, prefix
         continue
       }
 
-      const current = values[index]
-      const baseline = defaults[index]
+      const current = currentList[index]
+      const baseline = baselineList[index]
 
       if (isPlainObject(current) && isPlainObject(baseline)) {
         childDirty.push(...collectDirtyLeafPaths(current, baseline, path))
@@ -314,7 +322,7 @@ export function collectDirtyLeafPaths(values: unknown, defaults: unknown, prefix
     }
 
     const dirty: string[] = []
-    if ((values.length !== defaults.length || childDirty.length > 0) && prefix) {
+    if ((currentList.length !== baselineList.length || childDirty.length > 0) && prefix) {
       dirty.push(prefix)
     }
     dirty.push(...childDirty)
@@ -413,7 +421,7 @@ export function encodeRadioValueForId(value: string): string {
 }
 
 export function joinFieldPath(parent: string, child: string): FieldPath<FormValues> {
-  return (parent ? `${parent}.${child}` : child) as FieldPath<FormValues>
+  return parent ? `${parent}.${child}` : child
 }
 
 /**
@@ -436,13 +444,14 @@ export function deleteValueAtPath<T>(values: T, path: string): T {
 }
 
 function deleteAtSegments(current: unknown, segments: string[], index: number): unknown {
-  const segment = segments[index]!
+  const segment = segments[index]
   const isLast = index === segments.length - 1
 
   if (Array.isArray(current)) {
+    const list = current as unknown[]
     if (!isNumericPathSegment(segment)) return current
     const arrayIndex = Number(segment)
-    if (!Number.isInteger(arrayIndex) || arrayIndex < 0 || arrayIndex >= current.length) {
+    if (!Number.isInteger(arrayIndex) || arrayIndex < 0 || arrayIndex >= list.length) {
       return current
     }
 
@@ -450,10 +459,10 @@ function deleteAtSegments(current: unknown, segments: string[], index: number): 
       return current
     }
 
-    const child = current[arrayIndex]
+    const child = list[arrayIndex]
     const nextChild = deleteAtSegments(child, segments, index + 1)
     if (Object.is(nextChild, child)) return current
-    const next = current.slice()
+    const next = list.slice()
     next[arrayIndex] = nextChild
     return next
   }

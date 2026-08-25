@@ -209,10 +209,7 @@ export function useFieldArray<
         nextItems[secondIndex]!,
         nextItems[firstIndex]!,
       ]
-      ;[nextKeys[firstIndex], nextKeys[secondIndex]] = [
-        nextKeys[secondIndex]!,
-        nextKeys[firstIndex]!,
-      ]
+      ;[nextKeys[firstIndex], nextKeys[secondIndex]] = [nextKeys[secondIndex], nextKeys[firstIndex]]
 
       apply(nextItems, nextKeys, swapRemap(firstIndex, secondIndex), mutationOptions)
     },
@@ -233,7 +230,7 @@ export function useFieldArray<
       const [movedItem] = nextItems.splice(fromIndex, 1)
       const [movedKey] = nextKeys.splice(fromIndex, 1)
       nextItems.splice(toIndex, 0, movedItem!)
-      nextKeys.splice(toIndex, 0, movedKey!)
+      nextKeys.splice(toIndex, 0, movedKey)
 
       apply(nextItems, nextKeys, moveRemap(fromIndex, toIndex), mutationOptions)
     },

@@ -34,7 +34,7 @@ export function PasswordQualityForm() {
     criteriaMode: 'all',
     mode: ValidationMode.OnChange,
     rules: passwordRules,
-    onSubmit: async (_values, helpers) => {
+    onSubmit: (_values, helpers) => {
       helpers.setError('password', 'This password appeared in a breach', {
         source: 'server',
         type: 'breached',

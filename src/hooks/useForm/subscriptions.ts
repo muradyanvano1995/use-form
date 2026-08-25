@@ -174,11 +174,11 @@ export function useWatch<T extends FormValues, P extends FieldPath<T>>(
   const context = useOptionalFormContext()
   const optionsMode = nameArg === undefined && isWatchOptionsObject(formOrOptions)
   const control = resolvePositionalOrOptionsControl(formOrOptions, context, 'useWatch', optionsMode)
-  const name = optionsMode ? (formOrOptions as UseWatchOptions<T, P>).name : nameArg
+  const name = optionsMode ? formOrOptions.name : nameArg
 
   const store = getControlInternals(control).store
   const selected = useStoreSelector(store, (state) => {
-    if (name === undefined) return state.values as T | FieldPathValue<T, P>
+    if (name === undefined) return state.values
     return readFieldValue(state.values, name) as T | FieldPathValue<T, P>
   })
   useDebugValue(selected)
@@ -255,7 +255,7 @@ export function useFieldState<T extends FormValues, P extends FieldPath<T>>(
     control = resolveFormControl(formOrOptions as FormControl<T> | { control: FormControl<T> })
     name = nameArg
   } else if (isFieldStateOptionsObject(formOrOptions)) {
-    const options = formOrOptions as UseFieldStateOptions<T, P>
+    const options = formOrOptions
     control = resolveControl(options.control, context, 'useFieldState')
     name = options.name
   } else {

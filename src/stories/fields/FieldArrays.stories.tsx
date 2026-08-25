@@ -29,9 +29,9 @@ export const OrderItems: Story = {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByRole('button', { name: 'Append' }))
     await expect(canvas.getAllByLabelText('Name').length).toBeGreaterThan(1)
-    await userEvent.click(canvas.getAllByRole('button', { name: 'Remove' })[1]!)
+    await userEvent.click(canvas.getAllByRole('button', { name: 'Remove' })[1])
     await userEvent.click(canvas.getByRole('button', { name: 'Insert first' }))
     const downs = canvas.getAllByRole('button', { name: 'Down' })
-    await userEvent.click(downs[0]!)
+    await userEvent.click(downs[0])
   },
 }

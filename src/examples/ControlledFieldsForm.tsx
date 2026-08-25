@@ -1,4 +1,4 @@
-import { useController, useForm, type FieldPathValue } from '../hooks/useForm/index.ts'
+import { useController, useForm, type FieldPathValue } from '../hooks/useForm'
 import './examples.css'
 
 type ControlledDemoValues = {
@@ -146,7 +146,7 @@ export function ControlledFieldsForm() {
       },
       price: 19.99,
     },
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       const birth: FieldPathValue<ControlledDemoValues, 'profile.birthDate'> =
         values.profile.birthDate
       void birth

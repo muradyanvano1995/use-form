@@ -406,7 +406,7 @@ export const rules = {
         }> = []
 
         for (let fileIndex = 0; fileIndex < files.length; fileIndex += 1) {
-          const innerResult = await rule(files[fileIndex]!, values, context)
+          const innerResult = await rule(files[fileIndex], values, context)
           if (!isFailure(innerResult)) continue
 
           const parts = flattenValidationResult(innerResult)

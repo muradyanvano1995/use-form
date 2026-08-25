@@ -166,9 +166,7 @@ export function useController<
     if (disabledRef.current) return
 
     const parseFn = parseRef.current
-    const nextStored = (
-      parseFn ? parseFn(value) : (value as unknown as FieldPathValue<T, TName>)
-    ) as FieldPathValue<T, TName>
+    const nextStored = parseFn ? parseFn(value) : (value as unknown as FieldPathValue<T, TName>)
 
     const setOptions: SetValueOptions = {}
     if (shouldTouchRef.current) {

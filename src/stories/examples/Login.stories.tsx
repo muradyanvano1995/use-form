@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test'
 import { LoginForm } from '../../examples/LoginForm.tsx'
-import { ValidationMode } from '../../lib/index.ts'
+import { ValidationMode } from '../../lib'
 import { disabledArgType, modeArgType, reValidateModeArgType } from '../preview/controls.ts'
 import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'

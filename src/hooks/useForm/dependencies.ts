@@ -99,7 +99,7 @@ export function collectAffectedDependents(
   const visited = new Set<string>()
   let cursor = 0
   while (cursor < queue.length) {
-    const current = queue[cursor]!
+    const current = queue[cursor]
     cursor += 1
     if (visited.has(current)) continue
     visited.add(current)

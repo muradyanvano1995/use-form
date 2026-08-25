@@ -8,7 +8,7 @@ import {
   type DevToolsRedactionPredicate,
   type FormDevToolsProps,
 } from './index.ts'
-import type { FormControl } from '../hooks/useForm/index.ts'
+import type { FormControl } from '../hooks/useForm'
 // @ts-expect-error — serializer internals are not a public DevTools export
 import { safeSerialize as _safeSerialize } from './index.ts'
 // @ts-expect-error — control internals are not exported from DevTools

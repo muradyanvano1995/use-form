@@ -1,4 +1,4 @@
-import type { CriteriaMode, FieldError, FieldErrorDetails, FieldIssue } from '../errors.ts'
+import type { CriteriaMode, FieldError, FieldErrorDetails } from '../errors.ts'
 import {
   detailsFromStringMap,
   ErrorSource,
@@ -87,7 +87,7 @@ async function runFieldAndFormDetails<T extends FormValues>({
         criteriaMode,
         messages,
       })
-      const error = fieldErrorFromIssues(outcome.issues as FieldIssue[])
+      const error = fieldErrorFromIssues(outcome.issues)
       if (error) {
         fieldDetails[name] = error
       }
@@ -260,10 +260,7 @@ export async function runValidationPipeline<
         continue
       }
       const message = pickResolverFieldError(resolverResult.errors, name)
-      const derived = detailsFromStringMap(
-        message ? ({ [name]: message } as FieldErrors<TInput>) : {},
-        ErrorSource.Resolver,
-      )
+      const derived = detailsFromStringMap(message ? { [name]: message } : {}, ErrorSource.Resolver)
       if (derived[name]) scoped[name] = derived[name]!
     }
     resolverDetails = scoped
