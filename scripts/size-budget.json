@@ -1,8 +1,8 @@
 {
   "core.min.js": 100000,
   "core.min.js.gz": 26000,
-  "devtools.min.js": 20000,
-  "devtools.min.js.gz": 6500,
+  "devtools.min.js": 34000,
+  "devtools.min.js.gz": 9000,
   "resolver.min.js": 7000,
   "resolver.min.js.gz": 2500,
   "rules-only.min.js": 14000,

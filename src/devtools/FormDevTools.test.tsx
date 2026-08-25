@@ -1,4 +1,4 @@
-import { act, render, renderHook, screen } from '@testing-library/react'
+import { act, fireEvent, render, renderHook, screen } from '@testing-library/react'
 import { memo, StrictMode, useState } from 'react'
 import { describe, expect, it } from 'vitest'
 import { FormProvider, useForm, useWatch } from '../hooks/useForm'
@@ -77,7 +77,7 @@ describe('FormDevTools', () => {
         'aria-expanded',
         'false',
       )
-      expect(screen.queryByRole('button', { name: /Values/ })).not.toBeInTheDocument()
+      expect(screen.queryByRole('tab', { name: /Values/ })).not.toBeInTheDocument()
     })
 
     it('returns null when disabled', () => {
@@ -96,6 +96,134 @@ describe('FormDevTools', () => {
         'bottom-right',
       )
     })
+
+    it('floats inline inspector to the viewport and docks it back', () => {
+      const { result } = renderHook(() => useForm<Sample>({ defaultValues: defaults }))
+      const view = render(
+        <div data-testid="host">
+          <FormDevTools control={result.current.control} position="inline" />
+        </div>,
+      )
+      const host = view.getByTestId('host')
+      expect(host.querySelector('[data-form-devtools]')).not.toBeNull()
+
+      act(() => {
+        screen.getByRole('button', { name: 'Float over page' }).click()
+      })
+      const floating = screen.getByLabelText('Form DevTools')
+      expect(floating).toHaveAttribute('data-position', 'bottom-right')
+      expect(floating.parentElement).toBe(document.body)
+      expect(host.querySelector('[data-form-devtools]')).toBeNull()
+
+      act(() => {
+        screen.getByRole('button', { name: 'Dock inline' }).click()
+      })
+      expect(screen.getByLabelText('Form DevTools')).toHaveAttribute('data-position', 'inline')
+      expect(host.querySelector('[data-form-devtools]')).not.toBeNull()
+    })
+
+    it('drags and resizes the floating panel', () => {
+      const { result } = renderHook(() => useForm<Sample>({ defaultValues: defaults }))
+      render(<FormDevTools control={result.current.control} position="inline" />)
+
+      act(() => {
+        screen.getByRole('button', { name: 'Float over page' }).click()
+      })
+
+      const panel = screen.getByLabelText('Form DevTools')
+      const header = panel.querySelector('.fd-header')
+      expect(header).not.toBeNull()
+
+      const startX = Number.parseFloat(panel.style.left)
+      const startY = Number.parseFloat(panel.style.top)
+      expect(startX).toBeGreaterThan(0)
+      expect(startY).toBeGreaterThan(0)
+
+      fireEvent.pointerDown(header!, {
+        button: 0,
+        clientX: startX + 24,
+        clientY: startY + 12,
+        pointerId: 1,
+      })
+      fireEvent.pointerMove(header!, {
+        clientX: startX + 24 - 120,
+        clientY: startY + 12 - 90,
+        pointerId: 1,
+      })
+      fireEvent.pointerUp(header!, { pointerId: 1 })
+
+      expect(Number.parseFloat(panel.style.left)).toBeLessThan(startX)
+      expect(Number.parseFloat(panel.style.top)).toBeLessThan(startY)
+
+      const resize = screen.getByRole('button', { name: 'Resize DevTools' })
+      const widthBefore = Number.parseFloat(panel.style.width)
+      const heightBefore = Number.parseFloat(panel.style.height)
+
+      fireEvent.pointerDown(resize, {
+        button: 0,
+        clientX: 400,
+        clientY: 400,
+        pointerId: 2,
+      })
+      fireEvent.pointerMove(resize, {
+        clientX: 520,
+        clientY: 500,
+        pointerId: 2,
+      })
+      fireEvent.pointerUp(resize, { pointerId: 2 })
+
+      expect(Number.parseFloat(panel.style.width)).toBeGreaterThan(widthBefore)
+      expect(Number.parseFloat(panel.style.height)).toBeGreaterThan(heightBefore)
+    })
+
+    it('stacks collapsed floating inspectors at the bottom-right', () => {
+      const { result: first } = renderHook(() => useForm<Sample>({ defaultValues: defaults }))
+      const { result: second } = renderHook(() => useForm<Sample>({ defaultValues: defaults }))
+      render(
+        <>
+          <FormDevTools control={first.current.control} position="inline" />
+          <FormDevTools control={second.current.control} position="inline" />
+        </>,
+      )
+
+      const floatButtons = screen.getAllByRole('button', { name: 'Float over page' })
+      act(() => {
+        floatButtons[0]!.click()
+        floatButtons[1]!.click()
+      })
+
+      const collapseButtons = screen.getAllByRole('button', { name: 'Collapse' })
+      act(() => {
+        collapseButtons[0]!.click()
+        collapseButtons[1]!.click()
+      })
+
+      const panels = screen.getAllByLabelText('Form DevTools')
+      expect(panels).toHaveLength(2)
+      expect(panels[0]).toHaveStyle({ right: '16px', bottom: '16px' })
+      expect(panels[1]).toHaveStyle({ right: '16px', bottom: '68px' })
+    })
+
+    it('raises z-index when a floating inspector is activated', () => {
+      const { result: first } = renderHook(() => useForm<Sample>({ defaultValues: defaults }))
+      const { result: second } = renderHook(() => useForm<Sample>({ defaultValues: defaults }))
+      render(
+        <>
+          <FormDevTools control={first.current.control} position="bottom-right" />
+          <FormDevTools control={second.current.control} position="bottom-right" />
+        </>,
+      )
+
+      const panels = screen.getAllByLabelText('Form DevTools')
+      const firstZ = Number.parseInt(panels[0]!.style.zIndex, 10)
+      const secondZ = Number.parseInt(panels[1]!.style.zIndex, 10)
+      expect(secondZ).toBeGreaterThan(firstZ)
+
+      fireEvent.pointerDown(panels[0]!)
+      expect(Number.parseInt(panels[0]!.style.zIndex, 10)).toBeGreaterThan(
+        Number.parseInt(panels[1]!.style.zIndex, 10),
+      )
+    })
   })
 
   describe('privacy and updates', () => {
@@ -111,7 +239,30 @@ describe('FormDevTools', () => {
       expect(screen.queryByText(/hunter2-secret/)).not.toBeInTheDocument()
       expect(screen.queryByText(/secret-bytes/)).not.toBeInTheDocument()
       expect(screen.getByText(/avatar.png/)).toBeInTheDocument()
+      act(() => {
+        screen.getByRole('tab', { name: /Errors/ }).click()
+      })
       expect(screen.getByText(/Required/)).toBeInTheDocument()
+      act(() => {
+        result.current.setError('password', 'Password is required')
+        screen.getByRole('tab', { name: /Details/ }).click()
+      })
+      expect(screen.getByText('password')).toBeInTheDocument()
+      expect(screen.getByText('Password is required')).toBeInTheDocument()
+      expect(screen.queryByText(/^redacted$/i)).not.toBeInTheDocument()
+    })
+
+    it('does not redact touched/dirty booleans under password-named paths', () => {
+      const { result } = renderHook(() => useForm<Sample>({ defaultValues: defaults }))
+      render(<FormDevTools control={result.current.control} position="inline" />)
+      act(() => {
+        result.current.setValue('password', 'hunter2-secret', { shouldTouch: true })
+        screen.getByRole('tab', { name: /State/ }).click()
+      })
+      expect(screen.queryByText(/hunter2-secret/)).not.toBeInTheDocument()
+      expect(screen.getAllByText('password').length).toBeGreaterThan(0)
+      expect(screen.getAllByText('true').length).toBeGreaterThan(0)
+      expect(screen.queryByText(/^redacted$/i)).not.toBeInTheDocument()
     })
 
     it('can hide filenames and redact complete file fields', () => {
@@ -128,7 +279,7 @@ describe('FormDevTools', () => {
 
       view.rerender(<FormDevTools control={result.current.control} position="inline" redactFiles />)
       expect(screen.queryByText(/payroll.pdf/)).not.toBeInTheDocument()
-      expect(screen.getByText(/redacted/)).toBeInTheDocument()
+      expect(screen.getAllByText(/redacted/).length).toBeGreaterThan(0)
     })
   })
 

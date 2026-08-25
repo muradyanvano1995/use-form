@@ -224,7 +224,8 @@
   }
 }
 
-.demo-form__error {
+.demo-form .demo-form__error,
+.docs-page .demo-form__error {
   margin: 0;
   color: var(--docs-error-text);
   font-size: 0.88rem;
@@ -239,25 +240,29 @@
   border-radius: var(--docs-radius-sm);
 }
 
-.demo-form__banner {
+.demo-form .demo-form__banner,
+.docs-page .demo-form__banner {
   color: var(--docs-error-text);
   background: var(--docs-error-bg);
   border: 1px solid var(--docs-error-border);
 }
 
-.demo-form__success {
+.demo-form .demo-form__success,
+.docs-page .demo-form__success {
   color: var(--docs-success-text);
   background: var(--docs-success-bg);
   border: 1px solid var(--docs-success-border);
 }
 
-.demo-form__warning {
+.demo-form .demo-form__warning,
+.docs-page .demo-form__warning {
   color: var(--docs-warning-text);
   background: var(--docs-warning-bg);
   border: 1px solid var(--docs-warning-border);
 }
 
-.demo-form__info {
+.demo-form .demo-form__info,
+.docs-page .demo-form__info {
   color: var(--docs-info-text);
   background: var(--docs-info-bg);
   border: 1px solid var(--docs-info-border);
@@ -271,7 +276,7 @@
 }
 
 .demo-form__actions button,
-.demo-form button {
+.demo-form button:not(:is([data-form-devtools] *)) {
   appearance: none;
   min-height: var(--docs-control-min-height);
   border: 1px solid transparent;
@@ -285,11 +290,11 @@
 }
 
 .demo-form__actions button:hover:not(:disabled),
-.demo-form button:hover:not(:disabled) {
+.demo-form button:hover:not(:disabled, :is([data-form-devtools] *)) {
   background: var(--docs-button-primary-hover);
 }
 
-.demo-form button:disabled {
+.demo-form button:disabled:not(:is([data-form-devtools] *)) {
   background: var(--docs-disabled-bg);
   color: var(--docs-disabled-text);
   cursor: not-allowed;
@@ -322,7 +327,8 @@
   border-radius: 0.25rem;
 }
 
-.demo-form__issue-list {
+.demo-form .demo-form__issue-list,
+.docs-page .demo-form__issue-list {
   margin: 0.15rem 0 0;
   padding-left: 1.15rem;
   color: var(--docs-error-text);

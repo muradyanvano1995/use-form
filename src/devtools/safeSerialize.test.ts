@@ -46,6 +46,19 @@ describe('safeSerialize', () => {
       expect((result.profile as { city: string }).city).toBe('Yerevan')
     })
 
+    it('can disable sensitive-key heuristics while keeping explicit redaction', () => {
+      const result = safeSerialize(
+        { password: true, profile: { password: false, city: 'Yerevan' } },
+        { redactSensitiveKeys: false, redactPaths: ['profile.city'] },
+      ) as {
+        password: boolean
+        profile: { password: boolean; city: { $dev: string } }
+      }
+      expect(result.password).toBe(true)
+      expect(result.profile.password).toBe(false)
+      expect(result.profile.city).toEqual({ $dev: 'redacted' })
+    })
+
     it('applies explicit paths and custom predicates', () => {
       const byPath = safeSerialize(
         { profile: { ssn: '111', city: 'Yerevan' } },

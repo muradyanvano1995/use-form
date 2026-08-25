@@ -23,7 +23,7 @@ const meta = {
     docs: {
       description: {
         component: withGithubExample(
-          'Import FormDevTools from <package-name>/devtools. Passwords are redacted. File contents are never shown. CSS variables follow the preview theme with dark fallbacks.',
+          'Import FormDevTools from <package-name>/devtools. Passwords are redacted. File contents are never shown. The inspector uses a themed panel with status chips, section tabs, and a colorized value tree (`--form-devtools-*` tokens with dark fallbacks). Use Float to portal over the page; drag the header to move and the corner handle to resize. Dock returns inline.',
           'DevToolsInspectorForm.tsx',
         ),
       },
@@ -39,6 +39,15 @@ type Story = StoryObj<typeof meta>
 export const InlineInspector: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
+    const body = within(document.body)
+    await userEvent.click(canvas.getByRole('button', { name: 'Float over page' }))
+    await expect(canvas.queryByLabelText('Form DevTools')).toBeNull()
+    await expect(body.getByLabelText('Form DevTools')).toHaveAttribute(
+      'data-position',
+      'bottom-right',
+    )
+    await userEvent.click(body.getByRole('button', { name: 'Dock inline' }))
+    await expect(canvas.getByLabelText('Form DevTools')).toBeVisible()
     await userEvent.click(canvas.getByRole('button', { name: 'Collapse' }))
     await expect(canvas.getByRole('button', { name: 'Expand' })).toBeVisible()
   },

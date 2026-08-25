@@ -45,8 +45,9 @@ export function DevToolsInspectorForm({
           <h2>Form DevTools</h2>
           <p>
             Development inspector imported from <code>{'<package-name>/devtools'}</code>. Passwords
-            are redacted; file contents are never shown. The inspector resolves <code>control</code>{' '}
-            from context.
+            are redacted; file contents are never shown. Use <strong>Float</strong> to move the
+            panel over the page (leaves the form layout); <strong>Dock</strong> pins it back
+            inline. The inspector resolves <code>control</code> from context.
           </p>
         </header>
 
@@ -72,7 +73,14 @@ export function DevToolsInspectorForm({
 
         <label className="demo-form__field">
           Avatar
-          <input {...form.register('avatar', { type: 'file' })} />
+          <input
+            {...form.register('avatar', {
+              type: 'file',
+              accept: 'image/jpeg,image/png',
+            })}
+            type="file"
+            accept="image/jpeg,image/png"
+          />
         </label>
 
         <div className="demo-form__actions">

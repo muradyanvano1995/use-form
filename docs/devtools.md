@@ -39,7 +39,7 @@ Recommended production exclusion: do not render it, or pass `enabled={false}` (r
 | Prop            | Meaning                                                               |
 | --------------- | --------------------------------------------------------------------- |
 | `control`       | Explicit `form.control`. Optional inside `FormProvider`.              |
-| `position`      | `'bottom-right'` (default), `'bottom-left'`, or `'inline'`            |
+| `position`      | Initial placement: `'bottom-right'` (default), `'bottom-left'`, or `'inline'`. Header **Float** / **Dock** toggles at runtime; floating portals to `document.body` so the panel leaves the form layout. |
 | `initiallyOpen` | Panel expanded on first render (default `true`)                       |
 | `enabled`       | `false` renders nothing                                               |
 | `redact`        | Extra paths (`'profile.ssn'`) or a `(path, key) => boolean` predicate |
@@ -50,7 +50,9 @@ Public DevTools exports: `FormDevTools`, `FormDevToolsProps`, `DevToolsPosition`
 
 ## Privacy
 
-Sensitive keys are redacted by default (case-insensitive name match), including `password`, `passcode`, `secret`, `token`, `apiKey`, `accessToken`, `refreshToken`, `authorization`, `creditCard`, `cardNumber`, `cvv`, `cvc`. Supply `redact` as extra paths or a custom `(path, key) => boolean` predicate.
+Sensitive keys are redacted by default on **Values** and **Defaults** (case-insensitive name match), including `password`, `passcode`, `secret`, `token`, `apiKey`, `accessToken`, `refreshToken`, `authorization`, `creditCard`, `cardNumber`, `cvv`, `cvc`. Supply `redact` as extra paths or a custom `(path, key) => boolean` predicate.
+
+**State** shows touched/dirty maps and flags without sensitive-key redaction — a boolean under `touched.profile.password` is not a secret. **Errors** / **Details** also skip value redaction so field messages stay readable.
 
 **Filenames can themselves be sensitive.** Default File display is `{ $dev: 'File', name, type, size }`. Use `redactFiles` to replace the whole field with `{ $dev: 'redacted' }`, or `hideFileNames` to keep type/size without `name`. The serializer never reads File or Blob contents.
 
@@ -64,6 +66,10 @@ Cyclic objects, functions, maps, sets, and class instances are tagged without wa
 
 ## Subscriptions
 
-The inspector uses `useFormState` with a snapshot equality check. It does not write to the form and does not force extra rerenders of memoized children that subscribe to unrelated slices. Collapsed sections skip serialization.
+The inspector uses `useFormState` with a snapshot equality check. It does not write to the form and does not force extra rerenders of memoized children that subscribe to unrelated slices. Inactive tabs skip serialization.
+
+## UI
+
+The panel includes status chips (`Valid` / `Invalid`, dirty, error count, submitting, …), section tabs (Values, Errors, Details, State, Defaults), a colorized key/value tree for values/state, and card layouts for Errors/Details (path, error-colored message via `--form-devtools-error`, source/type pills; no JSON dump and no redacting of error messages on password-named paths). A **Float** control (before Collapse) portals the inspector to `document.body` as a fixed panel so large forms stay scrollable and the page layout is unobstructed. While floating, drag the header to move and use the bottom-right handle to resize (clamped to the viewport). Collapsing a floating panel docks the chip to the bottom-right, stacking multiple inspectors so they do not overlap; interacting with a panel raises its z-index above the others. **Dock** returns it inline. Only the value panel scrolls. Theme via `--form-devtools-*` CSS variables (surfaces, accents, `--form-devtools-on-accent`, syntax colors); dark fallbacks apply when unset.
 
 Phase 12 DevTools is **read-only**: no editing, reset, submit, time travel, or import/export.

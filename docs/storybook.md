@@ -23,11 +23,11 @@ Three layers, all Storybook-native:
 
 1. **Manager** — `.storybook/manager.ts` + `create()` themes. Follows the preview `theme` global.
 2. **Preview / Docs** — forced `light` only (dark mode disabled). A preview decorator sets `data-theme="light"` on the document and docs containers, and scopes canvas tokens on `.docs-preview-root`. `parameters.previewTheme`/toolbar theme switching are no-ops now (Storybook always renders light).
-3. **Examples** — semantic `--docs-*` variables in `tokens.css`. `examples.css` consumes them. Do not add per-story palettes. Do not import `src/index.css` or `App.tsx`.
+3. **Examples** — semantic `--docs-*` variables in `tokens.css`. `examples.css` consumes them. Do not add per-story palettes. Do not import `src/index.css` or `App.tsx`. Status colors (`.demo-form__error`, banners, issue lists) use selectors that beat `.docs-page p` / `ul` prose color so field errors stay on `--docs-error-text`.
 
 Backgrounds addon is **disabled**. The theme owns the canvas.
 
-DevTools uses `--form-devtools-*` with hardcoded fallbacks so it still renders outside Storybook.
+DevTools uses `--form-devtools-*` tokens (surfaces, accents, syntax colors) with hardcoded fallbacks so it still renders outside Storybook.
 
 ## Adding a story
 

@@ -89,7 +89,7 @@ DOM `name` attributes use the path string (`name="address.city"`). Browser `Form
 ### File inputs (`File | null` / `File[]`)
 
 - Prefer defaults `null` and `[]`. Never store `FileList` — parse to `File | null` or `File[]`.
-- Register with explicit `type: 'file'` (and `multiple: true` for `File[]`).
+- Register with explicit `type: 'file'` (and `multiple: true` for `File[]`). Also set `type="file"` on the `<input>` — register options configure parsing/uncontrolled props (`accept` / `multiple`) but do not set the DOM input type.
 - File registration returns **uncontrolled** props only (no `value` / `checked`).
 - `setValue` can update form state; browsers cannot populate a native file selection. Setting `null` / `[]` clears the native input.
 - `reset` / `resetField` restore state and clear native file inputs via `input.value = ''`.
@@ -175,7 +175,7 @@ Architecture:
 - `createFormStore` — internal external store (`getState` / `setState` / `subscribe` / `getServerSnapshot` / transactions)
 - `form.control` — opaque stable `FormControl` (internals in a module `WeakMap`; no public `_store` / handlers)
 - Getters always read `store.getState()` (`docs/imperative-api.md`). `form.batch()` defers notifications until the outermost transaction ends (`docs/batching.md`).
-- DevTools: import from `src/devtools/index.ts`, never the core barrel (`docs/devtools.md`).
+- DevTools: import from `src/devtools/index.ts`, never the core barrel (`docs/devtools.md`). The inspector UI uses status chips, section tabs, and a colorized tree themed with `--form-devtools-*`. Values/Defaults redact sensitive keys; State/Errors/Details do not redact password-named metadata or error messages. Errors/Details cards use the error accent for messages. Header Float/Dock toggles between inline and a fixed portal on `document.body`; floating mode supports header drag, corner resize, bottom-right collapsed stacking across multiple inspectors, and bring-to-front z-index on interaction.
 - Subscription hooks use `useSyncExternalStore` + selector equality (`Object.is` by default; `useFieldState` uses field-state equality; `useFormState` accepts custom `isEqual`)
 - Context: `FormProvider control={form.control}` + `useFormContext<T>()`; hooks accept optional `control` and fall back to the nearest provider
 

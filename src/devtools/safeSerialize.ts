@@ -24,6 +24,11 @@ export type SafeSerializeOptions = {
   redactPaths?: readonly string[]
   redact?: DevToolsRedactionPredicate
   redactFiles?: boolean
+  /**
+   * When false, skip default sensitive-key heuristics (`password`, `token`, …).
+   * Explicit `redactPaths` / `redact` still apply. Default: true.
+   */
+  redactSensitiveKeys?: boolean
   /** When true, File metadata omits `name`. Contents are never read either way. */
   hideFileNames?: boolean
   maxDepth?: number
@@ -56,6 +61,7 @@ function pathIsRedacted(path: string, redactPaths: readonly string[]): boolean {
 function shouldRedact(path: string, key: string, options: SafeSerializeOptions): boolean {
   if (pathIsRedacted(path, options.redactPaths ?? [])) return true
   if (options.redact?.(path, key)) return true
+  if (options.redactSensitiveKeys === false) return false
   if (isDefaultSensitiveKey(key)) return true
   return path.split('.').some((segment) => isDefaultSensitiveKey(segment))
 }

@@ -55,7 +55,7 @@ Current workspace `name` is `react-hooks` (generic). README install commands use
 
 `verify` is the full non-destructive suite. There is no `prepublishOnly`. `pack:dry-run` inspects the archive without publishing.
 
-Size budgets live in `scripts/size-budget.json` and are measured from minified consumer bundles with React external. Initial measured sizes (minified): core 81 kB / 21 kB gzip, DevTools 15 kB / 4.7 kB gzip, resolver 5.3 kB / 1.9 kB gzip, `rules`-only 11 kB, `useForm`-only 65 kB. Budgets include headroom above those measurements.
+Size budgets live in `scripts/size-budget.json` and are measured from minified consumer bundles with React external. Initial measured sizes (minified): core 81 kB / 21 kB gzip, DevTools ~31 kB / ~8 kB gzip (themed inspector + error cards), resolver 5.3 kB / 1.9 kB gzip, `rules`-only 11 kB, `useForm`-only 65 kB. Budgets include headroom above those measurements.
 
 ## Docs
 

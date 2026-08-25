@@ -55,11 +55,24 @@
   --docs-font: 'Segoe UI', 'Helvetica Neue', system-ui, sans-serif;
   --docs-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --docs-control-min-height: 2.5rem;
-  --form-devtools-bg: #f8fafc;
+  --form-devtools-bg: #f4f7fb;
+  --form-devtools-surface: #ffffff;
+  --form-devtools-elevated: #e8eef6;
+  --form-devtools-border: #c9d4e3;
   --form-devtools-fg: #0f172a;
-  --form-devtools-muted: #e2e8f0;
-  --form-devtools-border: #cbd5e1;
-  --form-devtools-header: #e2e8f0;
+  --form-devtools-muted: #64748b;
+  --form-devtools-accent: #0d9488;
+  --form-devtools-on-accent: #ffffff;
+  --form-devtools-ok: #059669;
+  --form-devtools-warn: #d97706;
+  --form-devtools-error: #e11d48;
+  --form-devtools-info: #0284c7;
+  --form-devtools-key: #0369a1;
+  --form-devtools-string: #15803d;
+  --form-devtools-number: #c2410c;
+  --form-devtools-boolean: #6d28d9;
+  --form-devtools-null: #64748b;
+  --form-devtools-shadow: 0 16px 40px rgb(15 23 42 / 12%);
 }
 
 [data-theme='dark'] {
@@ -109,11 +122,24 @@
   --docs-syntax-punctuation: #c5d0dc;
   --docs-syntax-tag: #7ee787;
   --docs-shadow: 0 12px 32px rgb(0 0 0 / 35%);
-  --form-devtools-bg: #0f172a;
-  --form-devtools-fg: #e2e8f0;
-  --form-devtools-muted: #1e293b;
+  --form-devtools-bg: #111827;
+  --form-devtools-surface: #1a2234;
+  --form-devtools-elevated: #243049;
   --form-devtools-border: #334155;
-  --form-devtools-header: #1e293b;
+  --form-devtools-fg: #e5eefb;
+  --form-devtools-muted: #94a3b8;
+  --form-devtools-accent: #2dd4bf;
+  --form-devtools-on-accent: #042f2e;
+  --form-devtools-ok: #34d399;
+  --form-devtools-warn: #fbbf24;
+  --form-devtools-error: #fb7185;
+  --form-devtools-info: #38bdf8;
+  --form-devtools-key: #7dd3fc;
+  --form-devtools-string: #86efac;
+  --form-devtools-number: #fdba74;
+  --form-devtools-boolean: #c4b5fd;
+  --form-devtools-null: #94a3b8;
+  --form-devtools-shadow: 0 18px 50px rgb(2 6 23 / 45%);
 }
 
 @media (prefers-reduced-motion: reduce) {
