@@ -7,7 +7,7 @@ function ApiOverviewPage() {
   return (
     <DocsPage>
       <Kicker>Public surface</Kicker>
-      <h1>API overview</h1>
+      <h1>API Reference</h1>
       <p className="docs-lead">
         Runtime exports from the core entry, plus the two subpaths that are intentionally absent
         from that barrel. Inventory source: <code>docs/public-api.md</code>. Package identity is not
@@ -90,7 +90,8 @@ function ApiOverviewPage() {
           {
             name: 'createAsyncRule',
             kind: 'validation helper',
-            notes: 'Same scheduler as rules.async. See Validation/Async validation → CreateAsyncRule.',
+            notes:
+              'Same scheduler as rules.async. See Validation/Async validation → CreateAsyncRule.',
           },
           {
             name: 'ValidationMode',
@@ -115,7 +116,8 @@ function ApiOverviewPage() {
           {
             name: 'normalizeErrors',
             kind: 'helper',
-            notes: 'Drop empty strings and unsafe path segments. See Core Concepts/normalizeErrors.',
+            notes:
+              'Drop empty strings and unsafe path segments. See Core Concepts/normalizeErrors.',
           },
           {
             name: 'defaultValidationMessages',
@@ -172,7 +174,7 @@ function ApiOverviewPage() {
 }
 
 const meta = {
-  title: 'API overview',
+  title: 'API Reference',
   component: ApiOverviewPage,
   parameters: {
     layout: 'fullscreen',

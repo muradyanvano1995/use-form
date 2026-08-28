@@ -6,7 +6,7 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Examples/Checkout',
+  title: 'Complete Examples/Checkout',
   component: CheckoutForm,
   args: {
     disabled: false,
@@ -53,16 +53,7 @@ export const Default: Story = {
 
 export const Mobile: Story = {
   parameters: {
-    previewTheme: 'light',
     viewport: { defaultViewport: 'smallMobile' },
     docs: { description: { story: 'Checkout at 320px. Rows stack; buttons remain tappable.' } },
-  },
-}
-
-export const DarkMobile: Story = {
-  parameters: {
-    previewTheme: 'light',
-    viewport: { defaultViewport: 'smallMobile' },
-    docs: { description: { story: 'Light canvas at small mobile width (dark mode disabled).' } },
   },
 }

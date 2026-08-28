@@ -6,7 +6,7 @@
 - React Testing Library (`renderHook`, `act`, `waitFor`)
 - `@testing-library/jest-dom` matchers via `src/test/setup.ts`
 - Coverage via `@vitest/coverage-v8` (configured in `vite.config.ts`)
-- Storybook play functions run in the Storybook UI; `npm run test:storybook` is Vitest on `src/stories` (RTL flows, not `composeStories`)
+- Storybook play functions run in the Storybook UI and in `npm run test:storybook-browser` (`@storybook/test-runner` + axe). `npm run test:storybook` is Vitest on `src/stories` (RTL flows, not `composeStories`) and is **not** a substitute for browser play.
 
 ## File naming
 
@@ -37,12 +37,15 @@ formGetters.ts             → formGetters.test.ts (+ formGetters.type-test.ts)
 formBatch.ts               → formBatch.test.ts (+ formBatch.type-test.ts)
 devtools/FormDevTools.tsx  → FormDevTools.test.tsx
 devtools/safeSerialize.ts  → safeSerialize.test.ts
+devtools/dirtyFields.ts    → dirtyFields.test.ts
+devtools/hooks/usePanelPersistence.ts → usePanelPersistence.test.ts
+devtools/components/*      → components/devtoolsUi.test.tsx (JsonTree / ErrorPanel)
 src/stories/**/*.stories.tsx CSF play functions (Storybook runtime)
 src/stories/storyPlay.test.tsx (RTL flows mirroring critical play paths)
 src/stories/components/CodePanel.test.tsx
 src/examples/LocalizedRegistrationForm.test.tsx
 src/stories/snippets/consumerSnippets.test.ts
-src/stories/theme/resolvePreviewTheme.test.ts
+src/stories/theme/applyDocumentTheme.test.ts
 src/stories/preview/safeActions.test.ts
 ```
 
@@ -69,7 +72,7 @@ formGetters.type-test.ts
 formBatch.type-test.ts
 ```
 
-DevTools type tests live in `src/devtools/devtools.type-test.ts`. Serializer/component tests: `safeSerialize.test.ts`, `FormDevTools.test.tsx`. Getter/batch runtime tests: `formGetters.test.ts`, `formBatch.test.ts`.
+DevTools type tests live in `src/devtools/devtools.type-test.ts`. Serializer/component tests: `safeSerialize.test.ts`, `FormDevTools.test.tsx`, `dirtyFields.test.ts`, `hooks/usePanelPersistence.test.ts`, `components/devtoolsUi.test.tsx`. Getter/batch runtime tests: `formGetters.test.ts`, `formBatch.test.ts`.
 
 ## Organization inside `useForm.test.ts`
 

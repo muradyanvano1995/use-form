@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect, userEvent, within } from 'storybook/test'
+import { expect, userEvent, waitFor, within } from 'storybook/test'
 import { DependentFieldsForm } from '../../examples/DependentFieldsForm.tsx'
 import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
@@ -30,9 +30,9 @@ export const PasswordAndPostal: Story = {
     await userEvent.type(canvas.getByLabelText('Password'), 'alpha')
     await userEvent.type(canvas.getByLabelText('Confirm password'), 'beta')
     await userEvent.click(canvas.getByRole('button', { name: 'Validate form' }))
-    await expect(canvas.getByText('Passwords must match')).toBeVisible()
+    await waitFor(() => expect(canvas.getByText('Passwords must match')).toBeVisible())
     await userEvent.clear(canvas.getByLabelText('Password'))
     await userEvent.type(canvas.getByLabelText('Password'), 'beta')
-    await expect(canvas.getByText('Passwords must match')).not.toBeInTheDocument()
+    await waitFor(() => expect(canvas.queryByText('Passwords must match')).not.toBeInTheDocument())
   },
 }

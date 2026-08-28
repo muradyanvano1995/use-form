@@ -87,13 +87,13 @@ export function AsyncDefaultsProfileForm({
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>Async default values</h2>
         <p>
           Fallback values render immediately. Loaded defaults replace pristine fields and become the
           reset baseline. Dirty edits are preserved.
         </p>
-      </header>
+      </div>
 
       {form.isLoadingDefaults ? (
         <p className="demo-form__hint" role="status">

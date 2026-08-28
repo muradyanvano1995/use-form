@@ -1,10 +1,4 @@
-import {
-  FormProvider,
-  rules,
-  useFieldState,
-  useForm,
-  ValidationMode,
-} from '../hooks/useForm'
+import { FormProvider, rules, useFieldState, useForm, ValidationMode } from '../hooks/useForm'
 import './examples.css'
 
 type FieldStateValues = {
@@ -35,14 +29,14 @@ export function FieldStateForm() {
   return (
     <FormProvider control={form.control}>
       <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-        <header className="demo-form__header">
+        <div className="demo-form__header">
           <h2>useFieldState</h2>
           <p>
             Child reads error / touched / dirty for one path without selecting the whole form
             snapshot. Distinct from <code>useWatch</code> (values) and <code>useFormState</code>{' '}
             (custom selectors).
           </p>
-        </header>
+        </div>
         <div className="demo-form__field">
           <label htmlFor={form.getFieldId('email')}>Email</label>
           <input {...form.register('email')} type="email" autoComplete="email" />

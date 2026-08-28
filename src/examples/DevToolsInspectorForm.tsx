@@ -41,15 +41,15 @@ export function DevToolsInspectorForm({
   return (
     <FormProvider control={form.control}>
       <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-        <header className="demo-form__header">
+        <div className="demo-form__header">
           <h2>Form DevTools</h2>
           <p>
             Development inspector imported from <code>{'<package-name>/devtools'}</code>. Passwords
             are redacted; file contents are never shown. Use <strong>Float</strong> to move the
-            panel over the page (leaves the form layout); <strong>Dock</strong> pins it back
-            inline. The inspector resolves <code>control</code> from context.
+            panel over the page (leaves the form layout); <strong>Dock</strong> pins it back inline.
+            The inspector resolves <code>control</code> from context.
           </p>
-        </header>
+        </div>
 
         <label className="demo-form__field">
           Display name

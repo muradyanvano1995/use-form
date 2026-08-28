@@ -42,10 +42,10 @@ export function RadioCheckboxGroupsForm({
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>Radio and checkbox groups</h2>
         <p>Use fieldset and legend. Radios share a name via register type radio.</p>
-      </header>
+      </div>
 
       <fieldset>
         <legend>Preferred contact</legend>

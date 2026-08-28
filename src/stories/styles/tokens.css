@@ -1,3 +1,4 @@
+:root,
 [data-theme='light'] {
   color-scheme: light;
   --docs-bg-page: #f4f1ea;
@@ -20,7 +21,7 @@
   --docs-button-secondary-border: #c9c0b0;
   --docs-button-danger-bg: #9f1239;
   --docs-button-danger-text: #ffffff;
-  --docs-error-text: #e11d48;
+  --docs-error-text: #9f1239;
   --docs-error-bg: #fff1f2;
   --docs-error-border: #fda4af;
   --docs-warning-text: #854d0e;
@@ -61,9 +62,9 @@
   --form-devtools-elevated: #e8eef6;
   --form-devtools-border: #c9d4e3;
   --form-devtools-fg: #0f172a;
-  --form-devtools-muted: #64748b;
-  --form-devtools-accent: #0d9488;
-  --form-devtools-on-accent: #ffffff;
+  --form-devtools-muted: #475569;
+  --form-devtools-accent: #14b8a6;
+  --form-devtools-on-accent: #042f2e;
   --form-devtools-ok: #059669;
   --form-devtools-warn: #d97706;
   --form-devtools-error: #e11d48;
@@ -72,76 +73,8 @@
   --form-devtools-string: #15803d;
   --form-devtools-number: #c2410c;
   --form-devtools-boolean: #6d28d9;
-  --form-devtools-null: #64748b;
+  --form-devtools-null: #475569;
   --form-devtools-shadow: 0 16px 40px rgb(15 23 42 / 12%);
-}
-
-[data-theme='dark'] {
-  color-scheme: dark;
-  --docs-bg-page: #10151c;
-  --docs-bg-elevated: #1b2330;
-  --docs-bg-muted: #151c26;
-  --docs-text: #e8eef6;
-  --docs-text-secondary: #c5d0dc;
-  --docs-text-muted: #9aabc0;
-  --docs-border: #3d4c5f;
-  --docs-input-bg: #0f141b;
-  --docs-input-text: #e8eef6;
-  --docs-input-placeholder: #7d8ea3;
-  --docs-focus: #5eead4;
-  --docs-focus-ring: #5eead4;
-  --docs-button-primary-bg: #14b8a6;
-  --docs-button-primary-text: #042f2e;
-  --docs-button-primary-hover: #2dd4bf;
-  --docs-button-secondary-bg: #1b2330;
-  --docs-button-secondary-text: #e8eef6;
-  --docs-button-secondary-border: #3d4c5f;
-  --docs-button-danger-bg: #e11d48;
-  --docs-button-danger-text: #ffffff;
-  --docs-error-text: #fecdd3;
-  --docs-error-bg: #4c0519;
-  --docs-error-border: #9f1239;
-  --docs-warning-text: #fde68a;
-  --docs-warning-bg: #422006;
-  --docs-warning-border: #a16207;
-  --docs-success-text: #bbf7d0;
-  --docs-success-bg: #052e16;
-  --docs-success-border: #166534;
-  --docs-info-text: #bfdbfe;
-  --docs-info-bg: #172554;
-  --docs-info-border: #1d4ed8;
-  --docs-disabled-bg: #2a3442;
-  --docs-disabled-text: #9ca3af;
-  --docs-code-bg: #0f141b;
-  --docs-code-text: #e8eef6;
-  --docs-syntax-default: #e8eef6;
-  --docs-syntax-comment: #8b949e;
-  --docs-syntax-keyword: #79c0ff;
-  --docs-syntax-string: #7ee787;
-  --docs-syntax-function: #d2a8ff;
-  --docs-syntax-number: #ffa657;
-  --docs-syntax-punctuation: #c5d0dc;
-  --docs-syntax-tag: #7ee787;
-  --docs-syntax-attr: #7dd3fc;
-  --docs-shadow: 0 12px 32px rgb(0 0 0 / 35%);
-  --form-devtools-bg: #111827;
-  --form-devtools-surface: #1a2234;
-  --form-devtools-elevated: #243049;
-  --form-devtools-border: #334155;
-  --form-devtools-fg: #e5eefb;
-  --form-devtools-muted: #94a3b8;
-  --form-devtools-accent: #2dd4bf;
-  --form-devtools-on-accent: #042f2e;
-  --form-devtools-ok: #34d399;
-  --form-devtools-warn: #fbbf24;
-  --form-devtools-error: #fb7185;
-  --form-devtools-info: #38bdf8;
-  --form-devtools-key: #7dd3fc;
-  --form-devtools-string: #86efac;
-  --form-devtools-number: #fdba74;
-  --form-devtools-boolean: #c4b5fd;
-  --form-devtools-null: #94a3b8;
-  --form-devtools-shadow: 0 18px 50px rgb(2 6 23 / 45%);
 }
 
 @media (prefers-reduced-motion: reduce) {

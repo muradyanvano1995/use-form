@@ -4,7 +4,7 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Examples/Async defaults',
+  title: 'Complete Examples/Async profile defaults',
   component: AsyncDefaultsProfileForm,
   args: {
     loadOutcome: 'success',

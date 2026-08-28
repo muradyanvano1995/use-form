@@ -5,7 +5,6 @@ import { applyDocumentTheme } from '../theme/applyDocumentTheme.ts'
 
 function ThemeRoot({ children }: { children: ReactNode }) {
   useLayoutEffect(() => {
-    // Dark mode disabled: keep Storybook/docs always on the light theme.
     applyDocumentTheme(ResolvedTheme.Light)
   }, [])
 

@@ -1,28 +1,31 @@
 # CI readiness
 
-No CI provider is configured in this repository (no GitHub Actions workflows, no GitLab CI file). Do not assume GitHub Actions.
+GitHub Actions is configured at `.github/workflows/ci.yml` (remote is GitHub). The workflow runs on `push`/`pull_request` to `main` with Node `20.19.x` and `22.x`.
+
+## Local vs CI
+
+| Command             | Includes                                                                                                                                                                                           |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run verify`    | Lockfile check, typecheck, lint, format, unit tests + coverage, library build, package/SSR/exports, size, TypeDoc, Storybook **build**, Storybook **Vitest mirrors**, pack dry-run, demo app build |
+| `npm run verify:ci` | Everything in `verify`, plus Playwright Chromium install, **real Storybook browser play + a11y** (`test:storybook-browser`), and light visual smoke (`test:storybook-visual`)                      |
+
+`test:storybook` alone is **not** complete Storybook verification — it mirrors play flows in jsdom/RTL. Browser play + axe run only via `test:storybook-browser` / `verify:ci` / GitHub Actions.
 
 ## Provider-neutral job
 
-Use a Node version compatible with Vite 8 and the current `package-lock.json` (Node 22 is a reasonable default; confirm locally).
+Use a Node version compatible with Vite 8 and `package.json` `engines` (`^20.19.0 || >=22.12.0`, npm `>=10`).
 
 ```text
 npm ci
-npm run verify
+npm run lockfile:check
+npm run verify:ci
 ```
 
-`verify` already includes library build, package consumer tests, Storybook build, TypeDoc, and `npm pack --dry-run`.
-
-Optional extra jobs, if the owner wants them split:
-
-```text
-npm run build:storybook
-npm run docs:api
-npm run pack:dry-run
-```
+`lockfile:check` runs `npm ci --dry-run` so lockfile drift fails before the rest of the suite.
 
 ## Policy
 
 - Do not upload coverage, Storybook, or provenance artifacts without authorization.
 - Do not publish from CI until package name, license, and npm trusted publishing are configured.
-- Cache `node_modules` according to the chosen provider; prefer `npm ci`.
+- Prefer `npm ci`. Install Playwright Chromium reproducibly (`npx playwright install chromium --with-deps` in CI).
+- Visual screenshots stay in gitignored `storybook-visual/` and are not packed.

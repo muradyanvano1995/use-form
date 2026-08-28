@@ -56,14 +56,14 @@ export function UsernameAvailabilityForm({
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>Username availability</h2>
         <p>
           Sync rules fail immediately. The remote check uses{' '}
           <code>{ruleApi === 'createAsyncRule' ? 'createAsyncRule' : 'rules.async'}</code> with
           debounce 400ms on change; blur and submit run it without waiting for the delay.
         </p>
-      </header>
+      </div>
 
       <div className="demo-form__field">
         <label htmlFor={form.getFieldId('username')}>Username</label>

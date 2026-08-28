@@ -7,7 +7,7 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Examples/Login',
+  title: 'Complete Examples/Login',
   component: LoginForm,
   args: {
     disabled: false,
@@ -99,12 +99,5 @@ export const KeyboardAndReset: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Reset' }))
     await expect(email).toHaveValue('')
     await expect(args.onReset).toHaveBeenCalled()
-  },
-}
-
-export const Dark: Story = {
-  parameters: {
-    previewTheme: 'light',
-    docs: { description: { story: 'Canvas forced to light tokens (dark mode disabled).' } },
   },
 }

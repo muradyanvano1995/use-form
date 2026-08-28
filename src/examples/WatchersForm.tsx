@@ -39,13 +39,13 @@ export function WatchersForm() {
   return (
     <FormProvider control={form.control}>
       <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-        <header className="demo-form__header">
+        <div className="demo-form__header">
           <h2>Watchers and subscriptions</h2>
           <p>
             Child components subscribe with <code>useWatch</code> and <code>useFormState</code>. The
             parent still re-renders; isolate expensive UI in memoized children.
           </p>
-        </header>
+        </div>
         <div className="demo-form__field">
           <label htmlFor={form.getFieldId('title')}>Title</label>
           <input {...form.register('title')} />

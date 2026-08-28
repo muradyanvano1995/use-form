@@ -1,5 +1,5 @@
 /* CodePanel + Storybook autodocs Source (Prism token classes).
-   Colors come from `--docs-syntax-*` on the active `data-theme`.
+   Colors come from `--docs-syntax-*` on the light documentation theme.
    Prism JSX marks nested script/attr spans with `.tag` too — never color all `.token.tag`. */
 
 .docs-code pre,
@@ -81,9 +81,18 @@ pre.prismjs .token.builtin {
 }
 
 /* Element / component names only — exclude script, spread, attrs (Prism nests `.tag` on those). */
-.docs-code .token.tag:not(.script):not(.spread):not(.attr-name):not(.attr-value):not(.punctuation):not(.operator):not(.class-name):not(.method):not(.function):not(.string):not(.plain-text),
-.docblock-source .token.tag:not(.script):not(.spread):not(.attr-name):not(.attr-value):not(.punctuation):not(.operator):not(.class-name):not(.method):not(.function):not(.string):not(.plain-text),
-pre.prismjs .token.tag:not(.script):not(.spread):not(.attr-name):not(.attr-value):not(.punctuation):not(.operator):not(.class-name):not(.method):not(.function):not(.string):not(.plain-text),
+.docs-code
+  .token.tag:not(.script):not(.spread):not(.attr-name):not(.attr-value):not(.punctuation):not(
+    .operator
+  ):not(.class-name):not(.method):not(.function):not(.string):not(.plain-text),
+.docblock-source
+  .token.tag:not(.script):not(.spread):not(.attr-name):not(.attr-value):not(.punctuation):not(
+    .operator
+  ):not(.class-name):not(.method):not(.function):not(.string):not(.plain-text),
+pre.prismjs
+  .token.tag:not(.script):not(.spread):not(.attr-name):not(.attr-value):not(.punctuation):not(
+    .operator
+  ):not(.class-name):not(.method):not(.function):not(.string):not(.plain-text),
 .docs-code .token.class-name,
 .docs-code .token.maybe-class-name,
 .docblock-source .token.class-name,

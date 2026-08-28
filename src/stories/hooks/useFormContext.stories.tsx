@@ -10,7 +10,7 @@ const meta = {
     docs: {
       description: {
         component: withGithubExample(
-          'useFormContext<T>() reads the nearest FormProvider control. Missing provider throws. Explicit control on hooks still overrides context. See Components/FormProvider for the provider component.',
+          'useFormContext<T>() reads the nearest FormProvider control. Missing provider throws. Explicit control on hooks still overrides context. See Hooks/FormProvider for the provider component.',
           'ContextProfileForm.tsx',
         ),
       },

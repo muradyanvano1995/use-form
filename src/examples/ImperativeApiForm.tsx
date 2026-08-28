@@ -1,11 +1,5 @@
 import { useState } from 'react'
-import {
-  ErrorSource,
-  rules,
-  useForm,
-  ValidationMode,
-  type FormResolver,
-} from '../hooks/useForm'
+import { ErrorSource, rules, useForm, ValidationMode, type FormResolver } from '../hooks/useForm'
 import './examples.css'
 
 type ImperativeValues = {
@@ -40,16 +34,15 @@ export function ImperativeApiForm() {
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>Imperative mutations</h2>
         <p>
           Buttons call <code>validateField</code>, <code>setError</code>, <code>clearError</code>,{' '}
-          <code>clearRootError</code>, and <code>clearErrors</code>. Set note to{' '}
-          <code>block</code> then Validate form to create a pathless <code>rootError</code>. There
-          is no public <code>setFocus</code>; submit uses registered refs when{' '}
-          <code>focusOnError</code> is on.
+          <code>clearRootError</code>, and <code>clearErrors</code>. Set note to <code>block</code>{' '}
+          then Validate form to create a pathless <code>rootError</code>. There is no public{' '}
+          <code>setFocus</code>; submit uses registered refs when <code>focusOnError</code> is on.
         </p>
-      </header>
+      </div>
 
       {form.rootError ? (
         <p className="demo-form__banner" role="status">

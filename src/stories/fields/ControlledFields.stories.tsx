@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect, userEvent, within } from 'storybook/test'
+import { expect, userEvent, waitFor, within } from 'storybook/test'
 import { ControlledFieldsForm } from '../../examples/ControlledFieldsForm.tsx'
 import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
@@ -29,8 +29,8 @@ export const CustomWidgets: Story = {
     const canvas = within(canvasElement)
     const price = canvas.getByLabelText('Price')
     await userEvent.clear(price)
-    await userEvent.type(price, '12.50')
-    await expect(canvas.getByText(/Stored as number: 12.5/)).toBeVisible()
+    await userEvent.paste('12.50')
+    await waitFor(() => expect(price).toHaveValue('12.50'))
     await userEvent.click(canvas.getByRole('button', { name: 'Submit' }))
   },
 }

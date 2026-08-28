@@ -55,13 +55,13 @@ export function PasswordQualityForm() {
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>Password quality</h2>
         <p>
           <code>criteriaMode: 'all'</code> lists every password rule. The primary string error stays
           backward compatible.
         </p>
-      </header>
+      </div>
 
       {form.rootError ? (
         <p id={rootErrorId} className="demo-form__error" role="alert">

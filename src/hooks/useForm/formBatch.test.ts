@@ -13,9 +13,9 @@ import {
 import { getControlInternals } from './formStore.ts'
 import { useFieldArray } from './useFieldArray.ts'
 import { useForm } from './useForm.ts'
-import { rules } from './validation/builtInRules.ts'
-import { ValidationMode } from './validation/modes.ts'
-import { createAsyncRule } from './validation/asyncRule.ts'
+import { rules } from './validation'
+import { ValidationMode } from './validation'
+import { createAsyncRule } from './validation'
 
 type AddressForm = {
   address: {
@@ -149,6 +149,79 @@ describe('form.batch', () => {
       expect(store.getTransactionDepth()).toBe(0)
       expect(result.current.getValue('address.city')).toBe('Yerevan')
       expect(listener).toHaveBeenCalledTimes(1)
+    })
+
+    it('rethrows the exact string thrown by the callback', () => {
+      const { result } = renderHook(() => useForm<AddressForm>({ defaultValues: addressDefaults }))
+      const store = getControlInternals(result.current.control).store
+      const listener = vi.fn()
+      store.subscribe(listener)
+
+      let caught: unknown
+      try {
+        void result.current.batch(() => {
+          result.current.setValue('address.city', 'Yerevan')
+          // Intentionally throw a non-Error to assert exact rethrow identity.
+          // eslint-disable-next-line @typescript-eslint/only-throw-error -- contract: preserve non-Error throws
+          throw 'string-boom'
+        })
+      } catch (error) {
+        caught = error
+      }
+
+      expect(caught).toBe('string-boom')
+      expect(store.getTransactionDepth()).toBe(0)
+      expect(result.current.getValue('address.city')).toBe('Yerevan')
+      expect(listener).toHaveBeenCalledTimes(1)
+    })
+
+    it('rethrows the exact plain object thrown by the callback', () => {
+      const { result } = renderHook(() => useForm<AddressForm>({ defaultValues: addressDefaults }))
+      const store = getControlInternals(result.current.control).store
+      const payload = { code: 'BATCH_FAIL', ok: false }
+      const listener = vi.fn()
+      store.subscribe(listener)
+
+      let caught: unknown
+      try {
+        void result.current.batch(() => {
+          result.current.setValue('email', 'kept@example.com')
+          // Intentionally throw a plain object to assert exact rethrow identity.
+          // eslint-disable-next-line @typescript-eslint/only-throw-error -- contract: preserve non-Error throws
+          throw payload
+        })
+      } catch (error) {
+        caught = error
+      }
+
+      expect(caught).toBe(payload)
+      expect(store.getTransactionDepth()).toBe(0)
+      expect(result.current.getValue('email')).toBe('kept@example.com')
+      expect(listener).toHaveBeenCalledTimes(1)
+    })
+
+    it('cancels queued validation when the callback throws', async () => {
+      const { result } = renderHook(() =>
+        useForm<AddressForm>({
+          defaultValues: addressDefaults,
+          mode: 'onChange',
+          rules: {
+            email: [(value) => (value === 'bad' ? 'Invalid email' : undefined)],
+          },
+        }),
+      )
+      const store = getControlInternals(result.current.control).store
+
+      expect(() => {
+        void result.current.batch(() => {
+          result.current.setValue('email', 'bad')
+          throw new Error('stop')
+        })
+      }).toThrow('stop')
+
+      expect(store.getTransactionDepth()).toBe(0)
+      await Promise.resolve()
+      expect(result.current.getErrors().email).toBeUndefined()
     })
 
     it('rejects async callbacks', () => {

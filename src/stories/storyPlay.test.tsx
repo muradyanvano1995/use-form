@@ -8,7 +8,6 @@ import { AsyncDefaultsProfileForm } from '../examples/AsyncDefaultsProfileForm.t
 import { StandardSchemaForm } from '../examples/StandardSchemaForm.tsx'
 import { FieldStateForm } from '../examples/FieldStateForm.tsx'
 import { ImperativeApiForm } from '../examples/ImperativeApiForm.tsx'
-import { resolvePreviewTheme, ThemeMode } from './theme/resolvePreviewTheme.ts'
 
 describe('documentation example flows', () => {
   it('login: required, invalid email, success, and reset', async () => {
@@ -77,7 +76,6 @@ describe('documentation example flows', () => {
     await waitFor(() => expect(onSubmitSuccess).toHaveBeenCalledWith({ username: 'ada', age: 21 }))
   })
 
-
   it('useFieldState child shows dirty and invalid email', async () => {
     const user = userEvent.setup()
     render(<FieldStateForm />)
@@ -94,10 +92,5 @@ describe('documentation example flows', () => {
     expect(screen.getByText('Email is required')).toBeVisible()
     await user.click(screen.getByRole('button', { name: 'clearError email' }))
     expect(screen.queryByText('Email is required')).not.toBeInTheDocument()
-  })
-
-  it('resolves preview theme modes', () => {
-    expect(resolvePreviewTheme(ThemeMode.System, true)).toBe('dark')
-    expect(resolvePreviewTheme(ThemeMode.Light, true)).toBe('light')
   })
 })

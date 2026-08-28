@@ -85,10 +85,10 @@ export function ExampleShell({
 }) {
   return (
     <div className={wide ? 'docs-example docs-example--wide' : 'docs-example'}>
-      <header>
+      <div className="docs-example__intro">
         <h2>{title}</h2>
         {description ? <p className="docs-lead">{description}</p> : null}
-      </header>
+      </div>
       {children}
     </div>
   )

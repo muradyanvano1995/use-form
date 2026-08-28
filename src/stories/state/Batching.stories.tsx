@@ -5,7 +5,7 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Core Concepts/Batching',
+  title: 'State & Performance/Batching',
   component: BatchedAddressForm,
   parameters: {
     docs: {

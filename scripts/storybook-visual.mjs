@@ -23,11 +23,16 @@ const mime = {
 
 const stories = [
   { id: 'introduction--overview', name: 'introduction' },
-  { id: 'getting-started--email-field', name: 'getting-started-email' },
-  { id: 'examples-login--default', name: 'login' },
-  { id: 'examples-checkout--default', name: 'checkout' },
-  { id: 'tools-devtools--inline-inspector', name: 'devtools' },
+  { id: 'getting-started--email-field', name: 'getting-started' },
+  { id: 'complete-examples-login--default', name: 'login' },
+  { id: 'complete-examples-registration--default', name: 'registration' },
+  { id: 'complete-examples-checkout--default', name: 'checkout' },
+  { id: 'complete-examples-async-profile-defaults--default', name: 'async-defaults' },
+  { id: 'validation-async-validation--default', name: 'async-validation' },
   { id: 'validation-internationalization--catalogs', name: 'i18n' },
+  { id: 'fields-file-inputs--default', name: 'file-inputs' },
+  { id: 'devtools--inline-inspector', name: 'devtools' },
+  { id: 'complete-examples-devtools-playground--default', name: 'devtools-playground' },
 ]
 
 const docsPages = [
@@ -35,7 +40,7 @@ const docsPages = [
   { id: 'getting-started--docs', name: 'getting-started-docs' },
   { id: 'validation-internationalization--docs', name: 'i18n-docs' },
   { id: 'core-concepts-registration--docs', name: 'registration-docs' },
-  { id: 'tools-devtools--docs', name: 'devtools-docs' },
+  { id: 'devtools--docs', name: 'devtools-docs' },
 ]
 
 const leakedImport =

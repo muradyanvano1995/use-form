@@ -6,7 +6,7 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Examples/Registration',
+  title: 'Complete Examples/Registration',
   component: RegistrationForm,
   args: {
     disabled: false,

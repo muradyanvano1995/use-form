@@ -146,10 +146,10 @@ export function LocalizedRegistrationForm({
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>{strings.title}</h2>
         <p>{strings.description}</p>
-      </header>
+      </div>
 
       <fieldset className="demo-form__field">
         <legend>{strings.language}</legend>

@@ -38,7 +38,9 @@ npm install <package-name>
 
 Peer requirement: **React 19**. `react-dom` is an optional peer (needed for SSR tests and DOM rendering). React Native is not tested.
 
-Until publish, develop from this repository with `npm install` at the root.
+Until publish, develop from this repository with `npm ci` (preferred) or `npm install` at the root.
+
+Supported tooling (also declared in `package.json` `engines`): **Node** `^20.19.0 || >=22.12.0`, **npm** `>=10`. Use the committed `package-lock.json`; do not omit the lockfile for installs.
 
 ## Quick start
 

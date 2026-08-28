@@ -11,7 +11,7 @@ const meta = {
     docs: {
       description: {
         component: withGithubExample(
-          'register(name) returns name, id, onChange, onBlur, ref, aria-invalid, aria-describedby. Radios pass type and value; checkboxes bind booleans. File fields omit value. Custom widgets use useController instead. Login/email register lives under Hooks/useForm and Examples/Login.',
+          'register(name) returns name, id, onChange, onBlur, ref, aria-invalid, aria-describedby. Radios pass type and value; checkboxes bind booleans. File fields omit value. Custom widgets use useController instead. Login/email register lives under Hooks/useForm and Complete Examples/Login.',
           'RadioCheckboxGroupsForm.tsx',
         ),
       },

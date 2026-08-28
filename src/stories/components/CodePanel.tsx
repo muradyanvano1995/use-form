@@ -1,6 +1,6 @@
 import { useEffect, useId, useState, type ReactNode } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism/index.js'
+import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism/index.js'
 
 export const COPY_RESTORE_MS = 2000
 
@@ -77,10 +77,10 @@ export function CodePanel({ title, code }: { title?: string; code: string }) {
       </div>
       <SyntaxHighlighter
         language="tsx"
-        // Let our CSS drive theme-friendly colors (no inline background).
+        // Let our CSS drive token colors (no inline background).
         // `useInlineStyles={false}` keeps semantic token classNames like `token keyword`.
         useInlineStyles={false}
-        style={document?.documentElement.getAttribute('data-theme') === 'dark' ? oneDark : oneLight}
+        style={oneLight}
         showLineNumbers={false}
         wrapLongLines={false}
         // Keep surface/background/layout controlled by our existing `.docs-code` CSS.

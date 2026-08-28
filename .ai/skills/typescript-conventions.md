@@ -5,7 +5,10 @@
 - `verbatimModuleSyntax`: use `import type` for type-only imports.
 - `erasableSyntaxOnly`: no enums / parameter properties / other non-erasable syntax.
 - `noUnusedLocals` / `noUnusedParameters`: remove dead code instead of prefix hacks unless intentional.
-- Relative imports: prefer directory barrels (`../hooks/useForm`) over `.../index.ts` when the folder has an index. Keep explicit `.ts` / `.tsx` file imports otherwise (`allowImportingTsExtensions`).
+- Relative imports:
+  - **Public / package boundaries** may use directory barrels (`src/lib/index.ts`, `src/hooks/useForm/index.ts`, `src/devtools/index.ts`). Prefer importing the barrel without `/index.ts`.
+  - **Internal implementation** should prefer direct module imports with explicit `.ts` / `.tsx` extensions (`./formStore.ts`, `../validation/runRules.ts`) when that clarifies dependencies or avoids circular barrels.
+  - Do not add circular barrel re-exports. Do not mechanically rewrite every import without a concrete benefit.
 
 ## Form typing rules
 

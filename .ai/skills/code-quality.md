@@ -15,6 +15,7 @@
 | `npm run build:storybook`         | Static Storybook → `storybook-static/`       |
 | `npm run test:storybook`          | Storybook Vitest suite (`src/stories`)       |
 | `npm run verify`                  | Full non-destructive release-readiness suite |
+| `npm run lockfile:check`          | `npm ci --dry-run` lockfile consistency      |
 
 See `.ai/skills/package-release.md` for packing, size, Storybook, and TypeDoc. Do not add `prepublishOnly`.
 
@@ -35,7 +36,7 @@ These are separate from ESLint. Prefer fixing the code when the warning is real:
 - Do not throw solely to be caught in the same `try` — assign an error and rethrow after cleanup.
 - Prefer `async`/`await` over `.then()` chains on public promise APIs when equivalent.
   Keep synchronous guards (`assertNotInBatch`) outside `async` functions so they still throw synchronously.
-- Prefer directory barrels (`../hooks/useForm`, `../../lib`) over `.../index.ts` imports.
+- Prefer directory barrels at **public boundaries** (`../hooks/useForm`, `../../lib`) over `.../index.ts`. Inside a feature folder, prefer direct module imports with `.ts` / `.tsx` extensions when that improves dependency clarity. Avoid circular barrels.
 
 Weak warnings about redundant type arguments, deprecated `DirtyFields` re-exports, and docs-only duplication can stay unless they block review.
 

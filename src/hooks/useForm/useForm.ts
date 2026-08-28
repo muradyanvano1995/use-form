@@ -2298,9 +2298,9 @@ export function useForm<
           outerBatchCompletionRef.current = null
           completion?.resolve()
         }
-        throw callbackError instanceof Error
-          ? callbackError
-          : new Error('form.batch() callback failed', { cause: callbackError })
+        // Rethrow the exact original value (Error, string, object, …).
+        // eslint-disable-next-line @typescript-eslint/only-throw-error -- preserve exact callback throw value
+        throw callbackError
       }
 
       if (!isOuter) {

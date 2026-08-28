@@ -191,7 +191,3 @@ export function safeSerialize(value: unknown, options: SafeSerializeOptions = {}
 
   return walk(value, '', 0)
 }
-
-export function formatSerialized(value: unknown): string {
-  return JSON.stringify(value, null, 2)
-}

@@ -107,13 +107,13 @@ export function CheckoutForm({
         }}
         noValidate
       >
-        <header className="demo-form__header">
+        <div className="demo-form__header">
           <h2>Checkout</h2>
           <p>
             Nested contact and shipping, a field array, optional invoice file, and coupon{' '}
             <code>FAIL</code> for a backend field error (200ms).
           </p>
-        </header>
+        </div>
 
         {form.submitError ? (
           <p className="demo-form__banner" role="alert">

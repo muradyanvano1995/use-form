@@ -70,6 +70,10 @@ None at this time. DevTools is a separate entry rather than an experimental core
 
 `safeSerialize` is not exported.
 
+### Peers
+
+The DevTools subpath requires **`react`** and **`react-dom`** (portals). Core (`.`) does not import DevTools or `react-dom`; apps that never import `<package-name>/devtools` do not need `react-dom` for the form library itself. `react-dom` remains an optional peer of the package so core-only consumers are not forced to install it.
+
 ## Resolver (`<package-name>/resolvers/standard-schema`)
 
 ### Runtime — resolver-entry-only

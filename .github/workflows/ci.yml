@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20.19.x, 22.x]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lockfile check
+        run: npm run lockfile:check
+
+      - name: Static verification
+        run: |
+          npm run typecheck
+          npm run lint
+          npm run format:check
+
+      - name: Unit tests and coverage
+        run: |
+          npm run test
+          npm run test:coverage
+
+      - name: Library build and package checks
+        run: |
+          npm run build:lib
+          npm run test:package
+          npm run test:ssr
+          npm run test:exports
+          npm run size
+          npm run docs:api
+          npm run pack:dry-run
+
+      - name: Storybook build
+        run: npm run build:storybook
+
+      - name: Storybook unit mirrors
+        run: npm run test:storybook
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Storybook browser (play + a11y)
+        run: npm run test:storybook-browser
+
+      - name: Storybook visual smoke (light desktop/mobile)
+        run: npm run test:storybook-visual
+
+      - name: Demo app build
+        run: npm run build:app

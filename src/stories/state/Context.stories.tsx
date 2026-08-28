@@ -4,7 +4,7 @@ import { consumerDocsSource, withGithubExample } from '../preview/docsSource.ts'
 import { snippets } from '../snippets/consumerSnippets.ts'
 
 const meta = {
-  title: 'Components/FormProvider',
+  title: 'Hooks/FormProvider',
   component: ContextProfileForm,
   parameters: {
     docs: {

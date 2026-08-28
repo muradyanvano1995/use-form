@@ -172,10 +172,10 @@ export function ControlledFieldsForm() {
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>Controlled fields</h2>
         <p>Date picker, currency parse/format, and a custom file uploader via useController.</p>
-      </header>
+      </div>
 
       <div className="demo-form__field">
         <label htmlFor={birthDate.field.id}>Birth date</label>

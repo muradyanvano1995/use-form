@@ -4,6 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "sideEffects": false,
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0",
+    "npm": ">=10"
+  },
   "main": "./dist/lib/index.js",
   "module": "./dist/lib/index.js",
   "types": "./dist/lib/index.d.ts",
@@ -35,6 +39,7 @@
     "build:storybook": "storybook build --disable-telemetry",
     "storybook": "storybook dev -p 6006 --disable-telemetry",
     "test:storybook": "vitest run src/stories",
+    "test:storybook-browser": "node scripts/storybook-browser.mjs",
     "test:storybook-visual": "node scripts/storybook-visual.mjs",
     "preview": "vite preview --outDir dist-app",
     "typecheck": "tsc -b --pretty false",
@@ -52,7 +57,9 @@
     "size": "node scripts/measure-size.mjs",
     "docs:api": "typedoc",
     "pack:dry-run": "npm pack --dry-run",
-    "verify": "npm run typecheck && npm run lint && npm run format:check && npm run test && npm run test:coverage && npm run build:lib && npm run test:package && npm run test:ssr && npm run test:exports && npm run size && npm run docs:api && npm run build:storybook && npm run test:storybook && npm run pack:dry-run && npm run build:app"
+    "lockfile:check": "node scripts/check-lockfile.mjs",
+    "verify": "npm run lockfile:check && npm run typecheck && npm run lint && npm run format:check && npm run test && npm run test:coverage && npm run build:lib && npm run test:package && npm run test:ssr && npm run test:exports && npm run size && npm run docs:api && npm run build:storybook && npm run test:storybook && npm run pack:dry-run && npm run build:app",
+    "verify:ci": "npm run verify && npx playwright install chromium && npm run test:storybook-browser && npm run test:storybook-visual"
   },
   "peerDependencies": {
     "react": "^19.0.0",
@@ -68,6 +75,7 @@
     "@storybook/addon-a11y": "^10.5.8",
     "@storybook/addon-docs": "^10.5.8",
     "@storybook/react-vite": "^10.5.8",
+    "@storybook/test-runner": "^0.24.4",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.4",
@@ -79,6 +87,7 @@
     "@vitejs/plugin-react": "^6.0.4",
     "@vitest/coverage-v8": "^4.1.10",
     "@vitest/ui": "^4.1.10",
+    "axe-playwright": "^2.2.2",
     "eslint": "^10.8.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.1.1",

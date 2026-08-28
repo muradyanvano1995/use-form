@@ -84,10 +84,10 @@ export function ProfileForm() {
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>Profile</h2>
         <p>Nested personal + address fields with path-based validation.</p>
-      </header>
+      </div>
 
       {form.submitError ? (
         <p className="demo-form__banner" role="alert">

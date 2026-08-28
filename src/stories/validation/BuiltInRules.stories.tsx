@@ -58,12 +58,14 @@ const builtInRuleRows = [
   {
     name: 'rules.matchesField(path)',
     kind: 'compare',
-    notes: 'Object.is against another field path (nested paths ok). Skips empty. Params: { field }.',
+    notes:
+      'Object.is against another field path (nested paths ok). Skips empty. Params: { field }.',
   },
   {
     name: 'rules.minItems(n)',
     kind: 'array',
-    notes: 'Array length ≥ n (field arrays). Does not skip empty — use for required lists. Params: { min }.',
+    notes:
+      'Array length ≥ n (field arrays). Does not skip empty — use for required lists. Params: { min }.',
   },
   {
     name: 'rules.maxItems(n)',
@@ -73,22 +75,26 @@ const builtInRuleRows = [
   {
     name: 'rules.fileSize(maxBytes)',
     kind: 'file',
-    notes: 'Every File must be ≤ maxBytes. Accepts File | null | File[]. Skips null/[]. Params: { maxBytes }.',
+    notes:
+      'Every File must be ≤ maxBytes. Accepts File | null | File[]. Skips null/[]. Params: { maxBytes }.',
   },
   {
     name: 'rules.fileType(mimes)',
     kind: 'file',
-    notes: 'Every File.type must be in the allow-list (case-insensitive). Empty MIME fails. Not a security boundary.',
+    notes:
+      'Every File.type must be in the allow-list (case-insensitive). Empty MIME fails. Not a security boundary.',
   },
   {
     name: 'rules.fileExtension(exts)',
     kind: 'file',
-    notes: 'Last path segment extension; optional leading dots; case-insensitive. Not a security boundary.',
+    notes:
+      'Last path segment extension; optional leading dots; case-insensitive. Not a security boundary.',
   },
   {
     name: 'rules.minFiles(n)',
     kind: 'file',
-    notes: 'File[] length ≥ n. Does not skip empty — use for required multi-upload. Params: { min }.',
+    notes:
+      'File[] length ≥ n. Does not skip empty — use for required multi-upload. Params: { min }.',
   },
   {
     name: 'rules.maxFiles(n)',
@@ -113,7 +119,8 @@ const combinatorRows = [
   {
     name: 'rules.custom(validator)',
     kind: 'escape hatch',
-    notes: 'Pass-through for an existing ValidationRule. Prefer createRule when you want annotated metadata.',
+    notes:
+      'Pass-through for an existing ValidationRule. Prefer createRule when you want annotated metadata.',
   },
   {
     name: 'createRule(validator)',
@@ -129,7 +136,8 @@ function BuiltInRulesCatalogPage() {
       <Kicker>Validation</Kicker>
       <h1>Built-in rules</h1>
       <p className="docs-lead">
-        Complete inventory of <code>rules.*</code> helpers exported from the core package.         Compose them as arrays on <code>useForm(&#123; rules &#125;)</code>. Optional custom messages are
+        Complete inventory of <code>rules.*</code> helpers exported from the core package. Compose
+        them as arrays on <code>useForm(&#123; rules &#125;)</code>. Optional custom messages are
         strings or factories; missing keys fall back to English{' '}
         <code>defaultValidationMessages</code>.
       </p>

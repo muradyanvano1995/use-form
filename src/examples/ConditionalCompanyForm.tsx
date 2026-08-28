@@ -65,7 +65,7 @@ export function ConditionalFieldsDemo({
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>
           {shouldUnregister ? 'Conditional fields (unregister)' : 'Conditional fields (preserve)'}
         </h2>
@@ -74,7 +74,7 @@ export function ConditionalFieldsDemo({
             ? 'Unmounting company fields removes optional company data from values and submit.'
             : 'Unmounting company fields keeps previous values. Switching back restores them.'}
         </p>
-      </header>
+      </div>
 
       <fieldset className="demo-form__field-group">
         <legend>Account type</legend>

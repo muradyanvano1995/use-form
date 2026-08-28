@@ -369,27 +369,6 @@ body {
   border-color: var(--docs-border) !important;
 }
 
-/* Storybook's docs toolbar sometimes keeps light background styling even
-   when the rest of the docs canvas is correctly themed. */
-[data-theme='dark'] .sbdocs [role='toolbar'] {
-  background: var(--docs-bg-page) !important;
-}
-
-[data-theme='dark'] .sbdocs [role='toolbar'] svg {
-  fill: currentColor !important;
-}
-
-/* Docs TOC (table of contents) text color override.
-   Storybook uses light-mode hard-coded colors for TOC links in some cases. */
-[data-theme='dark'] aside.sbdocs-toc--custom,
-[data-theme='dark'] aside.sbdocs-toc--custom .toc-link {
-  color: var(--docs-text) !important;
-}
-
-[data-theme='dark'] aside.sbdocs-toc--custom .toc-link:hover {
-  color: var(--docs-text-secondary) !important;
-}
-
 .sbdocs-title,
 .sbdocs-h1,
 .sbdocs-h2,
@@ -423,6 +402,14 @@ body {
 .docs-story .demo-form__issue-list li,
 .docs-story .demo-form__banner {
   color: var(--docs-error-text) !important;
+}
+
+.sbdocs-content .demo-form__banner,
+.sbdocs-preview .demo-form__banner,
+#storybook-root .demo-form__banner,
+.docs-story .demo-form__banner {
+  background: var(--docs-error-bg) !important;
+  border: 1px solid var(--docs-error-border) !important;
 }
 
 .sbdocs .docblock-argstable,

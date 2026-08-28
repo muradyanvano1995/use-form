@@ -45,10 +45,10 @@ export function DependentFieldsForm() {
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>Dependent fields</h2>
         <p>Touch a dependent field, then change its source to revalidate it automatically.</p>
-      </header>
+      </div>
 
       <div className="demo-form__row">
         <div className="demo-form__field">

@@ -51,13 +51,13 @@ export function StandardSchemaForm({
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>Standard Schema resolver</h2>
         <p>
           Imported from <code>&lt;package-name&gt;/resolvers/standard-schema</code>. Live state
           keeps <code>age</code> as a string; submit receives a number. This demo schema is not Zod.
         </p>
-      </header>
+      </div>
       <div className="demo-form__field">
         <label htmlFor={form.getFieldId('username')}>Username</label>
         <input {...form.register('username')} autoComplete="username" />

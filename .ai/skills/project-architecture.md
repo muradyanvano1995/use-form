@@ -43,10 +43,13 @@ src/
     validation/validationMessages.ts / validationMessages.test.ts / validationMessages.type-test.ts
     validation/rules.type-test.ts
     validation/resolver.type-test.ts
-  devtools/                   # Separate entry — FormDevTools, safeSerialize (not core barrel)
-    FormDevTools.tsx / FormDevTools.test.tsx / safeSerialize.ts / safeSerialize.test.ts / index.ts / devtools.type-test.ts
+  devtools/                   # Separate entry — FormDevTools (not core barrel); requires react-dom
+    index.ts / FormDevTools.tsx / FormDevTools.test.tsx / styles.ts / dirtyFields.ts
+    safeSerialize.ts / safeSerialize.test.ts / devtools.type-test.ts
+    components/                # DevToolsPanel, JsonTree, ErrorPanel, ResizeHandles (+ UI tests)
+    hooks/                     # useFloatingPanel, usePanelPersistence, useDevToolsSnapshot
   examples/                   # Login, Registration, LocalizedRegistration, Profile, AsyncDefaults, ConditionalCompany, UsernameAvailability, DependentFields, FileUpload, ControlledFields, ContextProfile, OrderItems, ResolverRegistration, PasswordQuality, BatchedAddress, DevToolsInspector, Checkout, RadioCheckbox, StandardSchema, Watchers
-  stories/                    # Storybook only (not packed): documentation/, core/, validation/, fields/, state/, tools/, examples/, styles/, preview/, theme/, components/, snippets/
+  stories/                    # Storybook only (not packed): documentation/, core/, validation/, fields/, state/, tools/, examples/ (Complete Examples E2E), styles/, preview/, theme/ (light-only), components/, snippets/
   test/setup.ts
   App.tsx
 docs/
@@ -72,7 +75,11 @@ docs/
   devtools.md
   storybook.md
   storybook-audit.md
+  useform-maintainability.md
+  production-readiness-audit.md
 ```
+
+`useForm.ts` remains the coordinating hook. Further extractions follow `docs/useform-maintainability.md`. Do not relocate `src/hooks/useForm`.
 
 Test naming: one `Module.test.ts` (or `.tsx` when JSX is required) beside each production module. Nested path behavior lives in `useForm.test.ts` describes + `pathUtilities.test.ts`. Details: `skills/testing.md`.
 
@@ -82,7 +89,9 @@ Test naming: one `Module.test.ts` (or `.tsx` when JSX is required) beside each p
 - `dependencies.ts` owns pure reverse-index traversal; do not duplicate graph logic in `useForm.ts`. Pathless resolver errors are `rootError` / `rootErrorDetails`, separate from API-facing `submitError`.
 - `errors.ts` owns canonical structured-error normalization. String maps are derived views.
 - Export core APIs through `src/lib/index.ts` (re-exports `src/hooks/useForm/index.ts`). Demo examples may still import `../hooks/useForm`.
-- DevTools is a separate entry (`src/devtools/index.ts` → package `./devtools`). Core must not import it.
+- DevTools is a separate entry (`src/devtools/index.ts` → package `./devtools`). Core must not import it or `react-dom`. The DevTools subpath requires `react-dom` (portals); `react-dom` stays an optional package peer so core-only consumers are not forced to install it.
+- DevTools styles are a JS string (`styles.ts`) injected by the panel — not a CSS file — so `"sideEffects": false` cannot tree-shake them away.
+- DevTools subscribes via `useDevToolsSnapshot` (store selector) rather than `useFormState`, so the consumer bundle does not pull `pathUtilities` dirty helpers; State-tab dirty maps use `dirtyFields.ts`.
 - `standardSchemaResolver` is a separate entry (`src/resolvers/standard-schema` → package `./resolvers/standard-schema`). Do not re-export it from core.
 - Examples under `src/examples` demonstrate the public API; they must not import private internals.
 - Library build: `npm run build:lib` → `dist/`. Demo: `npm run build:app` → `dist-app/`.
@@ -92,6 +101,6 @@ Test naming: one `Module.test.ts` (or `.tsx` when JSX is required) beside each p
 
 - Prefer named exports for hooks, utilities, and types.
 - `errors.ts` is the canonical error module; do not re-export merge/normalization helpers from the public barrel.
-- Use `.ts` / `.tsx` extensions in relative file imports; directory barrels may omit `/index.ts`.
+- Use `.ts` / `.tsx` extensions in relative file imports. Public/package boundaries may use directory barrels (omit `/index.ts`). Internal modules should prefer direct imports when that clarifies dependencies; avoid circular barrels.
 - Do not rewrite Vite / ESLint / Prettier setup unless a task explicitly requires it.
 - Prefer `as const` objects over enums for shared runtime constants.

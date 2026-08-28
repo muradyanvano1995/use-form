@@ -128,13 +128,13 @@ export function ContextProfileForm() {
   return (
     <FormProvider control={form.control}>
       <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-        <header className="demo-form__header">
+        <div className="demo-form__header">
           <h2>Context profile</h2>
           <p>
             Nested field components use <code>FormProvider</code> + <code>useController</code>{' '}
             without prop-drilling <code>control</code>.
           </p>
-        </header>
+        </div>
 
         <PersonalFields />
         <AddressFields />

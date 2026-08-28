@@ -28,13 +28,13 @@ export function BatchedAddressForm() {
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>Batched address updates</h2>
         <p>
           <code>form.batch()</code> applies several <code>setValue</code> calls as one notification.{' '}
           <code>getDirtyValues()</code> reads the latest snapshot without subscribing.
         </p>
-      </header>
+      </div>
 
       <label className="demo-form__field">
         City

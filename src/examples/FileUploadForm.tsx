@@ -96,10 +96,10 @@ export function FileUploadForm() {
 
   return (
     <form className="demo-form" onSubmit={form.handleSubmit} noValidate>
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>File upload</h2>
         <p>Nested avatar + multiple documents with client-side file rules.</p>
-      </header>
+      </div>
 
       {form.submitError ? (
         <p className="demo-form__banner" role="alert">

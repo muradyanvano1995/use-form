@@ -114,10 +114,10 @@ export function LoginForm({
       }}
       noValidate
     >
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>Sign in</h2>
         <p>Email, password, and remember-me. Validation mode defaults to blur.</p>
-      </header>
+      </div>
 
       {form.submitError ? (
         <p className="demo-form__banner" role="alert">

@@ -12,7 +12,16 @@ Intended package subpath:
 import { FormDevTools } from '<package-name>/devtools'
 ```
 
-Do not import DevTools from the core `useForm` entry. Core source does not import DevTools, so production bundles that never import `src/devtools` will not include the inspector.
+Do not import DevTools from the core `useForm` entry. Core source does not import DevTools or `react-dom`, so production bundles that never import `src/devtools` / `<package-name>/devtools` will not include the inspector.
+
+## Peers
+
+| Entry                     | React    | react-dom                                         |
+| ------------------------- | -------- | ------------------------------------------------- |
+| `<package-name>` (core)   | required | not required for core itself                      |
+| `<package-name>/devtools` | required | **required** (floating panel uses `createPortal`) |
+
+`react-dom` is an optional peer of the package so core-only apps are not forced to install it. Install and satisfy `react-dom` when you import the DevTools subpath.
 
 ## Usage
 
@@ -36,15 +45,15 @@ Recommended production exclusion: do not render it, or pass `enabled={false}` (r
 
 ## Props
 
-| Prop            | Meaning                                                               |
-| --------------- | --------------------------------------------------------------------- |
-| `control`       | Explicit `form.control`. Optional inside `FormProvider`.              |
+| Prop            | Meaning                                                                                                                                                                                                 |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `control`       | Explicit `form.control`. Optional inside `FormProvider`.                                                                                                                                                |
 | `position`      | Initial placement: `'bottom-right'` (default), `'bottom-left'`, or `'inline'`. Header **Float** / **Dock** toggles at runtime; floating portals to `document.body` so the panel leaves the form layout. |
-| `initiallyOpen` | Panel expanded on first render (default `true`)                       |
-| `enabled`       | `false` renders nothing                                               |
-| `redact`        | Extra paths (`'profile.ssn'`) or a `(path, key) => boolean` predicate |
-| `redactFiles`   | Hide the complete file field (metadata and name)                      |
-| `hideFileNames` | Keep type/size metadata but omit `File.name`                          |
+| `initiallyOpen` | Panel expanded on first render (default `true`)                                                                                                                                                         |
+| `enabled`       | `false` renders nothing                                                                                                                                                                                 |
+| `redact`        | Extra paths (`'profile.ssn'`) or a `(path, key) => boolean` predicate                                                                                                                                   |
+| `redactFiles`   | Hide the complete file field (metadata and name)                                                                                                                                                        |
+| `hideFileNames` | Keep type/size metadata but omit `File.name`                                                                                                                                                            |
 
 Public DevTools exports: `FormDevTools`, `FormDevToolsProps`, `DevToolsPosition`, `DevToolsRedactionPredicate`. The serializer is not a public export.
 
@@ -70,6 +79,26 @@ The inspector uses `useFormState` with a snapshot equality check. It does not wr
 
 ## UI
 
-The panel includes status chips (`Valid` / `Invalid`, dirty, error count, submitting, …), section tabs (Values, Errors, Details, State, Defaults), a colorized key/value tree for values/state, and card layouts for Errors/Details (path, error-colored message via `--form-devtools-error`, source/type pills; no JSON dump and no redacting of error messages on password-named paths). A **Float** control (before Collapse) portals the inspector to `document.body` as a fixed panel so large forms stay scrollable and the page layout is unobstructed. While floating, drag the header to move and use the bottom-right handle to resize (clamped to the viewport). Collapsing a floating panel docks the chip to the bottom-right, stacking multiple inspectors so they do not overlap; interacting with a panel raises its z-index above the others. **Dock** returns it inline. Only the value panel scrolls. Theme via `--form-devtools-*` CSS variables (surfaces, accents, `--form-devtools-on-accent`, syntax colors); dark fallbacks apply when unset.
+The panel includes status chips (`Valid` / `Invalid`, dirty, error count, submitting, …), section tabs (Values, Errors, Details, State, Defaults), a colorized key/value tree for values/state, and card layouts for Errors/Details (path, error-colored message via `--form-devtools-error`, source/type pills; no JSON dump and no redacting of error messages on password-named paths). A **Float** control (before Collapse) portals the inspector to `document.body` as a fixed panel so large forms stay scrollable and the page layout is unobstructed. While floating, drag the header to move and use the bottom-right handle to resize (clamped to the viewport). Collapsing a floating panel docks the chip to the bottom-right, stacking multiple inspectors so they do not overlap; interacting with a panel raises its z-index above the others. **Dock** returns it inline. Only the value panel scrolls. Theme via `--form-devtools-*` CSS variables (surfaces, accents, `--form-devtools-on-accent`, syntax colors). Styles ship as a JS string injected by the panel (not a separate CSS file) so `package.json` `"sideEffects": false` cannot drop them. The `./devtools` subpath requires `react-dom` (portals); core does not.
+
+## Source layout
+
+```text
+src/devtools/
+  index.ts                 # public exports
+  FormDevTools.tsx         # coordinator (control, tabs, snapshot, portal)
+  styles.ts                # DEVTOOLS_STYLES string
+  dirtyFields.ts           # compact State-tab dirty map (keeps pathUtilities out of the bundle)
+  safeSerialize.ts
+  components/
+    DevToolsPanel.tsx      # aside shell + style injection
+    JsonTree.tsx
+    ErrorPanel.tsx
+    ResizeHandles.tsx
+  hooks/
+    useFloatingPanel.ts    # drag / resize / float ↔ inline
+    usePanelPersistence.ts # stagger / collapsed slots / z-index / frame helpers
+    useDevToolsSnapshot.ts # store subscription without useFormState dirty helpers
+```
 
 Phase 12 DevTools is **read-only**: no editing, reset, submit, time travel, or import/export.

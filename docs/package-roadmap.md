@@ -25,7 +25,7 @@
 | Accessibility         | **Done**    | High    | Headless IDs / aria / focus-on-error; controller exposes `id` / `errorId` / aria props            | P2                          |
 | SSR safety            | **Partial** | Medium  | Stable store `getServerSnapshot`; selector cache; no dedicated SSR hydration suite                | P1                          |
 | Package build         | **Local**   | High    | Not published; name/license/repo/CI blockers remain                                               | P1 (owner)                  |
-| Documentation         | **Done**    | High    | Consumer Storybook with light/dark/system themes; not deployed; package not on npm                | P1 (publish site later)     |
+| Documentation         | **Done**    | High    | Consumer Storybook (light-only canvas); not deployed; package not on npm                          | P1 (publish site later)     |
 
 ## Recommended phase order
 

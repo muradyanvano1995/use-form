@@ -231,20 +231,20 @@ function GettingStartedPage() {
       <FeatureList
         items={[
           {
+            title: 'Core Concepts',
+            body: 'Registration, validation modes, errors, submit, reset, getters, mutations, and normalizeErrors.',
+          },
+          {
             title: 'Hooks',
-            body: 'useForm, useWatch, useFormState, useFieldState, useController, useFieldArray, useFormContext.',
+            body: 'useForm, useWatch, useFormState, useFieldState, useController, useFieldArray, useFormContext, FormProvider.',
           },
           {
-            title: 'Components',
-            body: 'FormProvider and FormDevTools (separate package entry).',
+            title: 'Fields / Validation',
+            body: 'Nested and conditional fields, files, radios/checkboxes, built-in and custom rules, async, i18n, resolvers.',
           },
           {
-            title: 'Validation',
-            body: 'Built-in rules, custom rules, async, dependencies, structured errors, i18n, resolvers.',
-          },
-          {
-            title: 'Fields / Examples',
-            body: 'Live Examples plus Core Concepts for register, modes, errors, submit, reset, getters, mutations, and normalizeErrors. Migration policy is under Migration.',
+            title: 'Complete Examples',
+            body: 'End-to-end Login, Registration, Checkout, async profile defaults, and DevTools playground. Migration and roadmap are under Migration / Limitations.',
           },
         ]}
       />

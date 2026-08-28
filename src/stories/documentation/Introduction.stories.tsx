@@ -200,8 +200,8 @@ function IntroductionPage() {
       <p>
         React 18 apps, React Native, CommonJS bundlers that need <code>require()</code>, deeply
         nested array trees, or a published npm dependency today. Continue from Getting Started, then
-        Validation, Fields, Hooks, Components, Examples (one live form per feature), Accessibility,
-        API overview, and Limitations and roadmap.
+        Core Concepts, Hooks, Fields, Validation, State & Performance, DevTools, Complete Examples
+        (end-to-end only), Accessibility, API Reference, and Limitations and roadmap.
       </p>
 
       <ApiTable
@@ -212,7 +212,7 @@ function IntroductionPage() {
             notes: 'Install placeholder, first typed form, register, modes, context, files.',
           },
           {
-            name: 'API overview',
+            name: 'API Reference',
             kind: 'docs',
             notes: 'Core exports vs DevTools and Standard Schema subpaths.',
           },

@@ -4,9 +4,13 @@ This repository is a library plus a Vite demo app. Do not publish, tag, or push 
 
 ## Install
 
+Requires **Node** `^20.19.0 || >=22.12.0` and **npm** `>=10` (see `package.json` `engines`). Prefer a clean lockfile install:
+
 ```bash
-npm install
+npm ci
 ```
+
+`npm install` is fine for local dependency bumps; commit the resulting `package-lock.json` and confirm `npm run lockfile:check` / `npm ci` still succeed.
 
 React 19 is required for the demo, tests, and Storybook.
 
@@ -52,7 +56,7 @@ npm run build:storybook
 npm run test:storybook
 ```
 
-Storybook is local documentation only. Follow [docs/storybook.md](docs/storybook.md). Review light, dark, mobile, and desktop before considering docs complete. Do not log passwords or file contents in Actions.
+Storybook is local documentation only. Follow [docs/storybook.md](docs/storybook.md). Review the light canvas at mobile and desktop widths before considering docs complete. Do not log passwords or file contents in Actions.
 
 `verify` is the full non-destructive release-readiness suite. It does not publish.
 

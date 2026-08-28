@@ -129,10 +129,10 @@ export function RegistrationForm({
       }}
       noValidate
     >
-      <header className="demo-form__header">
+      <div className="demo-form__header">
         <h2>Create account</h2>
         <p>Built-in rules, cross-field match, and a reusable custom name rule.</p>
-      </header>
+      </div>
 
       {form.submitError ? (
         <p className="demo-form__banner" role="alert">
