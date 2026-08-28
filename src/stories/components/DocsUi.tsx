@@ -47,7 +47,7 @@ export function ApiTable({
   rows: ReadonlyArray<{ name: string; kind: string; notes: string }>
 }) {
   return (
-    <div className="docs-table-wrap">
+    <div className="docs-table-wrap" tabIndex={0}>
       <table className="docs-table">
         <thead>
           <tr>
@@ -104,7 +104,9 @@ export function StateInspector({
   return (
     <section>
       <h3>{title}</h3>
-      <pre className="docs-inspector">{JSON.stringify(value, null, 2)}</pre>
+      <pre className="docs-inspector" tabIndex={0} aria-label={title}>
+        {JSON.stringify(value, null, 2)}
+      </pre>
     </section>
   )
 }

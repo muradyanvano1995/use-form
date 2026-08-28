@@ -69,6 +69,11 @@ describe('CodePanel', () => {
     expect(screen.getByRole('status')).toHaveTextContent('')
   })
 
+  it('exposes the code block for keyboard scrolling', () => {
+    render(<CodePanel title="Example" code="const x = 1" />)
+    expect(screen.getByLabelText('Code sample: Example')).toHaveAttribute('tabIndex', '0')
+  })
+
   it('announces a failure when clipboard is unavailable', async () => {
     const user = userEvent.setup()
     render(<CodePanel code="failed" />)

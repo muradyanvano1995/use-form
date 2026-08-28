@@ -13,7 +13,7 @@ GitHub Actions is configured at `.github/workflows/ci.yml` (remote is GitHub). T
 
 ## Provider-neutral job
 
-Use a Node version compatible with Vite 8 and `package.json` `engines` (`^20.19.0 || >=22.12.0`, npm `>=10`).
+Use a Node version compatible with Vite 8 and `package.json` `engines` (`^20.19.0 || >=22.12.0`, npm `>=10.8.0`). Verified with npm **10.8.x–11.19.x** on Ubuntu (GitHub Actions) and Linux/Windows locally.
 
 ```text
 npm ci

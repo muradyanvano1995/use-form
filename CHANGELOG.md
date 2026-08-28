@@ -26,6 +26,7 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- Linux `npm ci` failure (`Missing: @emnapi/core` / `@emnapi/runtime`) by adding those packages as devDependencies for `@napi-rs/wasm-runtime` peer resolution
 - Order and resolver demos no longer `console.info` form values (which could include files)
 - Internationalization demo left English errors visible after switching language until a manual Revalidate click
 

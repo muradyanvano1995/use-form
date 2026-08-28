@@ -41,9 +41,9 @@ Baseline recorded against a clean checkout before intentional repairs.
 
 ## Independent-audit claims (reproduced vs not)
 
-### Lockfile / `@emnapi/*` (Phase 1 claim)
+### Lockfile / `@emnapi/*`
 
-**Not reproduced on this host.** `npm ci` succeeded after deleting `node_modules`. Registry latest `@emnapi/core` / `@emnapi/runtime` is `1.11.3`; the lockfile pins nested optional copies at `1.9.2` and `1.11.2` under wasm32 optional packages. Top-level `node_modules/@emnapi/core` is not required on this Windows install path. `npm install --package-lock-only` reported no lockfile drift. Follow-up applied: `engines`, `lockfile:check` (`npm ci --dry-run`), and install docs.
+**Reproduced on Linux** (Debian bookworm): `npm ci` fails with `Missing: @emnapi/core@…` / `@emnapi/runtime@…` when `@napi-rs/wasm-runtime@1.2.3` peer dependencies are not hoisted into the lockfile (Windows npm may skip this). **Fix:** add `@emnapi/core` and `@emnapi/runtime` as devDependencies and regenerate the lockfile via `npm install` on Linux. Supported npm: **10.8.x–11.19.x** (see `engines` and `CONTRIBUTING.md`).
 
 ### Formatting (Phase 2)
 
@@ -55,7 +55,7 @@ Baseline recorded against a clean checkout before intentional repairs.
 
 ### Storybook themes (Phase 4)
 
-**Done for this repair.** Storybook is light-only: manager always uses `docsLightTheme`, preview always applies `data-theme="light"`, dark/system helpers and `[data-theme='dark']` tokens are removed. Do not restore a dark/system toolbar.
+**Project policy.** Storybook is light-only: manager always uses `docsLightTheme`, preview always applies `data-theme="light"`, and there is no dark/system toolbar or `[data-theme='dark']` token set.
 
 ### Storybook IA duplication (Phase 5)
 
@@ -125,34 +125,34 @@ All ten phases applied on top of starting commit `d8036f5`. Final verification f
 
 ### Final verification evidence
 
-| Command | Result |
-| ------- | ------ |
-| `npm ci` (clean) | **PASS** |
-| `npm run verify` | **PASS** — lockfile, typecheck, lint, format, 548 unit tests, coverage, build:lib, package/ssr/exports tests, size, docs:api, storybook build, storybook Vitest (15), pack:dry-run, build:app |
-| `npm run verify:ci` | **PASS** — verify + Playwright Chromium + `test:storybook-browser` (42 suites / 53 tests) + `test:storybook-visual` (light desktop + mobile smoke) |
+| Command             | Result                                                                                                                                                                                        |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm ci` (clean)    | **PASS**                                                                                                                                                                                      |
+| `npm run verify`    | **PASS** — lockfile, typecheck, lint, format, 548 unit tests, coverage, build:lib, package/ssr/exports tests, size, docs:api, storybook build, storybook Vitest (15), pack:dry-run, build:app |
+| `npm run verify:ci` | **PASS** — verify + Playwright Chromium + `test:storybook-browser` (42 suites / 53 tests) + `test:storybook-visual` (light desktop + mobile smoke)                                            |
 
 ### Size budgets (after repair)
 
-| Bundle | Bytes | Budget |
-| ------ | ----- | ------ |
-| `devtools.min.js` | 32456 | 34000 |
-| `devtools.min.js.gz` | 8991 | 9000 |
-| `core.min.js.gz` | 20979 | 26000 |
-| `resolver.min.js.gz` | 1862 | 2500 |
+| Bundle               | Bytes | Budget |
+| -------------------- | ----- | ------ |
+| `devtools.min.js`    | 32456 | 34000  |
+| `devtools.min.js.gz` | 8991  | 9000   |
+| `core.min.js.gz`     | 20979 | 26000  |
+| `resolver.min.js.gz` | 1862  | 2500   |
 
 DevTools split into `components/`, `hooks/`, `dirtyFields.ts`, `styles.ts` (JS string). Uses `useDevToolsSnapshot` instead of `useFormState` to keep `pathUtilities` out of the DevTools graph.
 
 ### Resolved baseline failures
 
-| Item | Resolution |
-| ---- | ---------- |
-| Format drift (89 files) | Prettier applied; `format:check` green |
-| DevTools over budget | Refactored + trimmed JS-string styles; gzip **8991 B** |
-| `form.batch()` throw contract | Rethrows exact original value; tests in `formBatch.test.ts` |
+| Item                           | Resolution                                                                |
+| ------------------------------ | ------------------------------------------------------------------------- |
+| Format drift (89 files)        | Prettier applied; `format:check` green                                    |
+| DevTools over budget           | Refactored + trimmed JS-string styles; gzip **8991 B**                    |
+| `form.batch()` throw contract  | Rethrows exact original value; tests in `formBatch.test.ts`               |
 | No real browser Storybook gate | `test:storybook-browser` + axe in `verify:ci`; `.github/workflows/ci.yml` |
-| Dark/system Storybook themes | Removed; light-only per owner override |
-| Duplicate Examples sidebar | IA reorganized; five Complete Examples remain |
-| No CI | GitHub Actions matrix Node 20.19 + 22 |
+| Dark/system Storybook themes   | Not supported; Storybook canvas is light-only                             |
+| Duplicate Examples sidebar     | IA reorganized; five Complete Examples remain                             |
+| No CI                          | GitHub Actions matrix Node 20.19 + 22                                     |
 
 ### Intentionally not done (documented)
 

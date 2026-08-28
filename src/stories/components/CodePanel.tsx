@@ -87,6 +87,8 @@ export function CodePanel({ title, code }: { title?: string; code: string }) {
         customStyle={{}}
         // Avoid Prism's default black text / text-shadow so token classes win.
         codeTagProps={{ style: { color: 'inherit', background: 'none', textShadow: 'none' } }}
+        tabIndex={0}
+        aria-label={title ? `Code sample: ${title}` : 'Code sample'}
         PreTag="pre"
       >
         {code}

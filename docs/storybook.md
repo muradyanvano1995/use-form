@@ -98,6 +98,8 @@ npm run test:storybook-visual
 
 `@storybook/addon-docs` plus `@storybook/addon-a11y` (`a11y.test: 'error'`). Browser runs use `axe-playwright` via `.storybook/test-runner.ts` and fail on violations. Fix violations instead of disabling rules. Static prose pages may use `a11y.test: 'todo'` when they are not interactive widgets. Associate errors with `getErrorId`. Do not put `role="alert"` on every field error. Root errors are not focus targets.
 
+Horizontally scrollable docs blocks (`CodePanel`, wide `ApiTable`, `StateInspector`) use `tabIndex={0}` so axe `scrollable-region-focusable` passes on mobile widths. Give each `CodePanel` a distinct `aria-label` from its title; do not reuse one `role="region"` label across multiple tables on the same page.
+
 ## Responsive review
 
 Viewports: small mobile 320, large mobile 414, tablet 768, desktop 1280, wide 1600. Check that rows stack, buttons stay usable, and inline DevTools does not cover the form.

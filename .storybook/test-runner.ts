@@ -47,7 +47,10 @@ function readA11yParameters(value: unknown): A11yParameters | undefined {
  */
 const config: TestRunnerConfig = {
   async preVisit(page) {
-    await injectAxe(page)
+    const hasAxe = await page.evaluate(() => typeof window.axe !== 'undefined')
+    if (!hasAxe) {
+      await injectAxe(page)
+    }
   },
   async postVisit(page, context) {
     await waitForPageReady(page)
