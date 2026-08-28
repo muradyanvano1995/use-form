@@ -1,5 +1,7 @@
 # Package identity migration inventory
 
+> **Historical audit (2026-08-28).** The package is now published as `@muradyanvano/use-form`. Do not treat tables below as current release guidance — see [releasing.md](releasing.md) and [CHANGELOG.md](../CHANGELOG.md).
+
 Baseline recorded before identity migration edits on **2026-08-28**.
 
 | Item            | Value                                        |

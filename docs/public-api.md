@@ -1,6 +1,6 @@
 # Public API inventory
 
-Planned npm package: **`@muradyanvano/use-form`** (pre-release; not published yet). Subpaths below use that scoped name.
+Published npm package: **`@muradyanvano/use-form`**. Subpaths below use that scoped name.
 
 Classifications:
 

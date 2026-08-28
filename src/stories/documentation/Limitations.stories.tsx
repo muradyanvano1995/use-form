@@ -7,8 +7,9 @@ function LimitationsPage() {
       <Kicker>Honest scope</Kicker>
       <h1>Limitations and roadmap</h1>
       <p className="docs-lead">
-        Local packaging is in place. This is not a published package, not a React Native library,
-        and not a CommonJS build. The list below is current behavior, not a promise of future work.
+        Local packaging is in place and the library is published on npm. This is not a React Native
+        library and not a CommonJS build. The list below is current behavior, not a promise of
+        future work.
       </p>
 
       <Callout tone="info" title="Controls">
@@ -18,12 +19,11 @@ function LimitationsPage() {
         </p>
       </Callout>
 
-      <Callout tone="warning" title="Unpublished beta">
+      <Callout tone="info" title="npm package">
         <p>
-          Planned npm name <code>@muradyanvano/use-form</code> (<code>0.1.0-beta.1</code>).{' '}
-          <code>private: true</code> remains set until the owner publishes with{' '}
-          <code>npm publish --access public --tag beta</code>. MIT license and repository metadata
-          are prepared locally; npm publish still requires explicit owner authorization.
+          Published as <code>@muradyanvano/use-form</code>. Install stable from npm or use{' '}
+          <code>@beta</code> for prereleases. MIT license. Publishing still requires explicit owner
+          authorization via the GitHub workflow.
         </p>
       </Callout>
 
@@ -133,7 +133,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Honest current limits: unpublished, React 19 and ESM only, no React Native, path depth 5, one-level arrays, no wildcards, no first-party Zod adapter, client-only hooks, and DevTools that are not for production. Controls are empty because this page is static documentation.',
+          'Honest current limits: React 19 and ESM only, no React Native, path depth 5, one-level arrays, no wildcards, no first-party Zod adapter, client-only hooks, and DevTools that are not for production. Controls are empty because this page is static documentation.',
       },
     },
   },

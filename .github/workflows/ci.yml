@@ -31,6 +31,9 @@ jobs:
       - name: Lockfile check
         run: npm run lockfile:check
 
+      - name: Release consistency
+        run: npm run release:check
+
       - name: Static verification
         run: |
           npm run typecheck

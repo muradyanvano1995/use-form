@@ -1,7 +1,19 @@
-name: Publish npm beta
+name: Publish npm package
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: Exact package version to publish
+        required: true
+        type: string
+      channel:
+        description: npm dist-tag
+        required: true
+        type: choice
+        options:
+          - beta
+          - latest
 
 permissions:
   contents: read
@@ -27,6 +39,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Release consistency checks
+        run: npm run release:check
 
       - name: Run verification
         run: npm run verify:ci
@@ -58,35 +73,65 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Release consistency checks
+        run: npm run release:check
+
       - name: Build library
         run: npm run build:lib
 
-      - name: Confirm beta version
+      - name: Audit packed package
+        run: npm run pack:dry-run
+
+      - name: Validate publish inputs and package metadata
         shell: bash
+        env:
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+          INPUT_CHANNEL: ${{ github.event.inputs.channel }}
         run: |
-          node -e "
-            const pkg = require('./package.json');
+          node <<'NODE'
+          import { readFileSync } from 'node:fs'
 
-            if (pkg.private) {
-              throw new Error('package.json still has private: true');
-            }
+          const semverCore = /^(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z-.]+))?(?:\+([0-9A-Za-z-.]+))?$/
 
-            if (!pkg.version.includes('-beta.')) {
-              throw new Error('Only beta versions can be published by this workflow');
-            }
+          const inputVersion = process.env.INPUT_VERSION?.trim()
+          const inputChannel = process.env.INPUT_CHANNEL?.trim()
+          const pkg = JSON.parse(readFileSync('package.json', 'utf8'))
 
-            console.log('Publishing', pkg.name, pkg.version);
-          "
+          if (!inputVersion) throw new Error('workflow input version is required')
+          if (!inputChannel) throw new Error('workflow input channel is required')
+          if (pkg.name !== '@muradyanvano/use-form') {
+            throw new Error(`Unexpected package name: ${pkg.name}`)
+          }
+          if (pkg.private) throw new Error('package.json still has private: true')
+          if (pkg.version !== inputVersion) {
+            throw new Error(`package.json version ${pkg.version} does not match workflow input ${inputVersion}`)
+          }
+
+          const match = semverCore.exec(inputVersion)
+          if (!match) throw new Error(`Version ${inputVersion} is not valid SemVer`)
+
+          const isPrerelease = Boolean(match[4])
+          if (isPrerelease && inputChannel !== 'beta') {
+            throw new Error(`Prerelease ${inputVersion} must use channel beta, not ${inputChannel}`)
+          }
+          if (!isPrerelease && inputChannel !== 'latest') {
+            throw new Error(`Stable ${inputVersion} must use channel latest, not ${inputChannel}`)
+          }
+
+          console.log(`Validated ${pkg.name}@${pkg.version} for channel ${inputChannel}`)
+          NODE
 
       - name: Confirm version is not already published
         shell: bash
+        env:
+          INPUT_VERSION: ${{ github.event.inputs.version }}
         run: |
-          VERSION=$(node -p "require('./package.json').version")
-
-          if npm view "@muradyanvano/use-form@$VERSION" version > /dev/null 2>&1; then
-            echo "Version $VERSION is already published."
+          if npm view "@muradyanvano/use-form@${INPUT_VERSION}" version > /dev/null 2>&1; then
+            echo "Version ${INPUT_VERSION} is already published."
             exit 1
           fi
 
-      - name: Publish beta
-        run: npm publish --access public --tag beta
+      - name: Publish to npm
+        env:
+          INPUT_CHANNEL: ${{ github.event.inputs.channel }}
+        run: npm publish --access public --tag "$INPUT_CHANNEL"

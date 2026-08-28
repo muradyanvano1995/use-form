@@ -84,7 +84,7 @@ function GettingStartedPage() {
       <h1>Getting started</h1>
       <p className="docs-lead">
         Walk through install, a typed form, register, accessible errors, validation, submit, reset,
-        and the extra entries. Snippets use the placeholder package name, not relative repo imports.
+        and the extra entries. Snippets use the published package name, not relative repo imports.
       </p>
 
       <Callout tone="info" title="Controls">
@@ -94,19 +94,16 @@ function GettingStartedPage() {
         </p>
       </Callout>
 
-      <Callout tone="warning" title="Install after publish">
+      <Callout tone="info" title="Install">
         <p>
-          The beta is not on npm yet. After publication:{' '}
+          Stable: <code>npm install @muradyanvano/use-form</code>. Prerelease:{' '}
           <code>npm install @muradyanvano/use-form@beta</code>. Peer: React 19.{' '}
-          <code>react-dom</code> is an optional peer (required for DevTools). Until then, develop
-          from this repository or install the packed tarball locally.
+          <code>react-dom</code> is an optional peer (required for DevTools). Contributors can also
+          develop from this repository or install a packed tarball locally.
         </p>
       </Callout>
 
-      <CodePanel
-        title="Install (after beta publish)"
-        code="npm install @muradyanvano/use-form@beta"
-      />
+      <CodePanel title="Install (stable)" code="npm install @muradyanvano/use-form" />
 
       <h2>First typed form</h2>
       <p>

@@ -1,7 +1,7 @@
 {
   "name": "@muradyanvano/use-form",
   "private": false,
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0",
   "description": "Typed React 19 form hooks for nested fields, validation, and submission",
   "license": "MIT",
   "author": {
@@ -72,7 +72,8 @@
     "docs:api": "typedoc",
     "pack:dry-run": "npm pack --dry-run",
     "lockfile:check": "node scripts/check-lockfile.mjs",
-    "verify": "npm run lockfile:check && npm run typecheck && npm run lint && npm run format:check && npm run test && npm run test:coverage && npm run build:lib && npm run test:package && npm run test:ssr && npm run test:exports && npm run size && npm run docs:api && npm run build:storybook && npm run test:storybook && npm run pack:dry-run && npm run build:app",
+    "release:check": "node --test scripts/check-release-consistency.test.mjs && node scripts/check-release-consistency.mjs",
+    "verify": "npm run lockfile:check && npm run release:check && npm run typecheck && npm run lint && npm run format:check && npm run test && npm run test:coverage && npm run build:lib && npm run release:check && npm run test:package && npm run test:ssr && npm run test:exports && npm run size && npm run docs:api && npm run build:storybook && npm run test:storybook && npm run pack:dry-run && npm run build:app",
     "verify:ci": "npm run verify && npx playwright install chromium && npm run test:storybook-browser && npm run test:storybook-visual"
   },
   "peerDependencies": {
@@ -85,8 +86,7 @@
     }
   },
   "publishConfig": {
-    "access": "public",
-    "tag": "beta"
+    "access": "public"
   },
   "devDependencies": {
     "@emnapi/core": "^1.11.3",

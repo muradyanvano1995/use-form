@@ -1,6 +1,6 @@
 # Agent instructions
 
-You are working in the `use-form` repository (planned npm package `@muradyanvano/use-form`).
+You are working in the `use-form` repository (npm package `@muradyanvano/use-form`).
 
 ## Before changing code
 

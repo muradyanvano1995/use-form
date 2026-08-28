@@ -4,20 +4,40 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
-### Added
+## [0.1.0] - 2026-08-29
 
-- MIT `LICENSE` and package metadata for planned npm identity `@muradyanvano/use-form`
-- `docs/package-identity-migration.md` inventory for the scoped package rename
+Prepared first stable-channel release. **Not published to npm yet** — requires owner authorization via the GitHub publish workflow (`version: 0.1.0`, `channel: latest`).
+
+First stable successor to `0.1.0-beta.2`. The public API remains pre-1.0.
+
+### Consumer-facing capabilities
+
+- Typed form state with nested and indexed paths (depth 5)
+- One-level field arrays and controlled components via `useController`
+- Form context (`FormProvider`, subscription hooks)
+- Built-in and custom validation, async and dependent validation, Standard Schema resolver entry
+- Async default values, conditional fields and unregister
+- Structured errors with i18n validation messages
+- Non-reactive getters and atomic `form.batch()`
+- Granular subscriptions (`useWatch`, `useFormState`, `useFieldState`)
+- File fields (metadata only, no content reads)
+- SSR-safe selector snapshots; resolver entry without React
+- DevTools on a separate entry
+- Accessible native registration and focus-on-error
+- Documented public exports, local Storybook, TypeDoc, and packed-tarball consumer verification
+
+## [0.1.0-beta.2] - 2026-08-28
+
+Published to npm on the `beta` dist-tag.
 
 ### Changed
 
-- Consumer-facing docs, Storybook snippets, and README use `@muradyanvano/use-form` instead of `<package-name>`
-- `npm pack --json` parsing in package consumer tests (no guessed tarball names)
-- Planned version `0.1.0-beta.1`; repository, homepage, bugs, and author metadata in `package.json`
+- Trusted Publishing workflow and npm beta channel publish path
+- Release documentation and consumer install guidance for published betas
 
-## [0.1.0-beta.1] — unpublished (prepared)
+## [0.1.0-beta.1] - 2026-08-27
 
-First planned beta. **Not published to npm.** Requires owner authorization, `private: false`, and `npm publish --access public --tag beta`.
+Published to npm (initial beta; `latest` dist-tag pointed here until a stable release ships).
 
 ### Public entry points
 
@@ -45,6 +65,9 @@ First planned beta. **Not published to npm.** Requires owner authorization, `pri
 - Storybook backgrounds addon is disabled; the light theme owns the canvas
 - Storybook Docs autodocs is enabled so consumer `source.code` snippets appear on Docs pages
 - Localized registration example revalidates visible errors after locale catalogs commit (core `useForm` still does not rewrite resolved strings)
+- Consumer-facing docs, Storybook snippets, and README use `@muradyanvano/use-form` instead of `<package-name>`
+- `npm pack --json` parsing in package consumer tests (no guessed tarball names)
+- Repository, homepage, bugs, and author metadata in `package.json`
 
 ### Fixed
 

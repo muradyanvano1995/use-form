@@ -10,8 +10,8 @@ function ApiOverviewPage() {
       <h1>API Reference</h1>
       <p className="docs-lead">
         Runtime exports from the core entry, plus the two subpaths that are intentionally absent
-        from that barrel. Inventory source: <code>docs/public-api.md</code>. Package identity is not
-        final; snippets use <code>{'@muradyanvano/use-form'}</code>.
+        from that barrel. Inventory source: <code>docs/public-api.md</code>. Published as{' '}
+        <code>@muradyanvano/use-form</code>.
       </p>
 
       <Callout tone="info" title="Controls">

@@ -19,6 +19,7 @@ export default defineConfig({
       '**/package-tests/**',
       '**/storybook-static/**',
       '**/api-docs/**',
+      'scripts/**',
     ],
     coverage: {
       provider: 'v8',

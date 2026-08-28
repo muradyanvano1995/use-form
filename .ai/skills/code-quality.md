@@ -16,6 +16,7 @@
 | `npm run test:storybook`          | Storybook Vitest suite (`src/stories`)       |
 | `npm run verify`                  | Full non-destructive release-readiness suite |
 | `npm run lockfile:check`          | `npm ci --dry-run` lockfile consistency      |
+| `npm run release:check`           | Package/docs/changelog release consistency   |
 
 See `.ai/skills/package-release.md` for packing, size, Storybook, and TypeDoc. Do not add `prepublishOnly`.
 

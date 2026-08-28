@@ -1,5 +1,7 @@
 # Production readiness audit
 
+> **Historical audit.** Snapshot from before CI and npm publish were configured. Current publishing guidance is in [releasing.md](releasing.md), [ci.md](ci.md), and [stable-release-audit.md](stable-release-audit.md).
+
 Baseline recorded against a clean checkout before intentional repairs.
 
 ## Environment

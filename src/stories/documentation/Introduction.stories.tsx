@@ -29,11 +29,12 @@ function IntroductionPage() {
         </p>
       </Callout>
 
-      <Callout tone="warning" title="Beta — not on npm yet">
+      <Callout tone="info" title="Published package">
         <p>
-          Planned package name <code>@muradyanvano/use-form</code> (<code>0.1.0-beta.1</code>).{' '}
-          <code>private: true</code> blocks accidental publish. Install from npm only after the
-          owner publishes the beta. Consumer snippets use the scoped name above.
+          Install stable: <code>npm install @muradyanvano/use-form</code>. Prerelease:{' '}
+          <code>npm install @muradyanvano/use-form@beta</code>. The API is pre-1.0 — see{' '}
+          <code>CHANGELOG.md</code> for released versions. Consumer snippets use{' '}
+          <code>@muradyanvano/use-form</code>.
         </p>
       </Callout>
 
@@ -47,8 +48,8 @@ function IntroductionPage() {
       <h2>Maturity</h2>
       <p>
         Local ESM packaging exists (<code>dist/</code>, core / DevTools / Standard Schema entries,
-        declaration files, consumer tests). React 19 is the only supported React line. There is no
-        published registry package, no chosen license, and no claimed production SLA.
+        declaration files, consumer tests). The package is on npm as{' '}
+        <code>@muradyanvano/use-form</code>. React 19 is the only supported React line.
       </p>
 
       <h2>Capabilities</h2>
@@ -185,7 +186,7 @@ function IntroductionPage() {
 
       <h2>Current limitations</h2>
       <ul>
-        <li>Not published. React Native is unsupported. ESM only, no CJS.</li>
+        <li>React Native is unsupported. ESM only, no CJS.</li>
         <li>Path expansion depth 5. One-level arrays. No nested arrays. No wildcard paths.</li>
         <li>No first-party Zod/Yup/Valibot adapter. No production DevTools.</li>
       </ul>

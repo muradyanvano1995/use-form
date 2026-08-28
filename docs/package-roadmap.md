@@ -1,7 +1,7 @@
 # Package roadmap — `useForm` capability audit
 
 **Baseline (2026-08-18):** Phases 5–13 complete locally — schema resolvers, dependent-field revalidation, debounced async field rules, async default-value loading, unregister / conditional fields, structured / multiple errors, internationalized built-in validation messages, non-reactive getters, atomic `batch()`, a separate-entry Form DevTools inspector, and a local npm-package build.  
-**Package status:** ESM library under `dist/` with `exports` for core, DevTools, and the Standard Schema adapter. **Not published.** `private: true`. Planned npm name `@muradyanvano/use-form` (`0.1.0-beta.1`). CI runs on GitHub Actions; npm publish requires owner authorization.
+**Package status (current):** Published on npm as `@muradyanvano/use-form`. Betas ship on the `beta` dist-tag; stable releases use `latest`. CI runs on GitHub Actions; npm publish uses GitHub Trusted Publishing and requires owner authorization via `.github/workflows/publish.yml`.
 
 ## Capability matrix
 
@@ -24,8 +24,8 @@
 | Structured errors     | **Done**    | High    | Dual string + `FieldError` views; `criteriaMode`; params-aware dedupe; i18n catalogs              | —                           |
 | Accessibility         | **Done**    | High    | Headless IDs / aria / focus-on-error; controller exposes `id` / `errorId` / aria props            | P2                          |
 | SSR safety            | **Partial** | Medium  | Stable store `getServerSnapshot`; selector cache; no dedicated SSR hydration suite                | P1                          |
-| Package build         | **Local**   | High    | Not published; name/license/repo/CI blockers remain                                               | P1 (owner)                  |
-| Documentation         | **Done**    | High    | Consumer Storybook (light-only canvas); not deployed; package not on npm                          | P1 (publish site later)     |
+| Package build         | **Done**    | High    | Published betas on npm; stable `0.1.0` prepared locally                                           | P1 (owner stable publish)   |
+| Documentation         | **Done**    | High    | Consumer Storybook (light-only canvas); not deployed                                              | P2 (publish site later)     |
 
 ## Recommended phase order
 
@@ -77,7 +77,7 @@ Until it ships, applications refresh visible built-in copy by calling `form.vali
 
 ## Next recommended phase
 
-**Owner decisions for a public 0.x:** authorize npm publish (`npm publish --access public --tag beta`), set `private: false`, and tag/release after publish. Local packaging identity is prepared as `@muradyanvano/use-form`.
+**Owner decisions for public 0.x:** trigger `.github/workflows/publish.yml` with the matching `version` and `channel` after CI is green. Prereleases use `beta`; stable releases use `latest`. Tag and GitHub Release only after npm publish succeeds.
 
 Phase 13 details:
 
@@ -88,4 +88,4 @@ Phase 13 details:
 
 ## Release readiness (honest)
 
-Locally packable. **Not** production-ready as a published npm package until the owner chooses a name, license, repository metadata, and CI, and explicitly publishes.
+Locally packable and published on npm for beta lines. Stable `0.1.0` is prepared in-tree but **not published** until the owner runs the publish workflow with `channel: latest`.

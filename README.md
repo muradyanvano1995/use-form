@@ -2,7 +2,7 @@
 
 Typed React 19 form hooks for nested objects, one-level field arrays, file metadata, validation timing, and accessible native field registration.
 
-**Beta status:** Planned npm name `@muradyanvano/use-form`, version `0.1.0-beta.1`. **Not published yet** — `private: true` remains set in this repository. Install from npm only after the owner publishes the beta.
+Published on npm as **`@muradyanvano/use-form`**. The API is currently pre-1.0; see [CHANGELOG.md](CHANGELOG.md) for released versions.
 
 Repository: [github.com/muradyanvano1995/use-form](https://github.com/muradyanvano1995/use-form)
 
@@ -18,7 +18,13 @@ Repository: [github.com/muradyanvano1995/use-form](https://github.com/muradyanva
 
 ## Installation
 
-After the beta is published to npm:
+Stable:
+
+```bash
+npm install @muradyanvano/use-form
+```
+
+Prerelease (beta channel):
 
 ```bash
 npm install @muradyanvano/use-form@beta
@@ -29,7 +35,7 @@ Peers:
 - **`react`**: `^19.0.0` (required)
 - **`react-dom`**: optional for core-only apps; **required** when importing `@muradyanvano/use-form/devtools`
 
-Until publish, develop from this repository (`npm ci`) or install a locally packed tarball (see [docs/releasing.md](docs/releasing.md)).
+Contributors can also develop from this repository (`npm ci`) or install a locally packed tarball (see [docs/releasing.md](docs/releasing.md)).
 
 Supported tooling: Node `^20.19.0 || >=22.12.0`, npm `>=10.8.0`.
 
@@ -221,7 +227,6 @@ Modern evergreen browsers with native ESM. The library targets client-side React
 
 ## Known limitations
 
-- Not on npm until the owner publishes the beta
 - ESM only (no CommonJS build)
 - Path expansion depth 5; one-level field arrays; no nested arrays inside items
 - No first-party Zod/Yup/Valibot adapters (Standard Schema only)
