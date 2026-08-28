@@ -109,7 +109,10 @@ function LimitationsPage() {
           The component that calls <code>useForm</code> still re-renders on any state change.
         </li>
         <li>Context generics are not runtime-verified.</li>
-        <li>Storybook and TypeDoc output are local; they are not deployed from this repo.</li>
+        <li>
+          TypeDoc output is local (gitignored). Storybook is published on GitHub Pages for stable
+          releases.
+        </li>
       </ul>
 
       <h2>Roadmap posture</h2>

@@ -11,16 +11,16 @@ This directory is the persistent knowledge base for AI coding agents working in 
 
 ## Skill map
 
-| Skill                              | Use when                                                                    |
-| ---------------------------------- | --------------------------------------------------------------------------- |
-| `skills/project-architecture.md`   | Choosing folders, module boundaries, or where new code belongs              |
-| `skills/react-conventions.md`      | Writing React components, hooks, or examples                                |
-| `skills/typescript-conventions.md` | Typing public APIs, generics, or imports                                    |
-| `skills/form-system.md`            | Using or changing `useForm`                                                 |
-| `skills/validation.md`             | Validation timing, adapters, or error shapes                                |
-| `skills/testing.md`                | Adding or changing Vitest / Testing Library coverage                        |
-| `skills/code-quality.md`           | Lint, format, scripts, or review standards                                  |
-| `skills/package-release.md`        | Library build, exports, packing, size, Storybook, TypeDoc, release blockers |
+| Skill                              | Use when                                                                                    |
+| ---------------------------------- | ------------------------------------------------------------------------------------------- |
+| `skills/project-architecture.md`   | Choosing folders, module boundaries, or where new code belongs                              |
+| `skills/react-conventions.md`      | Writing React components, hooks, or examples                                                |
+| `skills/typescript-conventions.md` | Typing public APIs, generics, or imports                                                    |
+| `skills/form-system.md`            | Using or changing `useForm`                                                                 |
+| `skills/validation.md`             | Validation timing, adapters, or error shapes                                                |
+| `skills/testing.md`                | Adding or changing Vitest / Testing Library coverage                                        |
+| `skills/code-quality.md`           | Lint, format, scripts, or review standards                                                  |
+| `skills/package-release.md`        | Library build, exports, packing, size, Storybook, TypeDoc, npm/GitHub release, Pages deploy |
 
 ## Mandatory rule for all agents
 

@@ -11,7 +11,8 @@ function ApiOverviewPage() {
       <p className="docs-lead">
         Runtime exports from the core entry, plus the two subpaths that are intentionally absent
         from that barrel. Inventory source: <code>docs/public-api.md</code>. Published as{' '}
-        <code>@muradyanvano/use-form</code>.
+        <code>@muradyanvano/use-form</code>. Docs:{' '}
+        <a href="https://muradyanvano1995.github.io/use-form/">Storybook</a>.
       </p>
 
       <Callout tone="info" title="Controls">

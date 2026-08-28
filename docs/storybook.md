@@ -1,8 +1,10 @@
 # Storybook contributor guide
 
-Storybook is the public-facing documentation site for this unpublished package. A successful `build:storybook` is necessary but not sufficient. Review the light canvas at mobile and desktop widths before merging documentation changes.
+Public documentation: [https://muradyanvano1995.github.io/use-form/](https://muradyanvano1995.github.io/use-form/).
 
-Do not publish, tag, push, or deploy Storybook.
+Stable GitHub Releases deploy Storybook automatically via `.github/workflows/deploy-storybook.yml` (prereleases do not update the public site). Contributors develop locally with `npm run storybook`. A successful `build:storybook` is necessary but not sufficient — review the light canvas at mobile and desktop widths before merging documentation changes.
+
+Do not publish, tag, push, or deploy Storybook unless the owner explicitly authorizes it.
 
 ## Organization
 

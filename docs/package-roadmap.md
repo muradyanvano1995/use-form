@@ -24,8 +24,8 @@
 | Structured errors     | **Done**    | High    | Dual string + `FieldError` views; `criteriaMode`; params-aware dedupe; i18n catalogs              | —                           |
 | Accessibility         | **Done**    | High    | Headless IDs / aria / focus-on-error; controller exposes `id` / `errorId` / aria props            | P2                          |
 | SSR safety            | **Partial** | Medium  | Stable store `getServerSnapshot`; selector cache; no dedicated SSR hydration suite                | P1                          |
-| Package build         | **Done**    | High    | Published betas on npm; stable `0.1.0` prepared locally                                           | P1 (owner stable publish)   |
-| Documentation         | **Done**    | High    | Consumer Storybook (light-only canvas); not deployed                                              | P2 (publish site later)     |
+| Package build         | **Done**    | High    | Published on npm (`latest` and `beta` channels)                                                   | —                           |
+| Documentation         | **Done**    | High    | Public Storybook at https://muradyanvano1995.github.io/use-form/ (light-only); TypeDoc local only | —                           |
 
 ## Recommended phase order
 
@@ -88,4 +88,4 @@ Phase 13 details:
 
 ## Release readiness (honest)
 
-Locally packable and published on npm for beta lines. Stable `0.1.0` is prepared in-tree but **not published** until the owner runs the publish workflow with `channel: latest`.
+Published on npm (stable and beta channels). Public Storybook is deployed from stable GitHub Releases to https://muradyanvano1995.github.io/use-form/.

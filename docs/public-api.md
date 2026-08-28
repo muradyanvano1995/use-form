@@ -2,6 +2,8 @@
 
 Published npm package: **`@muradyanvano/use-form`**. Subpaths below use that scoped name.
 
+Interactive documentation: [https://muradyanvano1995.github.io/use-form/](https://muradyanvano1995.github.io/use-form/).
+
 Classifications:
 
 - **Stable public API** — intended consumer surface

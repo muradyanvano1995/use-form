@@ -17,8 +17,9 @@ const EXPECTED = {
   license: 'MIT',
   authorName: 'Vano Muradyan',
   repositoryUrl: 'git+https://github.com/muradyanvano1995/use-form.git',
-  homepage: 'https://github.com/muradyanvano1995/use-form#readme',
+  homepage: 'https://muradyanvano1995.github.io/use-form/',
   bugsUrl: 'https://github.com/muradyanvano1995/use-form/issues',
+  storybookUrl: 'https://muradyanvano1995.github.io/use-form/',
   files: ['dist', 'README.md', 'CHANGELOG.md', 'LICENSE'],
   exportSubpaths: ['.', './devtools', './resolvers/standard-schema', './package.json'],
 }
@@ -31,6 +32,22 @@ const STALE_PATTERNS = [
   {
     label: 'Install from npm only after',
     regex: /Install from npm only after/i,
+  },
+  {
+    label: 'Storybook docs are local only',
+    regex: /Storybook docs are local only/i,
+  },
+  {
+    label: 'Storybook is local documentation only',
+    regex: /Storybook is local documentation only/i,
+  },
+  {
+    label: 'Storybook here is local documentation only',
+    regex: /Storybook here is local documentation only/i,
+  },
+  {
+    label: 'not deployed',
+    regex: /\bnot deployed\b/i,
   },
 ]
 
@@ -198,6 +215,9 @@ function verifyActiveDocumentation() {
   const readme = readFileSync(path.join(rootDir, 'README.md'), 'utf8')
   if (!readme.includes(PACKAGE_NAME)) {
     failures.push(`README.md must mention the real package name ${PACKAGE_NAME}`)
+  }
+  if (!readme.includes(EXPECTED.storybookUrl)) {
+    failures.push(`README.md must include the public Storybook URL ${EXPECTED.storybookUrl}`)
   }
 
   if (failures.length > 0) {

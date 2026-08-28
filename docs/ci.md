@@ -26,7 +26,8 @@ npm run verify:ci
 
 ## Policy
 
-- Do not upload coverage, Storybook, or provenance artifacts without authorization.
+- Do not upload coverage or provenance artifacts without authorization.
+- Public Storybook deploys only from `.github/workflows/deploy-storybook.yml` (stable releases or authorized `workflow_dispatch`).
 - Do not publish from CI until the owner triggers `.github/workflows/publish.yml` (Trusted Publishing, protected `npm-publish` environment).
 - Prefer `npm ci`. Install Playwright Chromium reproducibly (`npx playwright install chromium --with-deps` in CI).
 - Visual screenshots stay in gitignored `storybook-visual/` and are not packed.

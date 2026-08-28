@@ -98,8 +98,12 @@ function GettingStartedPage() {
         <p>
           Stable: <code>npm install @muradyanvano/use-form</code>. Prerelease:{' '}
           <code>npm install @muradyanvano/use-form@beta</code>. Peer: React 19.{' '}
-          <code>react-dom</code> is an optional peer (required for DevTools). Contributors can also
-          develop from this repository or install a packed tarball locally.
+          <code>react-dom</code> is an optional peer (required for DevTools). Public docs:{' '}
+          <a href="https://muradyanvano1995.github.io/use-form/">
+            muradyanvano1995.github.io/use-form
+          </a>
+          . Contributors can also develop from this repository (<code>npm run storybook</code>) or
+          install a packed tarball locally.
         </p>
       </Callout>
 

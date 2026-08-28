@@ -21,22 +21,25 @@ Future agents preparing or publishing a version must:
 4. Run `npm version <next> --no-git-tag-version` (never create a git tag from this command).
 5. Never edit lockfile version metadata manually — let `npm version` / `npm install` update `package-lock.json`.
 6. Confirm `package.json` and `package-lock.json` root `name` and `version` match.
-7. Update `CHANGELOG.md` with the target version (do not claim publication until it succeeds).
-8. Update migration docs when a release introduces breaking consumer-facing changes.
-9. Update README, docs, and Storybook only when affected — avoid hardcoding the current version everywhere.
-10. Search for stale publication language (`Not published yet`, `Planned npm name`, `<package-name>`, `private: true remains`, `Install from npm only after`).
-11. Run `npm run release:check`.
-12. Run clean `npm ci`.
-13. Run the complete verification pipeline (`npm run verify:ci`).
-14. Pack and inspect the tarball (`npm pack --json`).
-15. Test the tarball in isolated consumers (`npm run test:package`, `test:ssr`, `test:exports`).
-16. Confirm size budgets (`npm run size`).
-17. Confirm the target npm version is unpublished (`npm view @muradyanvano/use-form@<version> version` should fail).
-18. Confirm channel mapping: prerelease → `beta`, stable → `latest`.
-19. Never publish from a dirty tree or before CI succeeds.
-20. Never weaken release gates (lint, tests, coverage, a11y, size budgets).
-21. Never publish, tag, push, release, or deploy without explicit owner authorization.
-22. After publication (owner only): verify npm version/dist-tags, install from npm in a fresh project, verify provenance, create the matching Git tag, create a GitHub release (prerelease for betas, normal release for stable).
+7. Verify whether these metadata need updating for the release: `homepage`, `repository`, `bugs`, Storybook URL, README links, GitHub About website, package version, CHANGELOG, npm dist-tags, GitHub Release, Storybook deployment.
+8. Update `CHANGELOG.md` with the target version (do not claim publication until it succeeds).
+9. Update migration docs when a release introduces breaking consumer-facing changes.
+10. Update README, docs, and Storybook only when affected — avoid hardcoding the current version everywhere.
+11. Search for stale publication language (`Not published yet`, `Planned npm name`, `<package-name>`, `private: true remains`, `Install from npm only after`, `Storybook docs are local only`, `not deployed`).
+12. Run `npm run release:check`.
+13. Run clean `npm ci`.
+14. Run the complete verification pipeline (`npm run verify:ci`).
+15. Pack and inspect the tarball (`npm pack --json`).
+16. Test the tarball in isolated consumers (`npm run test:package`, `test:ssr`, `test:exports`).
+17. Confirm size budgets (`npm run size`).
+18. Confirm the target npm version is unpublished (`npm view @muradyanvano/use-form@<version> version` should fail).
+19. Confirm channel mapping: prerelease → `beta`, stable → `latest`.
+20. Never publish from a dirty tree or before CI succeeds.
+21. Never weaken release gates (lint, tests, coverage, a11y, size budgets).
+22. Never publish, tag, push, release, or deploy without explicit owner authorization.
+23. After publication (owner only): verify npm version/dist-tags, install from npm in a fresh project, verify provenance, create the matching Git tag, create a GitHub release (prerelease for betas, normal release for stable).
+24. For a stable release, public Storybook documentation must be deployed from the exact stable Git tag, not from an arbitrary unverified working tree.
+25. After a stable GitHub Release is published, verify that the Deploy Storybook workflow deployed the matching tag and that the public Storybook URL remains healthy.
 
 Inspect all potentially affected skills and update only those whose instructions, examples, package names, commands, compatibility statements, or release procedures became stale (public API, exports, compatibility, validation, architecture, TypeScript conventions, testing, CI, publishing, Storybook, documentation).
 
@@ -76,11 +79,19 @@ ESM only. Do not claim CommonJS without `require()` tests.
 
 ## Identity
 
-Published npm package: `@muradyanvano/use-form`. MIT license and repository metadata are in `package.json`. Consumer docs use the scoped name; implementation keeps relative imports. `private` must be `false`. Do not hardcode dist-tags in `package.json` — the publish workflow selects `beta` or `latest`.
+Published npm package: `@muradyanvano/use-form`.
+
+| Field      | Value                                        |
+| ---------- | -------------------------------------------- |
+| homepage   | https://muradyanvano1995.github.io/use-form/ |
+| repository | GitHub source (`muradyanvano1995/use-form`)  |
+| bugs       | GitHub Issues                                |
+
+MIT license. Consumer docs use the scoped name; implementation keeps relative imports. `private` must be `false`. Do not hardcode dist-tags in `package.json` — the publish workflow selects `beta` or `latest`.
 
 ## Scripts
 
-`verify` is the full non-destructive suite. There is no `prepublishOnly`. `release:check` validates package/lock identity, exports, active docs, and changelog entry for the current version. `pack:dry-run` inspects the archive without publishing. `lockfile:check` runs `npm ci --dry-run` and is the first step of `verify`.
+`verify` is the full non-destructive suite. There is no `prepublishOnly`. `release:check` validates package/lock identity, homepage/Storybook URL, exports, active docs, and changelog entry for the current version. `pack:dry-run` inspects the archive without publishing. `lockfile:check` runs `npm ci --dry-run` and is the first step of `verify`.
 
 Supported tooling (`package.json` `engines`): Node `^20.19.0 || >=22.12.0`, npm `>=10`. Prefer `npm ci` from the committed lockfile.
 
@@ -94,6 +105,17 @@ Size budgets live in `scripts/size-budget.json` and are measured from minified c
 - Protected environment: `npm-publish`.
 - Prerelease versions must publish to `beta`; stable versions must publish to `latest`.
 
+## Storybook
+
+- Public URL: https://muradyanvano1995.github.io/use-form/
+- Deploy workflow: `.github/workflows/deploy-storybook.yml` (filename must not change).
+- Stable GitHub Releases deploy from the exact release tag; prereleases do not overwrite stable docs.
+- `workflow_dispatch` can deploy a specific tag or commit.
+- Build output: `storybook-static` (gitignored, not packed).
+- Local: `npm run storybook` / `build:storybook` (devDependency).
+- Light-only theme — no dark/system mode.
+- Contributor rules: `docs/storybook.md`.
+
 ## Docs
 
 - Inventory: `docs/public-api.md`
@@ -101,7 +123,6 @@ Size budgets live in `scripts/size-budget.json` and are measured from minified c
 - Stable release audit: `docs/stable-release-audit.md`
 - CI: `docs/ci.md` (GitHub Actions at `.github/workflows/ci.yml`)
 - TypeDoc: `npm run docs:api` → `api-docs/` (gitignored)
-- Storybook: `npm run storybook` / `build:storybook` (devDependency, not packed, not deployed)
 - Storybook contributor rules: `docs/storybook.md` (light-only theme, Controls, Actions, play tests, a11y, scrollable docs blocks with `tabIndex={0}`, visual checklist, consumer `source.code` snippets, CodePanel copy). Sidebar: Introduction → Getting Started → Core Concepts → Hooks → Fields → Validation → State & Performance → DevTools → Complete Examples (E2E only) → Accessibility → API Reference → Migration → Limitations (`storySort` in `.storybook/preview.ts`). `useForm` canvas is Login; `useFieldState` uses FieldStateForm. Snippet highlighting: `--docs-syntax-*` + `syntax.css`.
 - Consumer snippets: `src/stories/snippets/consumerSnippets.ts`. Autodocs is enabled. Docs canvas `sourceState: 'shown'`. CodePanel Copy code button.
 - Pre-rebuild audit: `docs/storybook-audit.md`

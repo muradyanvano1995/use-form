@@ -1,10 +1,24 @@
 # @muradyanvano/use-form
 
+[![npm version](https://img.shields.io/npm/v/@muradyanvano/use-form)](https://www.npmjs.com/package/@muradyanvano/use-form)
+[![npm downloads](https://img.shields.io/npm/dm/@muradyanvano/use-form)](https://www.npmjs.com/package/@muradyanvano/use-form)
+[![CI](https://github.com/muradyanvano1995/use-form/actions/workflows/ci.yml/badge.svg)](https://github.com/muradyanvano1995/use-form/actions/workflows/ci.yml)
+[![license](https://img.shields.io/npm/l/@muradyanvano/use-form)](https://github.com/muradyanvano1995/use-form/blob/main/LICENSE)
+[![Storybook](https://img.shields.io/badge/Storybook-docs-FF4785?logo=storybook&logoColor=white)](https://muradyanvano1995.github.io/use-form/)
+
 Typed React 19 form hooks for nested objects, one-level field arrays, file metadata, validation timing, and accessible native field registration.
 
 Published on npm as **`@muradyanvano/use-form`**. The API is currently pre-1.0; see [CHANGELOG.md](CHANGELOG.md) for released versions.
 
-Repository: [github.com/muradyanvano1995/use-form](https://github.com/muradyanvano1995/use-form)
+| Resource      | URL                                                                                 |
+| ------------- | ----------------------------------------------------------------------------------- |
+| **Storybook** | [muradyanvano1995.github.io/use-form](https://muradyanvano1995.github.io/use-form/) |
+| **npm**       | [@muradyanvano/use-form](https://www.npmjs.com/package/@muradyanvano/use-form)      |
+| **GitHub**    | [muradyanvano1995/use-form](https://github.com/muradyanvano1995/use-form)           |
+| **Issues**    | [GitHub Issues](https://github.com/muradyanvano1995/use-form/issues)                |
+| **Changelog** | [CHANGELOG.md](https://github.com/muradyanvano1995/use-form/blob/main/CHANGELOG.md) |
+
+Explore interactive examples, validation behavior, field arrays, controlled components, asynchronous flows and DevTools in the [Storybook documentation](https://muradyanvano1995.github.io/use-form/).
 
 ## Features
 
@@ -231,14 +245,14 @@ Modern evergreen browsers with native ESM. The library targets client-side React
 - Path expansion depth 5; one-level field arrays; no nested arrays inside items
 - No first-party Zod/Yup/Valibot adapters (Standard Schema only)
 - Client-side validation is UX only — repeat checks on the server
-- Storybook docs are local only (not deployed)
 
 See [docs/package-roadmap.md](docs/package-roadmap.md) and Storybook **Limitations and roadmap**.
 
 ## Documentation
 
+- Interactive docs: [Storybook](https://muradyanvano1995.github.io/use-form/)
 - Guides: [docs/](docs/)
-- Local Storybook: `npm run storybook` — contributor rules in [docs/storybook.md](docs/storybook.md)
+- Local Storybook for contributors: `npm run storybook` — rules in [docs/storybook.md](docs/storybook.md)
 - API reference (TypeDoc): `npm run docs:api` → gitignored `api-docs/`
 
 ## Contributing

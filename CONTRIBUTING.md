@@ -56,7 +56,7 @@ npm run build:storybook
 npm run test:storybook
 ```
 
-Storybook is local documentation only. Follow [docs/storybook.md](docs/storybook.md). Review the light canvas at mobile and desktop widths before considering docs complete. Do not log passwords or file contents in Actions.
+Storybook is published at [https://muradyanvano1995.github.io/use-form/](https://muradyanvano1995.github.io/use-form/). For contributor work, run `npm run storybook` locally and follow [docs/storybook.md](docs/storybook.md). Review the light canvas at mobile and desktop widths before considering docs complete. Do not log passwords or file contents in Actions.
 
 `verify` is the full non-destructive release-readiness suite. It does not publish.
 

@@ -1,7 +1,7 @@
 {
   "name": "@muradyanvano/use-form",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Typed React 19 form hooks for nested fields, validation, and submission",
   "license": "MIT",
   "author": {
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/muradyanvano1995/use-form.git"
   },
-  "homepage": "https://github.com/muradyanvano1995/use-form#readme",
+  "homepage": "https://muradyanvano1995.github.io/use-form/",
   "bugs": {
     "url": "https://github.com/muradyanvano1995/use-form/issues"
   },

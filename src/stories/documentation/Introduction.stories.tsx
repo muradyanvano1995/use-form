@@ -18,8 +18,8 @@ function IntroductionPage() {
       <h1>Typed React 19 form state</h1>
       <p className="docs-lead">
         A client-side form library for values, validation, nested paths, one-level field arrays,
-        files, and submission. Storybook here is local documentation only. It is not packed, not
-        deployed, and not an npm product page.
+        files, and submission. This Storybook site is the public documentation. It is not packed
+        into the npm tarball and is not an npm product page.
       </p>
 
       <Callout tone="info" title="Controls">
@@ -29,12 +29,15 @@ function IntroductionPage() {
         </p>
       </Callout>
 
-      <Callout tone="info" title="Published package">
+      <Callout tone="info" title="Public documentation">
         <p>
-          Install stable: <code>npm install @muradyanvano/use-form</code>. Prerelease:{' '}
+          Interactive docs:{' '}
+          <a href="https://muradyanvano1995.github.io/use-form/">
+            muradyanvano1995.github.io/use-form
+          </a>
+          . Install stable: <code>npm install @muradyanvano/use-form</code>. Prerelease:{' '}
           <code>npm install @muradyanvano/use-form@beta</code>. The API is pre-1.0 — see{' '}
-          <code>CHANGELOG.md</code> for released versions. Consumer snippets use{' '}
-          <code>@muradyanvano/use-form</code>.
+          <code>CHANGELOG.md</code> for released versions.
         </p>
       </Callout>
 

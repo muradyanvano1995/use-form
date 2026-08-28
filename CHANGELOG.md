@@ -4,6 +4,16 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-08-29
+
+### Changed
+
+- Set `package.json` `homepage` to the public Storybook documentation URL
+- Added prominent documentation links and status badges in the README
+- Documented automatic stable Storybook deployment via GitHub Pages
+
+No runtime or public API changes.
+
 ## [0.1.0] - 2026-08-29
 
 First stable-channel release of `@muradyanvano/use-form`.
