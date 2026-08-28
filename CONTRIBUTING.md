@@ -4,7 +4,7 @@ This repository is a library plus a Vite demo app. Do not publish, tag, or push 
 
 ## Install
 
-Requires **Node** `^20.19.0 || >=22.12.0` and **npm** `>=10` (see `package.json` `engines`). Prefer a clean lockfile install:
+Requires **Node** `^20.19.0 || >=22.12.0` and **npm** `>=10.8.0` (see `package.json` `engines`). Verified on Linux (Debian bookworm) and Windows with npm **10.8.x–11.19.x**. Prefer a clean lockfile install:
 
 ```bash
 npm ci

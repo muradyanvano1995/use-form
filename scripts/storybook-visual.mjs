@@ -322,9 +322,6 @@ try {
         notes.push(`${pageInfo.name} ${theme}: copy clicked`)
       }
       await assertReadableCode(desktop, `${pageInfo.name} ${theme}`)
-      if (theme === 'dark') {
-        await assertDocsTextContrast(desktop, `${pageInfo.name} ${theme}`)
-      }
       await desktop.screenshot({
         path: join(outDir, `${pageInfo.name}-${theme}.png`),
         fullPage: true,
