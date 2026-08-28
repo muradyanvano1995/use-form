@@ -12,7 +12,7 @@
 - Example forms live in `src/examples` and are wired from `App.tsx` and Storybook.
 - Storybook examples must stay readable on the light `data-theme` canvas using `--docs-*` tokens. Do not add per-story palettes or import `src/index.css`. Storybook has no dark/system theme.
 - Locale switchers in examples should revalidate **after** catalogs commit when errors are already visible. Do not change `useForm` to auto-revalidate on catalog identity.
-- Storybook consumer snippets use `<package-name>` imports. Docs UI `CodePanel` provides Copy code.
+- Storybook consumer snippets use `@muradyanvano/use-form` imports. Docs UI `CodePanel` provides Copy code.
 - Keep forms accessible: labels, stable ids, `aria-invalid`, `aria-describedby`, keyboard submit, disabled submit while submitting. Prefer field errors linked by id over `role="alert"` on every field.
 - Controlled custom inputs should use `useController({ control, name })` (or context inside `FormProvider`), not a second ad-hoc binding layer.
 - Prefer `register()` for native HTML controls.

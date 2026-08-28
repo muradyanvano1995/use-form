@@ -44,10 +44,10 @@ export function DevToolsInspectorForm({
         <div className="demo-form__header">
           <h2>Form DevTools</h2>
           <p>
-            Development inspector imported from <code>{'<package-name>/devtools'}</code>. Passwords
-            are redacted; file contents are never shown. Use <strong>Float</strong> to move the
-            panel over the page (leaves the form layout); <strong>Dock</strong> pins it back inline.
-            The inspector resolves <code>control</code> from context.
+            Development inspector imported from <code>@muradyanvano/use-form/devtools</code>.
+            Passwords are redacted; file contents are never shown. Use <strong>Float</strong> to
+            move the panel over the page (leaves the form layout); <strong>Dock</strong> pins it
+            back inline. The inspector resolves <code>control</code> from context.
           </p>
         </div>
 

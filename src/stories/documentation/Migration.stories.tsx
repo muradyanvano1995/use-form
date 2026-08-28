@@ -51,7 +51,7 @@ function MigrationPage() {
       </p>
       <CodePanel
         title="Resolver subpath"
-        code={`import { standardSchemaResolver } from '<package-name>/resolvers/standard-schema'`}
+        code={`import { standardSchemaResolver } from '@muradyanvano/use-form/resolvers/standard-schema'`}
       />
 
       <h2>After 0.x publishes</h2>

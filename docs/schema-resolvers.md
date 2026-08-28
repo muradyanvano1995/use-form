@@ -129,7 +129,7 @@ Schema issues without a usable field path are validation failures, not submissio
 `standardSchemaResolver(schema)` adapts a Standard Schema v1–compatible object (`schema['~standard'].validate`) without importing a concrete library.
 
 ```ts
-import { standardSchemaResolver } from '<package-name>/resolvers/standard-schema'
+import { standardSchemaResolver } from '@muradyanvano/use-form/resolvers/standard-schema'
 ```
 
 The adapter is **not** exported from the core package entry. It lives at `src/resolvers/standard-schema` and the published subpath `./resolvers/standard-schema`.

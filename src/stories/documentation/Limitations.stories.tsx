@@ -18,11 +18,12 @@ function LimitationsPage() {
         </p>
       </Callout>
 
-      <Callout tone="warning" title="Unpublished">
+      <Callout tone="warning" title="Unpublished beta">
         <p>
-          <code>private: true</code> remains set. Workspace name <code>react-hooks</code> is
-          generic. Owner blockers before any public 0.x: package name/scope, license, repository
-          metadata, and CI provider. This page does not invent those choices.
+          Planned npm name <code>@muradyanvano/use-form</code> (<code>0.1.0-beta.1</code>).{' '}
+          <code>private: true</code> remains set until the owner publishes with{' '}
+          <code>npm publish --access public --tag beta</code>. MIT license and repository metadata
+          are prepared locally; npm publish still requires explicit owner authorization.
         </p>
       </Callout>
 
@@ -73,7 +74,7 @@ function LimitationsPage() {
       <p>
         There is no first-party Zod, Yup, or Valibot adapter and those libraries are not core
         dependencies. Use a custom <code>FormResolver</code> or <code>standardSchemaResolver</code>{' '}
-        from <code>{'<package-name>/resolvers/standard-schema'}</code> for Standard Schema
+        from <code>{'@muradyanvano/use-form/resolvers/standard-schema'}</code> for Standard Schema
         v1-compatible schemas.
       </p>
 

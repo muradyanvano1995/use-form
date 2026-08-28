@@ -11,7 +11,7 @@ function ApiOverviewPage() {
       <p className="docs-lead">
         Runtime exports from the core entry, plus the two subpaths that are intentionally absent
         from that barrel. Inventory source: <code>docs/public-api.md</code>. Package identity is not
-        final; snippets use <code>{'<package-name>'}</code>.
+        final; snippets use <code>{'@muradyanvano/use-form'}</code>.
       </p>
 
       <Callout tone="info" title="Controls">
@@ -31,7 +31,8 @@ function ApiOverviewPage() {
 
       <h2>Core runtime</h2>
       <p>
-        Import from <code>{'<package-name>'}</code>. This entry preserves <code>'use client'</code>.
+        Import from <code>{'@muradyanvano/use-form'}</code>. This entry preserves{' '}
+        <code>'use client'</code>.
       </p>
       <CodePanel title="Core entry" code={snippets.basicUseForm} />
       <ApiTable
@@ -140,18 +141,18 @@ function ApiOverviewPage() {
       <ApiTable
         rows={[
           {
-            name: '<package-name>',
+            name: '@muradyanvano/use-form',
             kind: 'core',
             notes: 'Client form APIs listed above. ESM import only.',
           },
           {
-            name: '<package-name>/devtools',
+            name: '@muradyanvano/use-form/devtools',
             kind: 'DevTools-only',
             notes:
               'FormDevTools. Types: FormDevToolsProps, DevToolsPosition, DevToolsRedactionPredicate.',
           },
           {
-            name: '<package-name>/resolvers/standard-schema',
+            name: '@muradyanvano/use-form/resolvers/standard-schema',
             kind: 'Resolver-entry-only',
             notes:
               'standardSchemaResolver plus StandardSchemaV1* types. No React, no Zod/Yup/Valibot.',

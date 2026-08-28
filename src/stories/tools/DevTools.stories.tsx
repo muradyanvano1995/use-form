@@ -23,7 +23,7 @@ const meta = {
     docs: {
       description: {
         component: withGithubExample(
-          'Import FormDevTools from <package-name>/devtools. Passwords are redacted. File contents are never shown. The inspector uses a themed panel with status chips, section tabs, and a colorized value tree (`--form-devtools-*` tokens). Use Float to portal over the page; drag the header to move and the corner handle to resize. Dock returns inline.',
+          'Import FormDevTools from @muradyanvano/use-form/devtools. Passwords are redacted. File contents are never shown. The inspector uses a themed panel with status chips, section tabs, and a colorized value tree (`--form-devtools-*` tokens). Use Float to portal over the page; drag the header to move and the corner handle to resize. Dock returns inline.',
           'DevToolsInspectorForm.tsx',
         ),
       },

@@ -51,7 +51,7 @@ DevTools uses `--form-devtools-*` tokens with hardcoded fallbacks so it still re
 1. Prefer wrapping an example in `src/examples` over inventing a one-off form.
 2. Set `title` to match the sidebar hierarchy.
 3. Document the public API, how to interact, expected behavior, and limits.
-4. Put consumer copy in `parameters.docs.source.code` using `<package-name>` imports, not `../lib`. Snippets live in `src/stories/snippets/consumerSnippets.ts` (about 15–60 lines, copyable). Link longer examples with “View complete implementation on GitHub”.
+4. Put consumer copy in `parameters.docs.source.code` using `@muradyanvano/use-form` imports, not `../lib`. Snippets live in `src/stories/snippets/consumerSnippets.ts` (about 15–60 lines, copyable). Link longer examples with “View complete implementation on GitHub”.
 5. Add `play` only for critical user flows. Query by role and name.
 6. Interactive stories need meaningful Controls/Actions, or explicitly disable empty panels (`controls.disable` / docs note).
 

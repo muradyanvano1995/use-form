@@ -1,6 +1,6 @@
 # Agent instructions
 
-You are working in the `react-hooks` repository.
+You are working in the `use-form` repository (planned npm package `@muradyanvano/use-form`).
 
 ## Before changing code
 

@@ -49,7 +49,7 @@ ESM only. Do not claim CommonJS without `require()` tests.
 
 Do not invent package scope, license, repository URL, author, or homepage. If missing, document as a release blocker. Keep `private: true` until the owner publishes.
 
-Current workspace `name` is `react-hooks` (generic). README install commands use `<package-name>`.
+Planned npm identity: `@muradyanvano/use-form` (`0.1.0-beta.1`). MIT license and repository metadata are in `package.json`. Consumer docs use the scoped name; implementation keeps relative imports.
 
 ## Scripts
 

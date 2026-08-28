@@ -10,7 +10,7 @@ Treat the public inventory in [public-api.md](public-api.md) as the intended 0.x
 - **Experimental** — may change without a migration guide until 1.0.
 - **DevTools-only / resolver-entry-only** — import from the documented subpath, not core.
 
-`standardSchemaResolver` was removed from the core barrel before any publish. Import it from `<package-name>/resolvers/standard-schema`.
+`standardSchemaResolver` was removed from the core barrel before any publish. Import it from `@muradyanvano/use-form/resolvers/standard-schema`.
 
 ## After 0.x publishes
 

@@ -2,9 +2,7 @@
 
 ## Reporting vulnerabilities
 
-No private vulnerability-reporting address is configured. The project owner must publish a contact process before a public release. Do not assume GitHub private reporting is enabled.
-
-Until then, treat this file as a placeholder policy, not a mailbox.
+No private vulnerability-reporting address is configured yet. Until a dedicated security contact is published, report suspected vulnerabilities via [GitHub Issues](https://github.com/muradyanvano1995/use-form/issues) for the `@muradyanvano/use-form` repository.
 
 ## Client-side validation is not a security boundary
 

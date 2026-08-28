@@ -289,6 +289,6 @@ Visual review of the **current** build (static `storybook-static` + source CSS):
 
 - Do not drop coverage of any public feature listed above.
 - Duplicate stories should be **re-homed and explained**, not deleted.
-- Public copy uses `<package-name>` and subpaths `/devtools` and `/resolvers/standard-schema`.
+- Public copy uses `@muradyanvano/use-form` and subpaths `/devtools` and `/resolvers/standard-schema`.
 - Do not invent npm identity, license, or production guarantees.
 - `focusOnError` is the public option name (not `shouldFocusError`).

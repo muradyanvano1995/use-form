@@ -19,7 +19,9 @@ describe('consumer snippets', () => {
       for (const token of banned) {
         expect(code, `${name} contains ${token}`).not.toContain(token)
       }
-      expect(code, `${name} should import <package-name>`).toContain('<package-name>')
+      expect(code, `${name} should import @muradyanvano/use-form`).toContain(
+        '@muradyanvano/use-form',
+      )
       expect(code.length).toBeGreaterThan(80)
     }
   })

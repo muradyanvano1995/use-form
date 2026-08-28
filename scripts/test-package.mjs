@@ -1,13 +1,5 @@
 import { execFileSync, execSync } from 'node:child_process'
-import {
-  cpSync,
-  existsSync,
-  mkdtempSync,
-  mkdirSync,
-  readdirSync,
-  rmSync,
-  writeFileSync,
-} from 'node:fs'
+import { cpSync, existsSync, mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -19,6 +11,8 @@ import {
   RESOLVER_RUNTIME_EXPORTS,
   assert,
   distDir,
+  nodeModulesPackageRoot,
+  packTarball,
   packageJson,
   rootDir,
 } from './package-utils.mjs'
@@ -172,7 +166,7 @@ export function Demo() {
 }
 
 async function assertConsumerRuntime(consumerDir) {
-  const packedRoot = path.join(consumerDir, 'node_modules', packageJson.name)
+  const packedRoot = nodeModulesPackageRoot(consumerDir)
   const core = await import(pathToFileURL(path.join(packedRoot, 'dist/lib/index.js')).href)
   for (const name of CORE_RUNTIME_EXPORTS) {
     assert(name in core, `Packed core is missing runtime export ${name}`)
@@ -216,7 +210,7 @@ async function assertConsumerRuntime(consumerDir) {
 }
 
 function extractPackedInstall(consumerDir, tarballPath) {
-  const packedRoot = path.join(consumerDir, 'node_modules', packageJson.name)
+  const packedRoot = nodeModulesPackageRoot(consumerDir)
   mkdirSync(packedRoot, { recursive: true })
   execSync(`tar -xf "${tarballPath}" -C "${packedRoot}" --strip-components=1`, { shell: true })
   for (const dep of ['react', 'react-dom', '@types/react', '@types/react-dom', 'typescript']) {
@@ -253,8 +247,8 @@ function assertArchive(files) {
     'Archive missing CHANGELOG',
   )
   assert(
-    !files.some((file) => file === 'LICENSE' || file.endsWith('/LICENSE')),
-    'Archive must not invent a LICENSE',
+    files.includes('LICENSE') || files.some((file) => file.endsWith('/LICENSE')),
+    'Archive missing LICENSE',
   )
   for (const forbidden of FORBIDDEN_PACK_PATHS) {
     assert(
@@ -279,10 +273,8 @@ assertDistBuilt()
 
 const tmpRoot = mkdtempSync(path.join(os.tmpdir(), 'form-pack-'))
 try {
-  runNpm(['pack', `--pack-destination=${tmpRoot}`], rootDir)
-  const packed = readdirSync(tmpRoot).find((name) => name.endsWith('.tgz'))
-  assert(packed, 'npm pack did not produce a tarball')
-  const tarballPath = path.join(tmpRoot, packed)
+  const { tarballPath, filename } = packTarball(tmpRoot)
+  console.log(`packed ${filename}`)
   const files = readTarList(tarballPath)
   assertArchive(files)
 
@@ -301,19 +293,37 @@ try {
     consumerDir,
   )
 
-  const packedRoot = path.join(consumerDir, 'node_modules', packageJson.name)
+  const packedRoot = nodeModulesPackageRoot(consumerDir)
   const resolvedCore = path.join(packedRoot, 'dist/lib/index.js')
   assert(existsSync(resolvedCore), 'Packed core entry is missing after extract')
-  assert(
-    resolvedCore.includes(`${path.sep}node_modules${path.sep}${packageJson.name}`),
-    'Consumer resolved core outside the packed install',
-  )
+  assert(resolvedCore.startsWith(packedRoot), 'Consumer resolved core outside the packed install')
   assert(
     !resolvedCore.includes(`${path.sep}src${path.sep}`),
     'Consumer resolved source instead of dist',
   )
 
   await assertConsumerRuntime(consumerDir)
+  execFileSync(
+    process.execPath,
+    [
+      '--input-type=module',
+      '-e',
+      `import { createElement } from 'react'
+import { renderToString } from 'react-dom/server'
+import { useForm } from '${packageJson.name}'
+
+function Form() {
+  const form = useForm({ defaultValues: { email: 'ssr@example.com' } })
+  return createElement('input', { defaultValue: form.values.email, readOnly: true })
+}
+
+const html = renderToString(createElement(Form))
+if (!html.includes('ssr@example.com')) {
+  throw new Error('Packed tarball SSR smoke failed: ' + html)
+}`,
+    ],
+    { cwd: consumerDir, stdio: 'inherit' },
+  )
   console.log('package archive and isolated consumer checks passed')
 } finally {
   rmSync(tmpRoot, { recursive: true, force: true })

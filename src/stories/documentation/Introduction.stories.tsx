@@ -29,12 +29,11 @@ function IntroductionPage() {
         </p>
       </Callout>
 
-      <Callout tone="warning" title="Not published">
+      <Callout tone="warning" title="Beta — not on npm yet">
         <p>
-          The workspace packages locally (<code>private: true</code>). The name in{' '}
-          <code>package.json</code> is a generic placeholder. Consumer snippets use{' '}
-          <code>{'<package-name>'}</code>. Do not treat this as a public npm identity, license, or
-          production guarantee.
+          Planned package name <code>@muradyanvano/use-form</code> (<code>0.1.0-beta.1</code>).{' '}
+          <code>private: true</code> blocks accidental publish. Install from npm only after the
+          owner publishes the beta. Consumer snippets use the scoped name above.
         </p>
       </Callout>
 
@@ -77,7 +76,7 @@ function IntroductionPage() {
           },
           {
             title: 'DevTools on a side entry',
-            body: 'Read-only inspector from <package-name>/devtools. It is not a core export.',
+            body: 'Read-only inspector from @muradyanvano/use-form/devtools. It is not a core export.',
           },
         ]}
       />
@@ -179,9 +178,9 @@ function IntroductionPage() {
 
       <h2>DevTools and SSR</h2>
       <p>
-        Import <code>FormDevTools</code> only from <code>{'<package-name>/devtools'}</code>. Form
-        hooks are client APIs (<code>'use client'</code>) and cannot run in Server Components. The
-        resolver entry has no client directive and may be used on the server.
+        Import <code>FormDevTools</code> only from <code>{'@muradyanvano/use-form/devtools'}</code>.
+        Form hooks are client APIs (<code>'use client'</code>) and cannot run in Server Components.
+        The resolver entry has no client directive and may be used on the server.
       </p>
 
       <h2>Current limitations</h2>

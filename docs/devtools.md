@@ -9,17 +9,17 @@ import { FormDevTools } from '../devtools/index.ts'
 Intended package subpath:
 
 ```ts
-import { FormDevTools } from '<package-name>/devtools'
+import { FormDevTools } from '@muradyanvano/use-form/devtools'
 ```
 
-Do not import DevTools from the core `useForm` entry. Core source does not import DevTools or `react-dom`, so production bundles that never import `src/devtools` / `<package-name>/devtools` will not include the inspector.
+Do not import DevTools from the core `useForm` entry. Core source does not import DevTools or `react-dom`, so production bundles that never import `src/devtools` / `@muradyanvano/use-form/devtools` will not include the inspector.
 
 ## Peers
 
-| Entry                     | React    | react-dom                                         |
-| ------------------------- | -------- | ------------------------------------------------- |
-| `<package-name>` (core)   | required | not required for core itself                      |
-| `<package-name>/devtools` | required | **required** (floating panel uses `createPortal`) |
+| Entry                             | React    | react-dom                                         |
+| --------------------------------- | -------- | ------------------------------------------------- |
+| `@muradyanvano/use-form` (core)   | required | not required for core itself                      |
+| `@muradyanvano/use-form/devtools` | required | **required** (floating panel uses `createPortal`) |
 
 `react-dom` is an optional peer of the package so core-only apps are not forced to install it. Install and satisfy `react-dom` when you import the DevTools subpath.
 

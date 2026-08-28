@@ -54,7 +54,7 @@ export function StandardSchemaForm({
       <div className="demo-form__header">
         <h2>Standard Schema resolver</h2>
         <p>
-          Imported from <code>&lt;package-name&gt;/resolvers/standard-schema</code>. Live state
+          Imported from <code>@muradyanvano/use-form/resolvers/standard-schema</code>. Live state
           keeps <code>age</code> as a string; submit receives a number. This demo schema is not Zod.
         </p>
       </div>

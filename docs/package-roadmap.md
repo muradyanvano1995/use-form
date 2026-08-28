@@ -1,7 +1,7 @@
 # Package roadmap — `useForm` capability audit
 
 **Baseline (2026-08-18):** Phases 5–13 complete locally — schema resolvers, dependent-field revalidation, debounced async field rules, async default-value loading, unregister / conditional fields, structured / multiple errors, internationalized built-in validation messages, non-reactive getters, atomic `batch()`, a separate-entry Form DevTools inspector, and a local npm-package build.  
-**Package status:** ESM library under `dist/` with `exports` for core, DevTools, and the Standard Schema adapter. **Not published.** `private: true`. Package name, license, repository metadata, and CI provider remain release blockers.
+**Package status:** ESM library under `dist/` with `exports` for core, DevTools, and the Standard Schema adapter. **Not published.** `private: true`. Planned npm name `@muradyanvano/use-form` (`0.1.0-beta.1`). CI runs on GitHub Actions; npm publish requires owner authorization.
 
 ## Capability matrix
 
@@ -77,7 +77,7 @@ Until it ships, applications refresh visible built-in copy by calling `form.vali
 
 ## Next recommended phase
 
-**Owner decisions for a public 0.x:** package name/scope, license, repository metadata, CI provider. Local Phase 13 packaging is complete; npm publish is **not** authorized by this roadmap.
+**Owner decisions for a public 0.x:** authorize npm publish (`npm publish --access public --tag beta`), set `private: false`, and tag/release after publish. Local packaging identity is prepared as `@muradyanvano/use-form`.
 
 Phase 13 details:
 

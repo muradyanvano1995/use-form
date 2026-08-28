@@ -1,6 +1,6 @@
 {
   "$schema": "https://typedoc.org/schema.json",
-  "name": "Form hooks API",
+  "name": "@muradyanvano/use-form API",
   "entryPoints": [
     "src/lib/index.ts",
     "src/devtools/index.ts",

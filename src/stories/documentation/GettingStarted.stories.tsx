@@ -94,15 +94,19 @@ function GettingStartedPage() {
         </p>
       </Callout>
 
-      <Callout tone="warning" title="Install is a placeholder">
+      <Callout tone="warning" title="Install after publish">
         <p>
-          The library is not published. After the owner chooses a public name:{' '}
-          <code>npm install {'<package-name>'}</code>. Peer: React 19. <code>react-dom</code> is an
-          optional peer. Until then, develop from this repository.
+          The beta is not on npm yet. After publication:{' '}
+          <code>npm install @muradyanvano/use-form@beta</code>. Peer: React 19.{' '}
+          <code>react-dom</code> is an optional peer (required for DevTools). Until then, develop
+          from this repository or install the packed tarball locally.
         </p>
       </Callout>
 
-      <CodePanel title="Install" code="npm install <package-name>" />
+      <CodePanel
+        title="Install (after beta publish)"
+        code="npm install @muradyanvano/use-form@beta"
+      />
 
       <h2>First typed form</h2>
       <p>

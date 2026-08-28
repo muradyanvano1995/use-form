@@ -244,9 +244,9 @@ try {
         await copyButton.click()
         await desktop.getByRole('status').filter({ hasText: 'Copied' }).first().waitFor()
         const copied = await desktop.evaluate(() => navigator.clipboard.readText()).catch(() => '')
-        if (copied && !copied.includes('<package-name>')) {
+        if (copied && !copied.includes('@muradyanvano/use-form')) {
           throw new Error(
-            `Introduction copy did not contain <package-name>: ${copied.slice(0, 80)}`,
+            `Introduction copy did not contain @muradyanvano/use-form: ${copied.slice(0, 80)}`,
           )
         }
         if (copied && leakedImport.test(copied)) {
@@ -305,8 +305,8 @@ try {
       const pageText = await desktop.evaluate(() => document.body.innerText)
       const blocks = await collectCodeBlocks(desktop)
       const joined = `${blocks.join('\n')}\n${pageText}`
-      if (!joined.includes('<package-name>')) {
-        throw new Error(`${pageInfo.name} ${theme}: Docs source missing <package-name>`)
+      if (!joined.includes('@muradyanvano/use-form')) {
+        throw new Error(`${pageInfo.name} ${theme}: Docs source missing @muradyanvano/use-form`)
       }
       if (leakedImport.test(joined)) {
         throw new Error(`${pageInfo.name} ${theme}: Docs source leaked an internal import`)

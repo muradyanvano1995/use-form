@@ -1,7 +1,7 @@
 /** Copyable consumer snippets for Storybook. Imports use the public package placeholder. */
 
 export const snippets = {
-  basicUseForm: `import { rules, useForm, ValidationMode } from '<package-name>'
+  basicUseForm: `import { rules, useForm, ValidationMode } from '@muradyanvano/use-form'
 
 type LoginValues = {
   email: string
@@ -30,7 +30,7 @@ export function Login() {
   )
 }`,
 
-  registration: `import { rules, useForm, ValidationMode } from '<package-name>'
+  registration: `import { rules, useForm, ValidationMode } from '@muradyanvano/use-form'
 
 type LoginValues = {
   email: string
@@ -62,7 +62,7 @@ export function Login() {
   )
 }`,
 
-  validationModes: `import { ReValidateMode, rules, useForm, ValidationMode } from '<package-name>'
+  validationModes: `import { ReValidateMode, rules, useForm, ValidationMode } from '@muradyanvano/use-form'
 
 const form = useForm({
   defaultValues: { email: '', password: '' },
@@ -81,7 +81,7 @@ const form = useForm({
 // OnSubmit waits until submit. OnBlur validates when leaving a field.
 // OnChange validates while typing. reValidateMode applies after the first submit.`,
 
-  builtInRules: `import { rules, useForm } from '<package-name>'
+  builtInRules: `import { rules, useForm } from '@muradyanvano/use-form'
 
 const form = useForm({
   defaultValues: {
@@ -103,7 +103,7 @@ const form = useForm({
   },
 })`,
 
-  customRules: `import { createRule, rules, useForm } from '<package-name>'
+  customRules: `import { createRule, rules, useForm } from '@muradyanvano/use-form'
 
 type AccountValues = {
   name: string
@@ -123,7 +123,7 @@ const form = useForm<AccountValues>({
   },
 })`,
 
-  formLevel: `import { rules, useForm } from '<package-name>'
+  formLevel: `import { rules, useForm } from '@muradyanvano/use-form'
 
 type OrderValues = {
   products: Array<{ name: string; quantity: number }>
@@ -149,7 +149,7 @@ const form = useForm<OrderValues>({
   },
 })`,
 
-  structuredErrors: `import { rules, useForm } from '<package-name>'
+  structuredErrors: `import { rules, useForm } from '@muradyanvano/use-form'
 
 const form = useForm({
   defaultValues: { password: '' },
@@ -169,7 +169,7 @@ const issues = form.errorDetails.password?.issues ?? []
 // form.errors.password is the first issue message.
 // form.errorDetails.password.issues lists every issue when criteriaMode is 'all'.`,
 
-  internationalization: `import { rules, useForm, type FieldLabels, type ValidationMessageCatalog } from '<package-name>'
+  internationalization: `import { rules, useForm, type FieldLabels, type ValidationMessageCatalog } from '@muradyanvano/use-form'
 import { useEffect, useRef, useState } from 'react'
 
 type Values = { name: string }
@@ -218,7 +218,7 @@ export function LocalizedName({ locale }: { locale: Locale }) {
   )
 }`,
 
-  asyncValidation: `import { rules, useForm, ValidationMode } from '<package-name>'
+  asyncValidation: `import { rules, useForm, ValidationMode } from '@muradyanvano/use-form'
 
 async function checkUsername(username: string, signal?: AbortSignal) {
   await new Promise<void>((resolve, reject) => {
@@ -249,7 +249,7 @@ const form = useForm({
   onSubmit: () => undefined,
 })`,
 
-  createAsyncRule: `import { createAsyncRule, rules, useForm, ValidationMode } from '<package-name>'
+  createAsyncRule: `import { createAsyncRule, rules, useForm, ValidationMode } from '@muradyanvano/use-form'
 
 async function checkUsername(username: string, signal?: AbortSignal) {
   await new Promise<void>((resolve) => {
@@ -274,7 +274,7 @@ const form = useForm({
 
 // createAsyncRule is the same scheduler as rules.async; prefer rules.async in apps.`,
 
-  asyncDefaults: `import { rules, useForm, ValidationMode } from '<package-name>'
+  asyncDefaults: `import { rules, useForm, ValidationMode } from '@muradyanvano/use-form'
 
 const fallback = { name: '', email: '' }
 
@@ -298,7 +298,7 @@ const form = useForm({
 // form.isLoadingDefaults / form.isDefaultsReady / form.defaultValuesError
 // form.reloadDefaultValues() retries after a failed load.`,
 
-  dependencies: `import { rules, useForm, type FieldDependencies } from '<package-name>'
+  dependencies: `import { rules, useForm, type FieldDependencies } from '@muradyanvano/use-form'
 
 type Values = {
   password: string
@@ -318,11 +318,11 @@ const form = useForm<Values>({
   onSubmit: () => undefined,
 })`,
 
-  schemaResolver: `import { useForm, ValidationMode } from '<package-name>'
+  schemaResolver: `import { useForm, ValidationMode } from '@muradyanvano/use-form'
 import {
   standardSchemaResolver,
   type StandardSchemaV1,
-} from '<package-name>/resolvers/standard-schema'
+} from '@muradyanvano/use-form/resolvers/standard-schema'
 
 type Input = { username: string; age: string }
 type Output = { username: string; age: number }
@@ -351,7 +351,7 @@ const form = useForm<Input, Output>({
   },
 })`,
 
-  nestedFields: `import { rules, useForm } from '<package-name>'
+  nestedFields: `import { rules, useForm } from '@muradyanvano/use-form'
 
 type ProfileValues = {
   personal: { firstName: string }
@@ -382,7 +382,7 @@ function NestedProfile() {
   )
 }`,
 
-  controlledFields: `import { useController, useForm } from '<package-name>'
+  controlledFields: `import { useController, useForm } from '@muradyanvano/use-form'
 
 function PriceField({
   control,
@@ -420,7 +420,7 @@ function PriceForm() {
   )
 }`,
 
-  conditionalFields: `import { rules, useForm, useWatch, ValidationMode } from '<package-name>'
+  conditionalFields: `import { rules, useForm, useWatch, ValidationMode } from '@muradyanvano/use-form'
 
 type Values = {
   accountType: 'personal' | 'company'
@@ -441,7 +441,7 @@ const form = useForm<Values>({
 
 const accountType = useWatch(form, 'accountType')`,
 
-  fieldArrays: `import { rules, useFieldArray, useForm } from '<package-name>'
+  fieldArrays: `import { rules, useFieldArray, useForm } from '@muradyanvano/use-form'
 
 type OrderValues = {
   products: Array<{ name: string; quantity: number }>
@@ -479,7 +479,7 @@ function Order() {
   )
 }`,
 
-  fileInputs: `import { rules, useForm } from '<package-name>'
+  fileInputs: `import { rules, useForm } from '@muradyanvano/use-form'
 
 type UploadValues = {
   avatar: File | null
@@ -508,7 +508,7 @@ function Upload() {
   )
 }`,
 
-  context: `import { FormProvider, useController, useForm, useFormState } from '<package-name>'
+  context: `import { FormProvider, useController, useForm, useFormState } from '@muradyanvano/use-form'
 
 type ProfileValues = { displayName: string }
 
@@ -563,7 +563,7 @@ function Profile() {
   )
 }`,
 
-  watchers: `import { FormProvider, useForm, useFormState, useWatch } from '<package-name>'
+  watchers: `import { FormProvider, useForm, useFormState, useWatch } from '@muradyanvano/use-form'
 
 type WatchValues = { title: string }
 
@@ -596,7 +596,7 @@ function Editor() {
   )
 }`,
 
-  batching: `import { useForm } from '<package-name>'
+  batching: `import { useForm } from '@muradyanvano/use-form'
 
 const form = useForm({
   defaultValues: {
@@ -611,7 +611,7 @@ await form.batch(() => {
 // One store notification and one coordinated validation pass.
 // The callback must be synchronous.`,
 
-  getters: `import { useForm } from '<package-name>'
+  getters: `import { useForm } from '@muradyanvano/use-form'
 
 const form = useForm({
   defaultValues: {
@@ -627,8 +627,8 @@ const dirty = form.getDirtyValues()
 const field = form.getFieldState('address.city')
 // Getters do not subscribe. Reading them during render will not re-render on change.`,
 
-  devtools: `import { FormProvider, useForm } from '<package-name>'
-import { FormDevTools } from '<package-name>/devtools'
+  devtools: `import { FormProvider, useForm } from '@muradyanvano/use-form'
+import { FormDevTools } from '@muradyanvano/use-form/devtools'
 
 function Inspector() {
   const form = useForm({
@@ -653,7 +653,7 @@ function Inspector() {
   )
 }`,
 
-  backendErrors: `import { rules, useForm, ValidationMode, type FieldErrors } from '<package-name>'
+  backendErrors: `import { rules, useForm, ValidationMode, type FieldErrors } from '@muradyanvano/use-form'
 
 type LoginValues = { email: string; password: string }
 
@@ -686,7 +686,7 @@ const form = useForm<LoginValues>({
   },
 })`,
 
-  radioCheckbox: `import { rules, useForm } from '<package-name>'
+  radioCheckbox: `import { rules, useForm } from '@muradyanvano/use-form'
 
 type Preferences = {
   plan: 'free' | 'pro'
@@ -725,7 +725,7 @@ function PreferencesForm() {
   )
 }`,
 
-  submission: `import { rules, useForm, ValidationMode } from '<package-name>'
+  submission: `import { rules, useForm, ValidationMode } from '@muradyanvano/use-form'
 
 const form = useForm({
   defaultValues: { email: '', password: '' },
@@ -745,7 +745,7 @@ async function save(values: { email: string; password: string }) {
   void values
 }`,
 
-  reset: `import { rules, useForm } from '<package-name>'
+  reset: `import { rules, useForm } from '@muradyanvano/use-form'
 
 const form = useForm({
   defaultValues: { name: '', password: '' },
@@ -761,7 +761,7 @@ const form = useForm({
 form.resetField('password')
 form.reset({ name: 'Ada', password: '' })`,
 
-  fieldState: `import { FormProvider, rules, useFieldState, useForm, ValidationMode } from '<package-name>'
+  fieldState: `import { FormProvider, rules, useFieldState, useForm, ValidationMode } from '@muradyanvano/use-form'
 
 type Values = { email: string }
 
@@ -794,7 +794,7 @@ function EmailForm() {
   )
 }`,
 
-  imperativeMutations: `import { ErrorSource, rules, useForm, ValidationMode } from '<package-name>'
+  imperativeMutations: `import { ErrorSource, rules, useForm, ValidationMode } from '@muradyanvano/use-form'
 
 const form = useForm({
   defaultValues: { email: '', note: '' },
@@ -813,7 +813,7 @@ form.clearErrors()
 await form.validate()
 // No public setFocus — focusOnError uses registered refs on submit.`,
 
-  normalizeErrors: `import { normalizeErrors } from '<package-name>'
+  normalizeErrors: `import { normalizeErrors } from '@muradyanvano/use-form'
 
 const cleaned = normalizeErrors({
   email: 'Email is required',
@@ -825,7 +825,7 @@ const cleaned = normalizeErrors({
 void cleaned.email
 void cleaned.password`,
 
-  formState: `import { useForm } from '<package-name>'
+  formState: `import { useForm } from '@muradyanvano/use-form'
 
 const form = useForm({
   defaultValues: { title: '' },

@@ -1,54 +1,49 @@
-# Form hooks
+# @muradyanvano/use-form
 
-Typed React form state for nested fields, field arrays, files, validation, and submission. This repository also hosts a Vite demo application and Storybook workspace.
+Typed React 19 form hooks for nested objects, one-level field arrays, file metadata, validation timing, and accessible native field registration.
 
-## Release-readiness status
+**Beta status:** Planned npm name `@muradyanvano/use-form`, version `0.1.0-beta.1`. **Not published yet** — `private: true` remains set in this repository. Install from npm only after the owner publishes the beta.
 
-Local packaging is in place: ESM library build, declaration files, package `exports`, peer React, archive checks, and consumer tests.
-
-**Not published.** Do not treat the current `package.json` `name` (`react-hooks`) as a public npm identity. It is a generic workspace name.
-
-Release blockers that the owner must resolve before publishing:
-
-- Final npm package name/scope required before publishing.
-- License selection required before public release.
-- Repository, homepage, bugs, and author metadata are unset.
-- CI provider is not established.
-- `private: true` remains set so an accidental `npm publish` is blocked.
+Repository: [github.com/muradyanvano1995/use-form](https://github.com/muradyanvano1995/use-form)
 
 ## Features
 
-- Strongly typed values, nested paths, and one level of field arrays
-- Granular subscriptions (`useWatch`, `useFormState`, `useFieldState`)
-- Native `register()` and headless `useController`
-- File fields without reading contents into form state
-- Built-in rules, custom rules, async debounce, resolvers, and i18n catalogs
-- Async default-value loading and conditional `unregister`
-- Structured errors (`FieldError` + string view)
+- Strongly typed values, nested paths (`address.city`), and one-level field arrays (`items.0.name`)
+- Native `register()` and headless `useController` for custom controls
+- Built-in rules, custom rules, form-level `validate`, Standard Schema resolvers, async debounce, i18n catalogs
+- Structured errors (`FieldError` + string view), accessible ids, focus-on-error
+- File fields store `File` references only (no content reads)
 - Non-reactive getters and atomic `form.batch()`
-- Development-only DevTools on a separate entry
+- Development DevTools on a separate entry (not shipped in core bundles)
 
 ## Installation
 
-The package is not on npm yet. After a public name is chosen:
+After the beta is published to npm:
 
 ```bash
-npm install <package-name>
+npm install @muradyanvano/use-form@beta
 ```
 
-Peer requirement: **React 19**. `react-dom` is an optional peer (needed for SSR tests and DOM rendering). React Native is not tested.
+Peers:
 
-Until publish, develop from this repository with `npm ci` (preferred) or `npm install` at the root.
+- **`react`**: `^19.0.0` (required)
+- **`react-dom`**: optional for core-only apps; **required** when importing `@muradyanvano/use-form/devtools`
 
-Supported tooling (also declared in `package.json` `engines`): **Node** `^20.19.0 || >=22.12.0`, **npm** `>=10`. Use the committed `package-lock.json`; do not omit the lockfile for installs.
+Until publish, develop from this repository (`npm ci`) or install a locally packed tarball (see [docs/releasing.md](docs/releasing.md)).
 
-## Quick start
+Supported tooling: Node `^20.19.0 || >=22.12.0`, npm `>=10.8.0`.
+
+## Minimal example
 
 ```tsx
-import { rules, useForm, ValidationMode } from '<package-name>'
+'use client'
 
-function Login() {
-  const form = useForm({
+import { rules, useForm, ValidationMode } from '@muradyanvano/use-form'
+
+type LoginValues = { email: string; password: string }
+
+export function LoginForm() {
+  const form = useForm<LoginValues>({
     defaultValues: { email: '', password: '' },
     mode: ValidationMode.OnSubmit,
     rules: {
@@ -62,69 +57,193 @@ function Login() {
 
   return (
     <form onSubmit={form.handleSubmit} noValidate>
-      <input {...form.register('email')} />
-      <input {...form.register('password')} type="password" />
+      <label htmlFor={form.getFieldId('email')}>Email</label>
+      <input {...form.register('email')} id={form.getFieldId('email')} type="email" />
+      {form.errors.email ? <p id={form.getErrorId('email')}>{form.errors.email}</p> : null}
+
+      <label htmlFor={form.getFieldId('password')}>Password</label>
+      <input {...form.register('password')} id={form.getFieldId('password')} type="password" />
+      {form.errors.password ? <p id={form.getErrorId('password')}>{form.errors.password}</p> : null}
+
       <button type="submit">Sign in</button>
     </form>
   )
 }
 ```
 
-Form hooks and components are **client-side APIs**. In React Server Component frameworks, import them from a Client Component (`'use client'`). The Standard Schema adapter does not import React and may be loaded on the server.
+Form hooks are **client components**. In React Server Component apps, import them from a file marked `'use client'`.
 
-## Guides
+## Validation example
 
-| Topic                 | Doc                                                            |
-| --------------------- | -------------------------------------------------------------- |
-| Validation            | [docs/validation.md](docs/validation.md)                       |
-| Nested fields         | [docs/form-state.md](docs/form-state.md)                       |
-| Field arrays          | [docs/field-arrays.md](docs/field-arrays.md)                   |
-| Controlled components | [docs/controlled-components.md](docs/controlled-components.md) |
-| Files                 | [docs/form-state.md](docs/form-state.md)                       |
-| Schema resolvers      | [docs/schema-resolvers.md](docs/schema-resolvers.md)           |
-| Async validation      | [docs/async-validation.md](docs/async-validation.md)           |
-| Async defaults        | [docs/async-default-values.md](docs/async-default-values.md)   |
-| Conditional fields    | [docs/conditional-fields.md](docs/conditional-fields.md)       |
-| Structured errors     | [docs/structured-errors.md](docs/structured-errors.md)         |
-| Internationalization  | [docs/internationalization.md](docs/internationalization.md)   |
-| Getters               | [docs/imperative-api.md](docs/imperative-api.md)               |
-| Batching              | [docs/batching.md](docs/batching.md)                           |
-| DevTools              | [docs/devtools.md](docs/devtools.md)                           |
-| Public API inventory  | [docs/public-api.md](docs/public-api.md)                       |
-| Releasing             | [docs/releasing.md](docs/releasing.md)                         |
+```tsx
+import { rules, useForm, ValidationMode } from '@muradyanvano/use-form'
 
-### DevTools
-
-```ts
-import { FormDevTools } from '<package-name>/devtools'
+const form = useForm({
+  defaultValues: { age: '' },
+  mode: ValidationMode.OnBlur,
+  rules: {
+    age: [rules.required(), rules.min(18)],
+  },
+})
 ```
 
-### Standard Schema adapter
+See [docs/validation.md](docs/validation.md) and [docs/async-validation.md](docs/async-validation.md).
 
-```ts
-import { standardSchemaResolver } from '<package-name>/resolvers/standard-schema'
+## TypeScript example
+
+```tsx
+import { useForm, type FieldPath } from '@muradyanvano/use-form'
+
+type Profile = {
+  email: string
+  address: { city: string }
+}
+
+const form = useForm<Profile>({
+  defaultValues: { email: '', address: { city: '' } },
+})
+
+const path: FieldPath<Profile> = 'address.city'
+form.setValue(path, 'Yerevan')
 ```
 
-The adapter is not exported from the core entry. It does not depend on Zod, Yup, or Valibot.
+Path inference stops at depth 5. Invalid paths fail at compile time.
+
+## Controlled-component example
+
+```tsx
+import { useController, useForm } from '@muradyanvano/use-form'
+
+function RatingField({ control }: { control: ReturnType<typeof useForm>['control'] }) {
+  const { field, fieldState } = useController({
+    control,
+    name: 'rating',
+    defaultValue: 0,
+  })
+
+  return (
+    <>
+      <input
+        type="range"
+        min={0}
+        max={5}
+        value={field.value}
+        onChange={(event) => {
+          field.onChange(Number(event.target.value))
+        }}
+      />
+      {fieldState.error ? <p>{fieldState.error}</p> : null}
+    </>
+  )
+}
+```
+
+See [docs/controlled-components.md](docs/controlled-components.md).
+
+## Field-array example
+
+```tsx
+import { useFieldArray, useForm } from '@muradyanvano/use-form'
+
+type FormValues = { items: Array<{ name: string }> }
+
+const form = useForm<FormValues>({ defaultValues: { items: [] } })
+const items = useFieldArray({ control: form.control, name: 'items' })
+
+items.append({ name: '' })
+```
+
+One index level only. See [docs/field-arrays.md](docs/field-arrays.md).
+
+## Async validation and defaults
+
+- Debounced remote checks: [docs/async-validation.md](docs/async-validation.md)
+- Async `loadDefaultValues`: [docs/async-default-values.md](docs/async-default-values.md)
+
+## Standard Schema resolver
+
+```tsx
+import { useForm } from '@muradyanvano/use-form'
+import { standardSchemaResolver } from '@muradyanvano/use-form/resolvers/standard-schema'
+
+const form = useForm({
+  defaultValues: { email: '' },
+  resolver: standardSchemaResolver(yourStandardSchema),
+})
+```
+
+The adapter has **no React import** and may run on the server. It is **not** exported from the core entry. See [docs/schema-resolvers.md](docs/schema-resolvers.md).
+
+## DevTools
+
+```tsx
+import { FormProvider, useForm } from '@muradyanvano/use-form'
+import { FormDevTools } from '@muradyanvano/use-form/devtools'
+
+const form = useForm({ defaultValues: { email: '' } })
+
+return (
+  <FormProvider control={form.control}>
+    {/* fields */}
+    {import.meta.env.DEV ? <FormDevTools control={form.control} /> : null}
+  </FormProvider>
+)
+```
+
+DevTools requires `react-dom` (portals). Do not ship it as production UI. See [docs/devtools.md](docs/devtools.md).
+
+## Public entry points
+
+| Import                                             | Purpose                                                      |
+| -------------------------------------------------- | ------------------------------------------------------------ |
+| `@muradyanvano/use-form`                           | Core hooks, rules, types (`'use client'`)                    |
+| `@muradyanvano/use-form/devtools`                  | `FormDevTools` inspector (`'use client'`, needs `react-dom`) |
+| `@muradyanvano/use-form/resolvers/standard-schema` | `standardSchemaResolver` (no React)                          |
+| `@muradyanvano/use-form/package.json`              | Package metadata                                             |
+
+Private paths (for example `@muradyanvano/use-form/hooks/...`) are **not** supported.
+
+Full inventory: [docs/public-api.md](docs/public-api.md).
+
+## React peer support
+
+Tested in this repository with **React 19.2**. React 18, React Native, and CommonJS `require()` are **not** supported or tested.
+
+## SSR
+
+Core hooks are client-only. The library uses a stable server snapshot for selector reads during SSR smoke tests, but **hydrated form UX is not a supported product surface yet**. Do not render interactive forms on the server.
+
+The Standard Schema resolver entry may be imported on the server because it does not import React.
+
+## Browser support
+
+Modern evergreen browsers with native ESM. The library targets client-side React DOM applications tested via Vitest, Testing Library, and Storybook browser runs in CI.
+
+## Known limitations
+
+- Not on npm until the owner publishes the beta
+- ESM only (no CommonJS build)
+- Path expansion depth 5; one-level field arrays; no nested arrays inside items
+- No first-party Zod/Yup/Valibot adapters (Standard Schema only)
+- Client-side validation is UX only — repeat checks on the server
+- Storybook docs are local only (not deployed)
+
+See [docs/package-roadmap.md](docs/package-roadmap.md) and Storybook **Limitations and roadmap**.
 
 ## Documentation
 
-- Guides: `docs/`
-- Interactive examples: `npm run storybook` (local only; not deployed). Contributor rules: [docs/storybook.md](docs/storybook.md)
-- API reference: `npm run docs:api` (writes `api-docs/`, not committed)
-- Agent skills: `.ai/skills/`
-
-## Compatibility
-
-- Tested with React 19.2 and TypeScript 6 in this repository
-- Primary format: ESM only (no CommonJS `require()` support)
-- Node is used for package/SSR import tests; browsers remain the runtime for form UI
-- React Native is unsupported
+- Guides: [docs/](docs/)
+- Local Storybook: `npm run storybook` — contributor rules in [docs/storybook.md](docs/storybook.md)
+- API reference (TypeDoc): `npm run docs:api` → gitignored `api-docs/`
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Run `npm run verify` before considering a change complete.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Run `npm run verify` locally; CI runs `npm run verify:ci` on push/PR.
+
+## Security
+
+See [SECURITY.md](SECURITY.md). Report issues via [GitHub Issues](https://github.com/muradyanvano1995/use-form/issues) until a dedicated security contact is published.
 
 ## License
 
-No license has been chosen. The owner must select a license before public release. This repository does not assume MIT or any other terms.
+[MIT](LICENSE) © 2026 Vano Muradyan

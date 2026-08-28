@@ -1,18 +1,18 @@
 # Public API inventory
 
-Package identity is not final. Subpaths below use the placeholder `<package-name>`.
+Planned npm package: **`@muradyanvano/use-form`** (pre-release; not published yet). Subpaths below use that scoped name.
 
 Classifications:
 
 - **Stable public API** — intended consumer surface
 - **Experimental public API** — may change before 1.0
 - **Internal** — must not be imported
-- **DevTools-only** — `<package-name>/devtools`
-- **Resolver-entry-only** — `<package-name>/resolvers/standard-schema`
+- **DevTools-only** — `@muradyanvano/use-form/devtools`
+- **Resolver-entry-only** — `@muradyanvano/use-form/resolvers/standard-schema`
 
 Declarations that mention internal types must not make those types importable. Consumers should not import `FormInternalState`, store constructors, serializers, or path parsers.
 
-## Core (`<package-name>`)
+## Core (`@muradyanvano/use-form`)
 
 ### Runtime — stable public API
 
@@ -56,7 +56,7 @@ None at this time. DevTools is a separate entry rather than an experimental core
 | `fieldErrorFromIssues` and error merge helpers | Internal            |
 | Field-array key stores / remappers             | Internal            |
 
-## DevTools (`<package-name>/devtools`)
+## DevTools (`@muradyanvano/use-form/devtools`)
 
 ### Runtime — DevTools-only
 
@@ -72,9 +72,9 @@ None at this time. DevTools is a separate entry rather than an experimental core
 
 ### Peers
 
-The DevTools subpath requires **`react`** and **`react-dom`** (portals). Core (`.`) does not import DevTools or `react-dom`; apps that never import `<package-name>/devtools` do not need `react-dom` for the form library itself. `react-dom` remains an optional peer of the package so core-only consumers are not forced to install it.
+The DevTools subpath requires **`react`** and **`react-dom`** (portals). Core (`.`) does not import DevTools or `react-dom`; apps that never import `@muradyanvano/use-form/devtools` do not need `react-dom` for the form library itself. `react-dom` remains an optional peer of the package so core-only consumers are not forced to install it.
 
-## Resolver (`<package-name>/resolvers/standard-schema`)
+## Resolver (`@muradyanvano/use-form/resolvers/standard-schema`)
 
 ### Runtime — resolver-entry-only
 
