@@ -1,6 +1,6 @@
 {
   "name": "@muradyanvano/use-form",
-  "private": true,
+  "private": false,
   "version": "0.1.0-beta.1",
   "description": "Typed React 19 form hooks for nested fields, validation, and submission",
   "license": "MIT",
