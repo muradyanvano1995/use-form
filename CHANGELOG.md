@@ -6,8 +6,7 @@ All notable changes to this project are documented in this file.
 
 ## [0.1.0] - 2026-08-29
 
-Prepared first stable-channel release. **Not published to npm yet** — requires owner authorization via the GitHub publish workflow (`version: 0.1.0`, `channel: latest`).
-
+First stable-channel release of `@muradyanvano/use-form`.
 First stable successor to `0.1.0-beta.2`. The public API remains pre-1.0.
 
 ### Consumer-facing capabilities
