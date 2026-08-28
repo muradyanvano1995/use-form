@@ -107,7 +107,15 @@ function runTestRunner(url) {
   return new Promise((resolve, reject) => {
     const child = spawn(
       process.execPath,
-      [testRunnerBin, '--url', url, '--index-json', '--maxWorkers=2', '--testTimeout=30000', '--ci'],
+      [
+        testRunnerBin,
+        '--url',
+        url,
+        '--index-json',
+        '--maxWorkers=2',
+        '--testTimeout=30000',
+        '--ci',
+      ],
       {
         cwd: root,
         stdio: 'inherit',
