@@ -4,10 +4,12 @@ GitHub Actions is configured at `.github/workflows/ci.yml` (remote is GitHub). T
 
 ## Local vs CI
 
-| Command             | Includes                                                                                                                                                                                           |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run verify`    | Lockfile check, typecheck, lint, format, unit tests + coverage, library build, package/SSR/exports, size, TypeDoc, Storybook **build**, Storybook **Vitest mirrors**, pack dry-run, demo app build |
-| `npm run verify:ci` | Everything in `verify`, plus Playwright Chromium install, **real Storybook browser play + a11y** (`test:storybook-browser`), and light visual smoke (`test:storybook-visual`)                      |
+| Local vs CI         | Includes                                                                                                                                                                                                          |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run verify`    | Lockfile check, release:check, typecheck, lint, format, unit tests + coverage, library build, package/SSR/exports, size, TypeDoc, Storybook **build**, Storybook **Vitest mirrors**, pack dry-run, demo app build |
+| `npm run verify:ci` | Everything in `verify`, plus Playwright Chromium install, **real Storybook browser play + a11y** (`test:storybook-browser`), and light visual smoke (`test:storybook-visual`)                                     |
+
+Risk-based when to run which level: [development-workflow.md](development-workflow.md). Maintainer GitHub release order: [github-release-workflow.md](github-release-workflow.md).
 
 `test:storybook` alone is **not** complete Storybook verification — it mirrors play flows in jsdom/RTL. Browser play + axe run only via `test:storybook-browser` / `verify:ci` / GitHub Actions.
 

@@ -4,6 +4,14 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-08-29
+
+### Package metadata
+
+- Added focused npm discovery keywords.
+- Improved the npm package description.
+- No runtime or public API changes.
+
 ## [0.1.1] - 2026-08-29
 
 ### Changed

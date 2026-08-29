@@ -2,6 +2,8 @@
 
 This is a **manual** checklist. Do not run publish, tag, push, or deploy steps unless the owner explicitly authorizes them.
 
+For the exact GitHub UI order (CI → Trusted Publishing → environment approval → npm verify → tag → Release → Storybook Pages), use **[github-release-workflow.md](github-release-workflow.md)**. This page keeps package identity and policy; avoid duplicating every click here.
+
 ## Package identity
 
 | Field      | Value                                               |
@@ -64,23 +66,15 @@ Optional production smoke after deploy (manual or future CI): retry briefly for 
 
 ## After the owner authorizes publish
 
-These steps are documented only. Do **not** execute them from an agent session unless the user explicitly asks to publish:
+These steps are documented only. Do **not** execute them from an agent session unless the user explicitly asks to publish. Follow the detailed UI sequence in [github-release-workflow.md](github-release-workflow.md):
 
 1. Ensure CI is green on `main` and the working tree is clean.
 2. Confirm the target version is **not** already on npm.
-3. Trigger `.github/workflows/publish.yml` with matching `version` and `channel`.
-4. After publish succeeds, verify:
-
-   ```bash
-   npm view @muradyanvano/use-form version
-   npm view @muradyanvano/use-form dist-tags
-   npm view @muradyanvano/use-form@<version>
-   ```
-
-5. Install from npm in a fresh project: `npm install @muradyanvano/use-form`.
-6. Create the matching Git tag and GitHub Release **only after** npm publish succeeds and the owner requests it.
-7. For stable releases, confirm Deploy Storybook runs from the release tag and the public Storybook URL stays healthy.
-8. Optionally update the GitHub repository **About → Website** to https://muradyanvano1995.github.io/use-form/.
+3. Trigger **Publish npm package** (`publish.yml`) with matching `version` and `channel`; approve `npm-publish`.
+4. Verify with `npm view` and a fresh `npm install` (see the GitHub guide).
+5. Create the matching Git tag and GitHub Release **only after** npm publish succeeds.
+6. For stable releases, confirm Deploy Storybook runs from the release tag and the public Storybook URL stays healthy.
+7. Optionally update the GitHub repository **About → Website** to https://muradyanvano1995.github.io/use-form/.
 
 ## Safety
 

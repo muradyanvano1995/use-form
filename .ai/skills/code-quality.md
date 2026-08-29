@@ -18,9 +18,9 @@
 | `npm run lockfile:check`          | `npm ci --dry-run` lockfile consistency      |
 | `npm run release:check`           | Package/docs/changelog release consistency   |
 
-See `.ai/skills/package-release.md` for packing, size, Storybook, and TypeDoc. Do not add `prepublishOnly`.
+See `.ai/skills/package-release.md` for packing, size, Storybook, and TypeDoc. After any change, classify risk and choose a verification level via `.ai/skills/change-workflow.md` and `docs/development-workflow.md`. Do not add `prepublishOnly`.
 
-Prettier: no semicolons, single quotes, trailing commas, width 100 (`.prettierrc`).
+Use `npm run format` to apply Prettier; use `npm run format:check` to verify without writing.
 
 ## ESLint
 

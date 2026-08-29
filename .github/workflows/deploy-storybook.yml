@@ -10,7 +10,7 @@ on:
       ref:
         description: Git tag or commit to deploy
         required: true
-        default: v0.1.1
+        default: v0.1.2
         type: string
 
 permissions:

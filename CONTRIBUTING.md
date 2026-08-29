@@ -60,6 +60,19 @@ Storybook is published at [https://muradyanvano1995.github.io/use-form/](https:/
 
 `verify` is the full non-destructive release-readiness suite. It does not publish.
 
+## After making changes
+
+Follow the canonical guide: [docs/development-workflow.md](docs/development-workflow.md).
+
+- Meaningful code changes: run `npm run verify` before committing.
+- High-risk, release, or package-metadata publication work: run `npm run verify:ci` (includes Storybook browser play, axe, and visual smoke).
+
+AI agents should also open `.ai/skills/change-workflow.md` for verification-level routing.
+
+## Maintainers: GitHub release and Storybook
+
+For npm Trusted Publishing, environment approvals, tags, GitHub Releases, and Pages Storybook deployment, follow [docs/github-release-workflow.md](docs/github-release-workflow.md). Policy summary: [docs/releasing.md](docs/releasing.md).
+
 ## Documentation updates
 
 - User guides: `docs/`

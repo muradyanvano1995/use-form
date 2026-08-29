@@ -257,7 +257,7 @@ See [docs/package-roadmap.md](docs/package-roadmap.md) and Storybook **Limitatio
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Run `npm run verify` locally; CI runs `npm run verify:ci` on push/PR.
+See [CONTRIBUTING.md](CONTRIBUTING.md) and the post-change guide [docs/development-workflow.md](docs/development-workflow.md). Run `npm run verify` locally; CI runs `npm run verify:ci` on push/PR.
 
 ## Security
 

@@ -119,4 +119,4 @@ npm run test:ssr
 npm run test:exports
 ```
 
-Package consumer tests (`scripts/test-*.mjs`) import the **built/packed** package, not `src/` aliases. Run them after `npm run build:lib`. Do not add them to the default Vitest suite.
+Choose which suites to run from the change-classification tables in `docs/development-workflow.md` (skill: `.ai/skills/change-workflow.md`). Package consumer tests (`scripts/test-*.mjs`) import the **built/packed** package, not `src/` aliases. Run them after `npm run build:lib`. Do not add them to the default Vitest suite.

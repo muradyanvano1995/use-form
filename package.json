@@ -1,8 +1,24 @@
 {
   "name": "@muradyanvano/use-form",
   "private": false,
-  "version": "0.1.1",
-  "description": "Typed React 19 form hooks for nested fields, validation, and submission",
+  "version": "0.1.2",
+  "description": "A strongly typed, headless React form-state and validation library.",
+  "keywords": [
+    "react",
+    "react-hooks",
+    "typescript",
+    "form",
+    "forms",
+    "form-state",
+    "form-validation",
+    "validation",
+    "field-array",
+    "async-validation",
+    "schema-validation",
+    "headless",
+    "accessibility",
+    "ssr"
+  ],
   "license": "MIT",
   "author": {
     "name": "Vano Muradyan"

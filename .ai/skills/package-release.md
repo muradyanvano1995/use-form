@@ -11,6 +11,10 @@ Use this skill for library builds, `package.json` exports, packing, consumer tes
 
 Local `build:lib`, `npm pack` (temp dir), consumer tests, and docs generation are allowed.
 
+Ordinary code changes follow [`change-workflow.md`](change-workflow.md) / [`docs/development-workflow.md`](../../docs/development-workflow.md). This skill owns packaging and release Level 3 gates.
+
+Before **npm publishing**, **Git tagging**, **GitHub Release creation**, **Storybook deployment**, or **npm/GitHub failure recovery**, read [`docs/github-release-workflow.md`](../../docs/github-release-workflow.md) (exact order and GitHub UI). Policy summary: [`docs/releasing.md`](../../docs/releasing.md).
+
 ## Every version release
 
 Future agents preparing or publishing a version must:
@@ -21,7 +25,7 @@ Future agents preparing or publishing a version must:
 4. Run `npm version <next> --no-git-tag-version` (never create a git tag from this command).
 5. Never edit lockfile version metadata manually — let `npm version` / `npm install` update `package-lock.json`.
 6. Confirm `package.json` and `package-lock.json` root `name` and `version` match.
-7. Verify whether these metadata need updating for the release: `homepage`, `repository`, `bugs`, Storybook URL, README links, GitHub About website, package version, CHANGELOG, npm dist-tags, GitHub Release, Storybook deployment.
+7. Verify whether these metadata need updating for the release: package name, description, keywords, version, license, homepage, repository, bugs, exports, files, publishConfig, Storybook URL, README links, GitHub About website, CHANGELOG, npm dist-tags, GitHub Release, Storybook deployment. When package capabilities or positioning change, update description and keywords only when necessary.
 8. Update `CHANGELOG.md` with the target version (do not claim publication until it succeeds).
 9. Update migration docs when a release introduces breaking consumer-facing changes.
 10. Update README, docs, and Storybook only when affected — avoid hardcoding the current version everywhere.
@@ -37,7 +41,7 @@ Future agents preparing or publishing a version must:
 20. Never publish from a dirty tree or before CI succeeds.
 21. Never weaken release gates (lint, tests, coverage, a11y, size budgets).
 22. Never publish, tag, push, release, or deploy without explicit owner authorization.
-23. After publication (owner only): verify npm version/dist-tags, install from npm in a fresh project, verify provenance, create the matching Git tag, create a GitHub release (prerelease for betas, normal release for stable).
+23. After publication (owner only): verify npm version/dist-tags, description, and keywords (`npm view @muradyanvano/use-form description`, `npm view @muradyanvano/use-form keywords --json`), install from npm in a fresh project, verify provenance, create the matching Git tag, create a GitHub release (prerelease for betas, normal release for stable).
 24. For a stable release, public Storybook documentation must be deployed from the exact stable Git tag, not from an arbitrary unverified working tree.
 25. After a stable GitHub Release is published, verify that the Deploy Storybook workflow deployed the matching tag and that the public Storybook URL remains healthy.
 
@@ -81,11 +85,15 @@ ESM only. Do not claim CommonJS without `require()` tests.
 
 Published npm package: `@muradyanvano/use-form`.
 
-| Field      | Value                                        |
-| ---------- | -------------------------------------------- |
-| homepage   | https://muradyanvano1995.github.io/use-form/ |
-| repository | GitHub source (`muradyanvano1995/use-form`)  |
-| bugs       | GitHub Issues                                |
+| Field       | Value                                        |
+| ----------- | -------------------------------------------- |
+| description | Concise React form-state + validation blurb  |
+| keywords    | Focused discovery tags in `package.json`     |
+| homepage    | https://muradyanvano1995.github.io/use-form/ |
+| repository  | GitHub source (`muradyanvano1995/use-form`)  |
+| bugs        | GitHub Issues                                |
+
+For every release, verify package name, description, keywords, version, license, homepage, repository, bugs, exports, files and publishConfig. When package capabilities or positioning change, update description and keywords only when necessary. Canonical keywords live only in `package.json` — do not duplicate the list through consumer docs.
 
 MIT license. Consumer docs use the scoped name; implementation keeps relative imports. `private` must be `false`. Do not hardcode dist-tags in `package.json` — the publish workflow selects `beta` or `latest`.
 
@@ -120,6 +128,7 @@ Size budgets live in `scripts/size-budget.json` and are measured from minified c
 
 - Inventory: `docs/public-api.md`
 - Checklist: `docs/releasing.md`
+- GitHub UI / release order: `docs/github-release-workflow.md`
 - Stable release audit: `docs/stable-release-audit.md`
 - CI: `docs/ci.md` (GitHub Actions at `.github/workflows/ci.yml`)
 - TypeDoc: `npm run docs:api` → `api-docs/` (gitignored)

@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync, statSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
@@ -62,6 +62,8 @@ export const ACTIVE_DOC_PATHS = [
   'docs/package-roadmap.md',
   'docs/ci.md',
   'docs/storybook.md',
+  'docs/development-workflow.md',
+  'docs/github-release-workflow.md',
   'src/stories/documentation/Introduction.stories.tsx',
   'src/stories/documentation/GettingStarted.stories.tsx',
   'src/stories/documentation/Limitations.stories.tsx',
@@ -109,6 +111,69 @@ export function stableChangelogEntryExists(changelog, version) {
   return new RegExp(`^## \\[${escaped}\\]`, 'm').test(changelog)
 }
 
+const REQUIRED_KEYWORDS = ['react', 'typescript', 'form', 'validation']
+
+const FORBIDDEN_KEYWORDS = new Set([
+  'react-hook-form',
+  'formik',
+  'final-form',
+  'redux-form',
+  'tanstack-form',
+  'vue',
+  'angular',
+  'svelte',
+])
+
+/**
+ * @param {{ description?: unknown, keywords?: unknown }} pkg
+ * @returns {string[]}
+ */
+export function validateDiscoveryMetadata(pkg) {
+  const failures = []
+  const description = pkg.description
+
+  if (typeof description !== 'string' || description.trim() === '') {
+    failures.push('package.json description must be a non-empty string')
+  } else {
+    const lower = description.toLowerCase()
+    if (!/\breact\b/.test(lower)) failures.push('description must mention React')
+    if (!/\bform\b/.test(lower)) failures.push('description must mention form')
+    if (!/\bvalidation\b/.test(lower)) failures.push('description must mention validation')
+  }
+
+  const keywords = pkg.keywords
+  if (!Array.isArray(keywords)) {
+    failures.push('package.json keywords must be an array')
+  } else if (keywords.length === 0) {
+    failures.push('package.json keywords must be a non-empty array')
+  } else {
+    const seen = new Set()
+    for (const [index, keyword] of keywords.entries()) {
+      if (typeof keyword !== 'string' || keyword.trim() === '') {
+        failures.push(`keywords[${index}] must be a non-empty string`)
+        continue
+      }
+      if (keyword !== keyword.toLowerCase()) {
+        failures.push(`keywords[${index}] must be lowercase ("${keyword}")`)
+      }
+      if (seen.has(keyword)) {
+        failures.push(`keywords must not contain duplicates ("${keyword}")`)
+      }
+      seen.add(keyword)
+      if (FORBIDDEN_KEYWORDS.has(keyword)) {
+        failures.push(`keywords must not include competitor/unrelated package name "${keyword}"`)
+      }
+    }
+    for (const required of REQUIRED_KEYWORDS) {
+      if (!seen.has(required)) {
+        failures.push(`keywords must include required discovery keyword "${required}"`)
+      }
+    }
+  }
+
+  return failures
+}
+
 function verifyPackageIdentity() {
   assert(packageJson.name === EXPECTED.name, `package.json name must be ${EXPECTED.name}`)
   assert(packageJson.private === false, 'package.json private must be false')
@@ -132,6 +197,13 @@ function verifyPackageIdentity() {
     packageJson.bugs?.url === EXPECTED.bugsUrl,
     `package.json bugs.url must be ${EXPECTED.bugsUrl}`,
   )
+
+  const discoveryFailures = validateDiscoveryMetadata(packageJson)
+  if (discoveryFailures.length > 0) {
+    throw new Error(
+      `package discovery metadata invalid:\n${discoveryFailures.map((f) => `- ${f}`).join('\n')}`,
+    )
+  }
 
   const lockRoot = readLockfileRoot()
   assert(lockRoot.name === packageJson.name, 'package-lock root name must match package.json name')
@@ -235,6 +307,74 @@ function verifyChangelog() {
   )
 }
 
+function verifyWorkflowGuideLinks() {
+  const requiredFiles = [
+    'docs/development-workflow.md',
+    'docs/github-release-workflow.md',
+    '.ai/skills/change-workflow.md',
+    '.ai/skills/package-release.md',
+    'CONTRIBUTING.md',
+    '.ai/README.md',
+  ]
+  for (const relativePath of requiredFiles) {
+    assert(
+      existsSync(path.join(rootDir, relativePath)),
+      `Missing workflow guide file: ${relativePath}`,
+    )
+  }
+
+  const agentsReadme = readFileSync(path.join(rootDir, '.ai/README.md'), 'utf8')
+  assert(
+    agentsReadme.includes('skills/change-workflow.md'),
+    '.ai/README.md must route change tasks to skills/change-workflow.md',
+  )
+  assert(
+    agentsReadme.includes('skills/package-release.md'),
+    '.ai/README.md must route packaging/release tasks to skills/package-release.md',
+  )
+
+  const contributing = readFileSync(path.join(rootDir, 'CONTRIBUTING.md'), 'utf8')
+  assert(
+    contributing.includes('docs/development-workflow.md'),
+    'CONTRIBUTING.md must link to docs/development-workflow.md',
+  )
+  assert(
+    contributing.includes('docs/github-release-workflow.md'),
+    'CONTRIBUTING.md must link to docs/github-release-workflow.md',
+  )
+
+  const changeSkill = readFileSync(path.join(rootDir, '.ai/skills/change-workflow.md'), 'utf8')
+  assert(
+    changeSkill.includes('docs/development-workflow.md'),
+    '.ai/skills/change-workflow.md must link to docs/development-workflow.md',
+  )
+  assert(
+    changeSkill.includes('docs/github-release-workflow.md'),
+    '.ai/skills/change-workflow.md must link to docs/github-release-workflow.md',
+  )
+
+  const packageSkill = readFileSync(path.join(rootDir, '.ai/skills/package-release.md'), 'utf8')
+  assert(
+    packageSkill.includes('docs/github-release-workflow.md'),
+    '.ai/skills/package-release.md must require docs/github-release-workflow.md',
+  )
+
+  const developmentWorkflow = readFileSync(
+    path.join(rootDir, 'docs/development-workflow.md'),
+    'utf8',
+  )
+  assert(
+    developmentWorkflow.includes('github-release-workflow.md'),
+    'docs/development-workflow.md must link to github-release-workflow.md',
+  )
+
+  const releasing = readFileSync(path.join(rootDir, 'docs/releasing.md'), 'utf8')
+  assert(
+    releasing.includes('github-release-workflow.md'),
+    'docs/releasing.md must link to github-release-workflow.md',
+  )
+}
+
 function main() {
   verifyPackageIdentity()
   verifyExportsAndFiles()
@@ -250,6 +390,7 @@ function main() {
 
   verifyActiveDocumentation()
   verifyChangelog()
+  verifyWorkflowGuideLinks()
   console.log(`release:check OK (${PACKAGE_NAME}@${packageJson.version})`)
 }
 

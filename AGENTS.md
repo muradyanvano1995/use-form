@@ -10,9 +10,10 @@ You are working in the `use-form` repository (npm package `@muradyanvano/use-for
 
 ## After changing code
 
-1. Update every affected skill file under `.ai/skills/` so documentation matches the final behavior.
-2. Run the applicable verification scripts (`typecheck`, `lint`, `format:check`, `test`, `build`).
-3. Do not leave docs describing removed or planned-only behavior.
+1. Follow [docs/development-workflow.md](docs/development-workflow.md) and `.ai/skills/change-workflow.md` (classify the change; pick verification Level 1–3).
+2. Update every affected skill file under `.ai/skills/` so documentation matches the final behavior.
+3. Run the applicable verification scripts (`typecheck`, `lint`, `format:check`, `test`, `build`, or `npm run verify` / `verify:ci` as required).
+4. Do not leave docs describing removed or planned-only behavior.
 
 ## Form work
 
